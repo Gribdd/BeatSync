@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeatSync.Views.Admin_LandingPage"
+             xmlns:local="clr-namespace:BeatSync.Pages"
+             Shell.NavBarIsVisible="False"
+             Title="Admin_LandingPage"
+             Shell.TabBarBackgroundColor="#17122E"
+             Shell.TabBarForegroundColor="#FFFFFF"
+             Shell.TabBarTitleColor="#FFFFFF"
+             Shell.TabBarUnselectedColor="#7EA6D9"
+             >
+
+    <TabBar>
+        <Tab Title="Songs" Icon="songs.png">
+            <ShellContent ContentTemplate="{DataTemplate local:SongManagement}" />
+        </Tab>
+        <Tab Title="Users" Icon="users.png">
+            <ShellContent ContentTemplate="{DataTemplate local:UserManagement}" />
+        </Tab>
+        <Tab Title="Home" Icon="home.ong">
+            <ShellContent ContentTemplate="{DataTemplate local:LandingPage}"></ShellContent> 
+        </Tab>
+        <Tab Title="Publishers" Icon="publishers.png">
+            <ShellContent ContentTemplate="{DataTemplate local:PublisherManagement}" />
+        </Tab>
+        <Tab Title="Artists" Icon="artists.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ArtistManagement}" />
+        </Tab>
+    </TabBar>
+    
+    
+</Shell>

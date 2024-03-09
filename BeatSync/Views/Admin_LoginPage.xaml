@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeatSync.Views.Admin_LoginPage"
+             Title="Admin_LoginPage"
+             BackgroundImageSource="resizedbackgroundpixel.png"
+             Shell.NavBarIsVisible="False"
+             >
+    
+    <StackLayout>
+        <VerticalStackLayout>
+            <Image Source="logo.png" HeightRequest="120" Aspect="AspectFit" VerticalOptions="Center" Margin="10,100,10,10"/>
+            <Label Text="Log in to BeatSync" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" TextColor="White" />
+            <BoxView HeightRequest="2" WidthRequest="350" BackgroundColor="White" Margin="0,15,0,0"></BoxView>
+            <Label Text="Email or username" Margin="40,10,0,0" Style="{StaticResource Fields}" TextColor="White" ></Label>
+            <Border BackgroundColor="White" WidthRequest="310" Margin="0,10,0,0" StrokeShape="RoundRectangle 5" Stroke="White">
+                <Entry x:Name="txtEmail" BackgroundColor="#5C5474" TextColor="White"></Entry>
+            </Border>
+            <Label Text="Password" Margin="40,10,0,0" Style="{StaticResource Fields}" TextColor="White" ></Label>
+            <Border BackgroundColor="White" WidthRequest="310" Margin="0,10,0,0" StrokeShape="RoundRectangle 5" Stroke="White">
+                <Entry x:Name="txtPassword" BackgroundColor="#5C5474" IsPassword="True" TextColor="White"></Entry>
+            </Border>
+            <StackLayout Orientation="Horizontal" Margin="30,5,0,0">
+                <CheckBox x:Name="cbxRememberMe" CheckedChanged="cbxRememberMe_CheckedChanged" IsChecked="False" />
+                <Label Text="Remember Me" VerticalOptions="Center" TextColor="White"/>
+            </StackLayout>
+            <Button x:Name= "btnLogin" Text="Login"  CornerRadius="25" BackgroundColor="#9747FF" HorizontalOptions="Fill" WidthRequest="300" Margin="0,10,0,0" Clicked="OnbtnLogin_Clicked" />
+            <Label Text="Forgot your password?" TextDecorations="Underline" HorizontalOptions="Center" TextColor="White" Margin="0,10,0,0"/>
+            <BoxView HeightRequest="2" WidthRequest="350" BackgroundColor="White" Margin="0,15,0,0"></BoxView>
+            <Label x:Name="lblDontHaveAnAccount" Text="Don't have an account?" TextColor="#90A5DB" Margin="0,10,0,0" HorizontalOptions="Center"></Label>
+            <Label x:Name="lblSignIn" Text="Sign In" TextColor="#90A5DB" HorizontalOptions="Center" Margin="0,3,0,0" TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnlblSignInTapped"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </StackLayout>
+</ContentPage>
