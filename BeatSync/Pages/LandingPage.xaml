@@ -43,11 +43,8 @@
         
         <!--Top Hits-->
         <Label Style="{StaticResource SubHeadline}" Text="Top Hits" TextColor="White" Margin="35,20,0,0" HorizontalOptions="Start"></Label>
-        <CarouselView>
-            <CarouselView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal" SnapPointsAlignment="Center" SnapPointsType="MandatorySingle" ItemSpacing="10"></LinearItemsLayout>
-            </CarouselView.ItemsLayout>
-            <CarouselView.ItemsSource>
+        <CarouselView PeekAreaInsets="150" Margin="30,0,30,0">
+            <CarouselView.ItemsSource >
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Rap</x:String>
                     <x:String>Pop</x:String>
@@ -58,7 +55,7 @@
             </CarouselView.ItemsSource>
             <CarouselView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout Padding="10" Margin="30,15,30,30">
+                    <VerticalStackLayout Padding="10" Margin="30,15,-5,30" HorizontalOptions="Start">
                         <Frame HeightRequest="150" WidthRequest="150">
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <Image Source="logo.png" HeightRequest="50" WidthRequest="50" Margin="0,0,0,0"></Image>
