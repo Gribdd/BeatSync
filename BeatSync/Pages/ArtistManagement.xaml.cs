@@ -7,17 +7,17 @@ public partial class ArtistManagement : ContentPage
 		InitializeComponent();
 	}
 
-    private void OnBtnAddClicked(object sender, EventArgs e)
+    private async void OnBtnAddClicked(object sender, EventArgs e)
     {
-        
+        await Navigation.PushAsync(new AddArtist());
     }
 
-    private void OnBtnDeleteClicked(object sender, EventArgs e)
+    private async void OnBtnDeleteClicked(object sender, EventArgs e)
     {
-
+        string inputId = await DisplayPromptAsync("Delete Artist", "Enter Artist ID to delete:");
     }
-    private void OnBtnUpdateClicked(object sender, EventArgs e)
+    private async void OnBtnUpdateClicked(object sender, EventArgs e)
     {
-
+        string inputID = await DisplayPromptAsync("Edit Artist Details", "Enter Artist ID to Edit:");
     }
 }

@@ -68,6 +68,7 @@
 	  <None Remove="Resources\Images\publishers.png" />
 	  <None Remove="Resources\Images\resizedbackground.png" />
 	  <None Remove="Resources\Images\resizedbackgroundpixel.png" />
+	  <None Remove="Resources\Images\returnbtn.png" />
 	  <None Remove="Resources\Images\search.png" />
 	  <None Remove="Resources\Images\songs.png" />
 	  <None Remove="Resources\Images\update.png" />
@@ -91,6 +92,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\AddArtist.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddSong.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ArtistManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
