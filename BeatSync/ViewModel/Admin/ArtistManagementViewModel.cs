@@ -22,13 +22,13 @@ public partial class ArtistManagementViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void NavigateAddArtist()
+    async Task NavigateAddArtist()
     {
         await Shell.Current.GoToAsync($"{nameof(AddArtist)}");
     }
 
     [RelayCommand]
-    async void DeleteArtist()
+    async Task DeleteArtist()
     {
         string inputId = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Artist ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
@@ -39,7 +39,7 @@ public partial class ArtistManagementViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void UpdateArtist()
+    async Task UpdateArtist()
     {
         string inputId = await Shell.Current.DisplayPromptAsync("Update Artist", "Enter Artist ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))

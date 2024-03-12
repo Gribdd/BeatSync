@@ -7,6 +7,7 @@ namespace BeatSync.Models;
 /// </summary>
 public partial class Song : ObservableObject
 {
+    [ObservableProperty]
     private int _id;
 
     [ObservableProperty]
@@ -14,6 +15,9 @@ public partial class Song : ObservableObject
 
     [ObservableProperty]
     private string? _name;
+    
+    [ObservableProperty]
+    private string? _genre;
 
     [ObservableProperty]
     private string? _filename;

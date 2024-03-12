@@ -19,7 +19,7 @@ public partial class AddArtistViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void AddArtist()
+    async Task AddArtist()
     {
         if (await _adminService.AddArtistAsync(Artist))
         {
@@ -33,7 +33,7 @@ public partial class AddArtistViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void Return()
+    async Task Return()
     {
         await Shell.Current.GoToAsync("..");
     }

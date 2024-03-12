@@ -9,6 +9,7 @@ namespace BeatSync.Models;
 
 public partial class Publisher : ObservableObject
 {
+    [ObservableProperty]
     private int _id;
 
     [ObservableProperty]
