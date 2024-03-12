@@ -1,55 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Pages.AddArtist"
-             Title="AddArtist"
-             NavigationPage.HasNavigationBar="False"
-             BackgroundImageSource="resizedbackgroundpixel.png">
+<ContentPage
+    x:Class="BeatSync.Pages.AddArtist"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
+    Title="AddArtist"
+    x:DataType="viewmodel:AddArtistViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Entry">
-                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="Margin" Value="30,5,30,5" />
+                <Setter Property="BackgroundColor" Value="#453D62" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
             </Style>
         </ResourceDictionary>
-    </ContentPage.Resources>  
-    
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-                        
-            <ImageButton Source="returnbtn.png" HeightRequest="30" Margin="-60,30,30,30" HorizontalOptions="Start" Grid.Column="0" Grid.Row="0" Clicked="OnBtnReturnClicked"></ImageButton>
-        </Grid>
+
+        <ImageButton
+            Grid.Row="0"
+            Grid.Column="0"
+            Command="{Binding ReturnCommand}"
+            Margin="-60,30,30,30"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="returnbtn.png" />
         <VerticalStackLayout>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Email" Keyboard="Email" ClearButtonVisibility="WhileEditing" Style="{StaticResource Fields}" Margin="5"></Entry>
+            <Border>
+                <Entry
+                    Margin="5"
+                    ClearButtonVisibility="WhileEditing"
+                    Keyboard="Email"
+                    Placeholder="Enter Email"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Email}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Username"  Style="{StaticResource Fields}" ></Entry>
+            <Border>
+                <Entry
+                    Placeholder="Enter Username"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Username}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Password"  Style="{StaticResource Fields}"></Entry>
+            <Border>
+                <Entry
+                    Placeholder="Enter Password"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Password}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Date of Birth" Style="{StaticResource Fields}"></Entry>
+            <Border>
+                <DatePicker Date="{Binding Artist.DateOfBirth}" Style="{StaticResource Fields}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter First Name" Style="{StaticResource Fields}"></Entry>
+            <Border>
+                <Entry
+                    Placeholder="Enter First Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.FirstName}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Last Name"  Style="{StaticResource Fields}"></Entry>
+            <Border>
+                <Entry
+                    Placeholder="Enter Last Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.LastName}" />
             </Border>
-            <Border Margin="30,5,30,5" BackgroundColor="#453D62" StrokeShape="RoundRectangle 10">
-                <Entry Placeholder="Enter Gender" Style="{StaticResource Fields}" ></Entry>
+            <Border>
+                <Picker
+                    Title="Select a Gender"
+                    SelectedItem="{Binding Artist.Gender}"
+                    Style="{StaticResource Fields}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Man</x:String>
+                            <x:String>Woman</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
             </Border>
-            <Button x:Name= "btnAdd" Text="Submit Details"  CornerRadius="25" BackgroundColor="#9747FF" HorizontalOptions="Fill" WidthRequest="300" Margin="30" Clicked="OnBtnAddClicked"></Button>
+            <Button
+                Margin="30"
+                BackgroundColor="#9747FF"
+                Command="{Binding AddArtistCommand}"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Submit Details"
+                WidthRequest="300" />
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

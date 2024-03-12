@@ -17,4 +17,10 @@ public partial class Song : ObservableObject
 
     [ObservableProperty]
     private string? _filename;
+
+    [ObservableProperty]
+    private string? _imageFileName;
+
+    [ObservableProperty]
+    private bool _isDeleted;
 }

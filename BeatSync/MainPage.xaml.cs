@@ -11,13 +11,13 @@ namespace BeatSync
 
         private void OnlblLoginTapped(object sender, TappedEventArgs e)
         {
-            
-
+          
         }
 
         private async void OnlblLoginAdminTapped(object sender, TappedEventArgs e)
         {
-            await Navigation.PushAsync(new Admin_LoginPage());
+            //await Navigation.PushAsync(new Admin_LoginPage());
+            await Shell.Current.GoToAsync($"{nameof(Admin_LoginPage)}");
         }
     }
 

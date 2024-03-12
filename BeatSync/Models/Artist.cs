@@ -9,6 +9,7 @@ public partial class Artist : ObservableObject
     /// [ObservableProperty]
     /// private ObservableColectons<Artist>< _artists;
     /// </summary>
+    [ObservableProperty]
     private int _id;
 
     [ObservableProperty]
@@ -37,4 +38,7 @@ public partial class Artist : ObservableObject
 
     [ObservableProperty]
     private bool _isDeleted;
+
+    [ObservableProperty]
+    private string? _imageFileName;
 }

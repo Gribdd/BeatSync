@@ -1,21 +1,14 @@
+using BeatSync.ViewModel.Admin;
+
 namespace BeatSync.Pages;
 
 public partial class AddArtist : ContentPage
 {
-	public AddArtist()
+	public AddArtist(AddArtistViewModel vm)
 	{
 		InitializeComponent();
+        BindingContext = vm;
 	}
-
-    private void OnBtnReturnClicked(object sender, EventArgs e)
-    {
-		Navigation.PopAsync();
-    }
-
-    private void OnBtnAddClicked(object sender, EventArgs e)
-    {
-        Navigation.PopAsync();
-    }
 
 
 }

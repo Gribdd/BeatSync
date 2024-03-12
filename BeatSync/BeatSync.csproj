@@ -88,10 +88,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="View Model\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Pages\AddArtist.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -8,5 +8,4 @@
     Title="BeatSync">
 
     <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage"  Icon="logo.png"/>
-    
 </Shell>
