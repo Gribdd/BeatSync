@@ -12,6 +12,35 @@
             <ImageButton Source="search.png" HeightRequest="35" Margin="25,0,0,0" HorizontalOptions="Start"></ImageButton>
             <ImageButton Source="add.png" HeightRequest="30" Margin="-5,0,0,0" HorizontalOptions="Start"></ImageButton>
         </HorizontalStackLayout>
-        <BoxView HeightRequest="2" Color="White"></BoxView>
+        <BoxView HeightRequest="2" Color="White" WidthRequest="310" Margin="0,-10,0,0"></BoxView>
+        <HorizontalStackLayout Spacing="10" Margin="40,10,10,10">
+            <Button x:Name="btnAdd" BackgroundColor="#9747FF" Text="Add" CornerRadius="25" Padding="20" Clicked="OnBtnAddClicked"></Button>
+            <Button x:Name="btnDelete" BackgroundColor="#9747FF" Text="Delete" CornerRadius="25" Padding="20" Clicked="OnBtnDeleteClicked"></Button>
+            <Button x:Name="btnUpdate" BackgroundColor="#9747FF" Text="Update" CornerRadius="25" Padding="20" Clicked="OnBtnUpdateClicked"></Button>
+        </HorizontalStackLayout>
+        <CollectionView>
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Song Name</x:String>
+                    <x:String>Song Name</x:String>
+                    <x:String>Song Name</x:String>
+                    <x:String>Song Name</x:String>
+                    <x:String>Song Name</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout BackgroundColor="#17122E" Padding="5" Margin="30,5,30,5">
+                        <HorizontalStackLayout>
+                            <Image Source="logo.png" HeightRequest="30" Margin="5"></Image>
+                            <VerticalStackLayout>
+                                <Label Style="{StaticResource SubHeadline}" Text="{Binding .}" HorizontalOptions="Center" HorizontalTextAlignment="Center" Margin="10,5,5,5" TextColor="White"></Label>
+                                <Label Style="{StaticResource Fields}" Text="Artist Name" TextColor="#7EA6D9" Margin="10,-5,0,0"></Label>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

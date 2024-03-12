@@ -58,7 +58,9 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Jua-Regular.ttf" />
 	  <None Remove="Resources\Images\add.png" />
+	  <None Remove="Resources\Images\addperson.png" />
 	  <None Remove="Resources\Images\artists.png" />
+	  <None Remove="Resources\Images\deleteperson.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\profile.png" />
@@ -68,6 +70,7 @@
 	  <None Remove="Resources\Images\resizedbackgroundpixel.png" />
 	  <None Remove="Resources\Images\search.png" />
 	  <None Remove="Resources\Images\songs.png" />
+	  <None Remove="Resources\Images\update.png" />
 	  <None Remove="Resources\Images\users.png" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
