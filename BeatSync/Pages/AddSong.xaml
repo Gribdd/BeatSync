@@ -1,12 +1,79 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Pages.AddSong"
-             Title="AddSong">
+<ContentPage
+    x:Class="BeatSync.Pages.AddSong"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
+    x:DataType=""
+    Title="AddSong">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <ImageButton
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="-60,30,30,30"
+            Command="{Binding ReturnCommand}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="returnbtn.png" />
+        <VerticalStackLayout>
+            <Border>
+                <Entry
+                    Margin="5"
+                    ClearButtonVisibility="WhileEditing"
+                    Keyboard="Email"
+                    Placeholder="Enter Email"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Email}" />
+            </Border>
+            <Border>
+                <Entry
+                    Placeholder="Enter Username"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Username}" />
+            </Border>
+            <Border>
+                <Entry
+                    Placeholder="Enter Password"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.Password}" />
+            </Border>
+            <Border>
+                <DatePicker Date="{Binding Artist.DateOfBirth}" Style="{StaticResource Fields}" />
+            </Border>
+            <Border>
+                <Entry
+                    Placeholder="Enter First Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.FirstName}" />
+            </Border>
+            <Border>
+                <Entry
+                    Placeholder="Enter Last Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Artist.LastName}" />
+            </Border>
+            <Border>
+                <Picker
+                    Title="Select a Gender"
+                    SelectedItem="{Binding Artist.Gender}"
+                    Style="{StaticResource Fields}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Man</x:String>
+                            <x:String>Woman</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Border>
+            <Button
+                Margin="30"
+                BackgroundColor="#9747FF"
+                Command="{Binding AddArtistCommand}"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Submit Details"
+                WidthRequest="300" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

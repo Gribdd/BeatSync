@@ -25,8 +25,8 @@ public partial class Admin_LoginPage : ContentPage
 
         if(username == txtEmail.Text && password == txtPassword.Text)
         {
-            Application.Current.MainPage = new NavigationPage(new Admin_LandingPage());
-
+            //Application.Current.MainPage = new NavigationPage(new Admin_LandingPage());
+            Shell.Current.GoToAsync($"{nameof(Admin_LandingPage)}");
         }
         else
         {
