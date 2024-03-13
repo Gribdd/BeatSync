@@ -7,7 +7,8 @@
     Title="AddArtist"
     x:DataType="viewmodel:AddArtistViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -28,7 +29,7 @@
             Grid.Row="0"
             Grid.Column="0"
             Command="{Binding ReturnCommand}"
-            Margin="-60,30,30,30"
+            Margin="-200,30,30,30"
             HeightRequest="30"
             HorizontalOptions="Start"
             Source="returnbtn.png" />

@@ -7,7 +7,8 @@
     Title="AddSong"
     x:DataType="viewmodel:AddSongViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -52,7 +53,7 @@
                 <Picker
                     Title="Select genre"
                     ItemsSource="{Binding Genres}"
-                    SelectedItem="{Binding Song.Genre}" />
+                    SelectedItem="{Binding Genres}" />
             </Border>
 
             <Button

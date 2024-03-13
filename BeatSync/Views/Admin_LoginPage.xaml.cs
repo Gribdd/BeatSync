@@ -18,7 +18,7 @@ public partial class Admin_LoginPage : ContentPage
         await Navigation.PushAsync(new MainPage());
     }
 
-    private void OnbtnLogin_Clicked(object sender, EventArgs e)
+    private async void OnbtnLogin_Clicked(object sender, EventArgs e)
     {
         string username = "admin";
         string password = "admin123";
@@ -26,11 +26,11 @@ public partial class Admin_LoginPage : ContentPage
         if(username == txtEmail.Text && password == txtPassword.Text)
         {
             //Application.Current.MainPage = new NavigationPage(new Admin_LandingPage());
-            Shell.Current.GoToAsync($"{nameof(Admin_LandingPage)}");
+            await Shell.Current.GoToAsync($"{nameof(Admin_LandingPage)}");
         }
         else
         {
-            DisplayAlert("Error", "Invalid username or password", "Ok");
+            await DisplayAlert("Error", "Invalid username or password", "Ok");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BeatSync.Pages;
 using BeatSync.Services;
 using BeatSync.ViewModel.Admin;
+using BeatSync.Views;
 using Microsoft.Extensions.Logging;
 
 namespace BeatSync
@@ -25,6 +26,10 @@ namespace BeatSync
             builder.Services.AddTransient<ArtistManagement>();
             builder.Services.AddTransient<AddSong>();
             builder.Services.AddTransient<SongManagement>();
+            builder.Services.AddTransient<PublisherManagement>();
+            builder.Services.AddTransient<AddPublisher>();
+            builder.Services.AddTransient<Admin_LandingPage>();
+            builder.Services.AddTransient<Admin_LoginPage>();
 
 
             //Viewmodel
@@ -32,6 +37,8 @@ namespace BeatSync
             builder.Services.AddTransient<ArtistManagementViewModel>();
             builder.Services.AddTransient<AddSongViewModel>();
             builder.Services.AddTransient<SongManagementViewModel>();
+            builder.Services.AddTransient < PublisherManagementViewModel >();
+            builder.Services.AddTransient < AddPublisherViewModel >();
             
 
             //Service

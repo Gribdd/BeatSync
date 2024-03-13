@@ -77,13 +77,34 @@
                                 Padding="5"
                                 HeightRequest="50"
                                 VerticalOptions="Center">
-                                <Label
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="Start"
-                                    Style="{StaticResource SubHeadline}"
-                                    Text="{Binding Username}"
-                                    TextColor="White" />
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource SubHeadline}"
+                                        Text=" # "
+                                        TextColor="White"/>
+                                    <Label
+                                         FontAttributes="Bold"
+                                         HorizontalOptions="Start"
+                                         Style="{StaticResource SubHeadline}"
+                                         Text="{Binding Id}"
+                                         TextColor="White" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource SubHeadline}"
+                                        Text=" | "
+                                        TextColor="White"/>
+                                    <Label
+                                         FontAttributes="Bold"
+                                         HorizontalOptions="Start"
+                                         Style="{StaticResource SubHeadline}"
+                                         Text="{Binding Username}"
+                                         TextColor="White" />       
+                                </HorizontalStackLayout>
+                                
+                                <HorizontalStackLayout Spacing="5">
                                     <Label
                                         Style="{StaticResource Fields}"
                                         Text="{Binding FirstName}"

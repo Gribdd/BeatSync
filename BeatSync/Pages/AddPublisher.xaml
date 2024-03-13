@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeatSync.Pages.AddPublisher"
+             Title="AddPublisher"
+             xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
+             x:DataType="viewmodel:AddPublisherViewModel"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             >
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="Margin" Value="30,5,30,5" />
+                <Setter Property="BackgroundColor" Value="#453D62" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+
+        <ImageButton
+        Grid.Row="0"
+        Grid.Column="0"
+        Command="{Binding ReturnCommand}"
+        Margin="-200,30,30,30"
+        HeightRequest="30"
+        HorizontalOptions="Start"
+        Source="returnbtn.png" />
+        <VerticalStackLayout>
+            <Border>
+                <Entry
+                Margin="5"
+                ClearButtonVisibility="WhileEditing"
+                Keyboard="Email"
+                Placeholder="Enter Email"
+                Style="{StaticResource Fields}"
+                Text="{Binding Publisher.Email}" />
+            </Border>
+            <Border>
+                <Entry
+                Placeholder="Enter Username"
+                Style="{StaticResource Fields}"
+                Text="{Binding Publisher.Username}" />
+            </Border>
+            <Border>
+                <Entry
+                Placeholder="Enter Password"
+                Style="{StaticResource Fields}"
+                Text="{Binding Publisher.Password}" />
+            </Border>
+            <Border>
+                <DatePicker Date="{Binding Publisher.DateOfBirth}" Style="{StaticResource Fields}" />
+            </Border>
+            <Border>
+                <Entry
+                Placeholder="Enter First Name"
+                Style="{StaticResource Fields}"
+                Text="{Binding Publisher.FirstName}" />
+            </Border>
+            <Border>
+                <Entry
+                Placeholder="Enter Last Name"
+                Style="{StaticResource Fields}"
+                Text="{Binding Publisher.LastName}" />
+            </Border>
+            <Border>
+                <Picker
+                Title="Select a Gender"
+                SelectedItem="{Binding Publisher.Gender}"
+                Style="{StaticResource Fields}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Man</x:String>
+                            <x:String>Woman</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Border>
+            <Button
+            Margin="30"
+            BackgroundColor="#9747FF"
+            Command="{Binding AddPublisherCommand}"
+            CornerRadius="25"
+            HorizontalOptions="Fill"
+            Text="Submit Details"
+            WidthRequest="300" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
