@@ -33,6 +33,16 @@ namespace BeatSync
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<AddUser>();
             builder.Services.AddTransient<UserManagement>();
+            builder.Services.AddTransient<LoginPage>(); 
+            builder.Services.AddTransient<SignUpPage>();
+
+            builder.Services.AddTransient<CreateAccountPassword>();
+            builder.Services.AddTransient<CreateAccountDOB>();
+            builder.Services.AddTransient<CreateAccountFirstName>();
+            builder.Services.AddTransient<CreateAccountLastName>();
+            builder.Services.AddTransient<CreateAccountGender>();
+
+            builder.Services.AddTransient<CustomerLandingPage>();
 
 
             //Viewmodel

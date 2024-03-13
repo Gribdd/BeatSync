@@ -24,6 +24,16 @@ namespace BeatSync
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(AddUser), typeof(AddUser));
 
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
+            Routing.RegisterRoute(nameof(CreateAccountPassword), typeof(CreateAccountPassword));
+            Routing.RegisterRoute(nameof(CreateAccountDOB), typeof(CreateAccountDOB));
+            Routing.RegisterRoute(nameof(CreateAccountFirstName), typeof(CreateAccountFirstName));
+            Routing.RegisterRoute(nameof(CreateAccountLastName), typeof(CreateAccountLastName));
+            Routing.RegisterRoute(nameof(CreateAccountGender), typeof(CreateAccountGender));
+
+            Routing.RegisterRoute(nameof(CustomerLandingPage), typeof(CustomerLandingPage));
+
         }
     }
 }
