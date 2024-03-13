@@ -30,6 +30,7 @@ namespace BeatSync
             builder.Services.AddTransient<AddPublisher>();
             builder.Services.AddTransient<Admin_LandingPage>();
             builder.Services.AddTransient<Admin_LoginPage>();
+            builder.Services.AddTransient<MainPage>();
 
 
             //Viewmodel

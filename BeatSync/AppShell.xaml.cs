@@ -11,6 +11,7 @@ namespace BeatSync
 
             Routing.RegisterRoute(nameof(Admin_LandingPage), typeof(Admin_LandingPage));
             Routing.RegisterRoute(nameof(Admin_LoginPage), typeof(Admin_LoginPage));
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
 
             Routing.RegisterRoute(nameof(ArtistManagement), typeof(ArtistManagement));
             Routing.RegisterRoute(nameof(UserManagement), typeof(UserManagement));

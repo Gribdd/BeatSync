@@ -20,6 +20,10 @@ public partial class SongManagementViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
 
+    [ObservableProperty]
+    private ObservableCollection<String> _artistName = new();
+
+
     public SongManagementViewModel(AdminService adminService)
     {
         _adminService = adminService;
@@ -57,5 +61,14 @@ public partial class SongManagementViewModel : ObservableObject
     public async void GetSongs()
     {
         Songs = await _adminService.GetActiveSongAsync();
+    }
+
+    public async void GetArtists()
+    {
+        for (int index = 0; index < Songs.Count; index++)
+        {
+
+            ArtistName.Add(await _adminService.GetArtistNameById(Songs[index].ArtistID));
+        }
     }
 }

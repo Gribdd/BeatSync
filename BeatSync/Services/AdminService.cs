@@ -177,6 +177,13 @@ public class AdminService
         return new ObservableCollection<Song>(songs.Where(m => !m.IsDeleted));
     }
 
+    public async Task<String> GetArtistNameById(int id )
+    {
+        var artists = await GetArtistsAsync();
+        var artist = artists.FirstOrDefault(m => m.Id == id);
+        return $"{artist!.FirstName} {artist!.LastName}";
+    }
+
     public async Task<ObservableCollection<Song>> DeleteSongAsync(int id)
     {
         var songs = await GetSongsAsync();
