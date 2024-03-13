@@ -4,7 +4,8 @@
              x:Class="BeatSync.Pages.LandingPage"
              Title="LandingPage"
              BackgroundImageSource="resizedbackgroundpixel.png"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
     <VerticalStackLayout>
         <!--Top Elements-->

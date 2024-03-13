@@ -1,24 +1,22 @@
-using BeatSync.Pages;
-
 namespace BeatSync.Views;
 
-public partial class Admin_LoginPage : ContentPage
+public partial class LoginPage : ContentPage
 {
-	public Admin_LoginPage()
+	public LoginPage()
 	{
 		InitializeComponent();
 	}
-
     private async void OnlblSignInTapped(object sender, TappedEventArgs e)
     {
         await Navigation.PushAsync(new MainPage());
     }
 
-    private async void OnbtnLogin_Clicked(object sender, EventArgs e)
+    private void OnbtnLogin_Clicked(object sender, EventArgs e)
     {
-        string username = "admin";
-        string password = "admin123";
 
+        //add navigation
+
+        /*
         if(username == txtEmail.Text && password == txtPassword.Text)
         {
             //Application.Current.MainPage = new NavigationPage(new Admin_LandingPage());
@@ -30,5 +28,7 @@ public partial class Admin_LoginPage : ContentPage
         {
             await DisplayAlert("Error", "Invalid username or password", "Ok");
         }
+        */
     }
+
 }
