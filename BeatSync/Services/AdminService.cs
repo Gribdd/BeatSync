@@ -11,6 +11,14 @@ public class AdminService
     private readonly string _publisherFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers.json");
     private readonly string _songFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs.json");
 
+    //file and dirs
+    public void CreateDirectoryIfMissing(string dir)
+    {
+        bool folderExists = Directory.Exists(dir);
+        if (!folderExists)
+            Directory.CreateDirectory(dir);
+    }
+
     //Artists
 
     public async Task<bool> AddArtistAsync(Artist artist)
@@ -219,7 +227,7 @@ public class AdminService
             return songs;
         }
 
-        string[] editOptions = { "Name"};
+        string[] editOptions = { "Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
 
         var newValue = string.Empty;

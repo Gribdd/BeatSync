@@ -40,5 +40,5 @@ public partial class Artist : ObservableObject
     private bool _isDeleted;
 
     [ObservableProperty]
-    private string? _imageFileName;
+    private string? _imageFilePath;
 }

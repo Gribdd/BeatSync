@@ -53,8 +53,16 @@
                 <Picker
                     Title="Select genre"
                     ItemsSource="{Binding Genres}"
-                    SelectedItem="{Binding Genres}" />
+                    SelectedItem="{Binding Song.Genre}" />
             </Border>
+            <Button
+                Margin="0,10,0,0"
+                BackgroundColor="#9747FF"
+                Command="{Binding UploadImageCommand}"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Upload Image"
+                WidthRequest="300" />
 
             <Button
                 Margin="30"

@@ -33,4 +33,7 @@ public partial class User : ObservableObject
 
     [ObservableProperty]
     private bool _isDeleted;
+
+    [ObservableProperty]
+    private string? _imageFilePath;
 }

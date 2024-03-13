@@ -55,8 +55,7 @@ public partial class SongManagementViewModel : ObservableObject
             Songs = await _adminService.UpdateSongAsync(id);
         }
     }
-
-    public ICommand GetSongsCommand => new Command(GetSongs);
+  
 
     public async void GetSongs()
     {

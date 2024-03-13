@@ -72,7 +72,7 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 HeightRequest="40"
-                                Source="logo.png" />
+                                Source="{Binding ImageFilePath}" />
                             <VerticalStackLayout
                                 Grid.Row="0"
                                 Grid.Column="1"
@@ -91,6 +91,10 @@
                                     <Label
                                         Style="{StaticResource Fields}"
                                         Text="{Binding ArtistName}"
+                                        TextColor="#7EA6D9" />
+                                    <Label
+                                        Style="{StaticResource Fields}"
+                                        Text=" | "
                                         TextColor="#7EA6D9" />
                                     <Label
                                         Style="{StaticResource Fields}"
