@@ -90,7 +90,7 @@
                                 <HorizontalStackLayout Spacing="10">
                                     <Label
                                         Style="{StaticResource Fields}"
-                                        Text="Artist Name"
+                                        Text="{Binding ArtistName}"
                                         TextColor="#7EA6D9" />
                                     <Label
                                         Style="{StaticResource Fields}"

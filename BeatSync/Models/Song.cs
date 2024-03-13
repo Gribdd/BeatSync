@@ -14,6 +14,9 @@ public partial class Song : ObservableObject
     private int _artistID;
 
     [ObservableProperty]
+    private string? _artistName;
+
+    [ObservableProperty]
     private string? _name;
     
     [ObservableProperty]

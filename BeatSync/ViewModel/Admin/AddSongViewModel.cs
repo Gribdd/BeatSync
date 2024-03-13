@@ -34,6 +34,8 @@ public partial class AddSongViewModel : ObservableObject
     async Task AddSong()
     {
         Song.ArtistID = SelectedArtist.Id;
+        Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
+
         if (await _adminService.AddSongAsync(Song))
         {
             await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
