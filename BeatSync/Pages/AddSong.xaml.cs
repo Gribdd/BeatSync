@@ -12,9 +12,9 @@ public partial class AddSong : ContentPage
 		BindingContext = _vm = vm;
 	}
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
-        _vm.PopulateArtist();
+        await _vm.PopulateArtist();
     }
 }

@@ -39,7 +39,7 @@
         </HorizontalStackLayout>
         <CollectionView ItemsSource="{Binding Publishers}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Artist">
+                <DataTemplate x:DataType="model:Publisher">
                     <Frame Margin="30,5,30,5" BackgroundColor="#17122E">
                         <Grid>
                             <Grid.ColumnDefinitions>
