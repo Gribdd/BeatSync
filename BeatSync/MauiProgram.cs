@@ -31,6 +31,8 @@ namespace BeatSync
             builder.Services.AddTransient<Admin_LandingPage>();
             builder.Services.AddTransient<Admin_LoginPage>();
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<AddUser>();
+            builder.Services.AddTransient<UserManagement>();
 
 
             //Viewmodel
@@ -40,6 +42,8 @@ namespace BeatSync
             builder.Services.AddTransient<SongManagementViewModel>();
             builder.Services.AddTransient < PublisherManagementViewModel >();
             builder.Services.AddTransient < AddPublisherViewModel >();
+            builder.Services.AddTransient<AddUserViewModel>();
+            builder.Services.AddTransient<UserManagementViewModel>();
             
 
             //Service

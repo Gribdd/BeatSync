@@ -4,6 +4,7 @@ namespace BeatSync.Models;
 
 public partial class User : ObservableObject
 {
+    [ObservableProperty]
     private int _id;
 
     [ObservableProperty]

@@ -97,6 +97,9 @@
 	  <MauiXaml Update="Pages\AddSong.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddUser.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ArtistManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

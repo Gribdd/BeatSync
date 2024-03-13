@@ -22,6 +22,7 @@ namespace BeatSync
             Routing.RegisterRoute(nameof(AddArtist), typeof(AddArtist));
             Routing.RegisterRoute(nameof(AddSong), typeof(AddSong));
             Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
+            Routing.RegisterRoute(nameof(AddUser), typeof(AddUser));
 
         }
     }
