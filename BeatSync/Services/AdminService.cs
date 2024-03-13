@@ -249,11 +249,7 @@ public class AdminService
         return await GetActiveSongAsync();
     }
 
-    public void Test()
-    {
-
-    }
-
+   
     //Publishers
     public async Task<bool> AddPublisherAsync(Publisher publisher)
     {
