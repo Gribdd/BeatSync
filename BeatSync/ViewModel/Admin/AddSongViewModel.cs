@@ -2,18 +2,14 @@
 using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddSongViewModel : ObservableObject
 {
     private AdminService _adminService;
+    private FileResult? _fileResult;
 
     [ObservableProperty]
     private Song _song = new();
@@ -36,6 +32,13 @@ public partial class AddSongViewModel : ObservableObject
         Song.ArtistID = SelectedArtist.Id;
         Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
 
+        if (string.IsNullOrEmpty(Song.ImageFilePath))
+        {
+            File.Copy(_fileResult!.FullPath, Song.ImageFilePath);
+            await Shell.Current.DisplayAlert("Upload picture", "Please upload song picture first", "OK");
+            return;
+        }
+
         if (await _adminService.AddSongAsync(Song))
         {
             await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
@@ -46,6 +49,38 @@ public partial class AddSongViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Add Song", "Please enter all fields", "OK");
         }
     }
+
+    [RelayCommand]
+    async Task UploadImage()
+    {
+        if (string.IsNullOrEmpty(Song.Name))
+        {
+            await Shell.Current.DisplayAlert("Upload picture", "Please enter song name first", "OK");
+            return;
+        }
+
+        _fileResult = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Please pick an image for the movie",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (_fileResult == null)
+        {
+            return;
+        }
+
+        //make dir 
+        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs");
+        _adminService.CreateDirectoryIfMissing(dir);
+
+        Song.ImageFilePath = Path.Combine(dir, $"{Song.Name}.jpg");
+        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+
+    }
+
+    
+
 
     [RelayCommand]
     async Task Return()

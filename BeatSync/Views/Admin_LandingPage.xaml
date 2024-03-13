@@ -17,7 +17,7 @@
         <Tab Title="Users" Icon="users.png">
             <ShellContent ContentTemplate="{DataTemplate pages:UserManagement}" />
         </Tab>
-        <Tab Title="Home" Icon="home.ong">
+        <Tab Title="Home" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}"/>
         </Tab>
         <Tab Title="Publishers" Icon="publishers.png">

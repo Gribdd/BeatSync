@@ -1,9 +1,12 @@
+using BeatSync.ViewModel.Admin;
+
 namespace BeatSync.Pages;
 
 public partial class AddUser : ContentPage
 {
-	public AddUser()
+	public AddUser(AddUserViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = vm;
 	}
 }

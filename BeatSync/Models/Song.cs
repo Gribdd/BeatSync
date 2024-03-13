@@ -23,10 +23,10 @@ public partial class Song : ObservableObject
     private string? _genre;
 
     [ObservableProperty]
-    private string? _filename;
+    private string? _filePath;
 
     [ObservableProperty]
-    private string? _imageFileName;
+    private string? _imageFilePath;
 
     [ObservableProperty]
     private bool _isDeleted;

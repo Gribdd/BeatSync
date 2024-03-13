@@ -38,4 +38,7 @@ public partial class Publisher : ObservableObject
 
     [ObservableProperty]
     private bool _isDeleted;
+
+    [ObservableProperty]
+    private string? _imageFilePath;
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Pages.AddUser"
-             Title="AddUser"
-             xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
-             x:DataType="viewmodel:AddUserViewModel"
-             Shell.NavBarIsVisible="False"
-             BackgroundImageSource="resizedbackgroundpixel.png">
-    
+<ContentPage
+    x:Class="BeatSync.Pages.AddUser"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
+    Title="AddUser"
+    x:DataType="viewmodel:AddUserViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Entry">
@@ -24,55 +25,55 @@
     <VerticalStackLayout>
 
         <ImageButton
-        Grid.Row="0"
-        Grid.Column="0"
-        Command="{Binding ReturnCommand}"
-        Margin="-200,30,30,30"
-        HeightRequest="30"
-        HorizontalOptions="Start"
-        Source="returnbtn.png" />
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="-200,30,30,30"
+            Command="{Binding ReturnCommand}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="returnbtn.png" />
         <VerticalStackLayout>
             <Border>
                 <Entry
-                Margin="5"
-                ClearButtonVisibility="WhileEditing"
-                Keyboard="Email"
-                Placeholder="Enter Email"
-                Style="{StaticResource Fields}"
-                Text="{Binding User.Email}" />
+                    Margin="5"
+                    ClearButtonVisibility="WhileEditing"
+                    Keyboard="Email"
+                    Placeholder="Enter Email"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding User.Email}" />
             </Border>
             <Border>
                 <Entry
-                Placeholder="Enter Username"
-                Style="{StaticResource Fields}"
-                Text="{Binding User.Username}" />
+                    Placeholder="Enter Username"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding User.Username}" />
             </Border>
             <Border>
                 <Entry
-                Placeholder="Enter Password"
-                Style="{StaticResource Fields}"
-                Text="{Binding User.Password}" />
+                    Placeholder="Enter Password"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding User.Password}" />
             </Border>
             <Border>
                 <DatePicker Date="{Binding User.DateOfBirth}" Style="{StaticResource Fields}" />
             </Border>
             <Border>
                 <Entry
-                Placeholder="Enter First Name"
-                Style="{StaticResource Fields}"
-                Text="{Binding User.FirstName}" />
+                    Placeholder="Enter First Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding User.FirstName}" />
             </Border>
             <Border>
                 <Entry
-                Placeholder="Enter Last Name"
-                Style="{StaticResource Fields}"
-                Text="{Binding User.LastName}" />
+                    Placeholder="Enter Last Name"
+                    Style="{StaticResource Fields}"
+                    Text="{Binding User.LastName}" />
             </Border>
             <Border>
                 <Picker
-                Title="Select a Gender"
-                SelectedItem="{Binding User.Gender}"
-                Style="{StaticResource Fields}">
+                    Title="Select a Gender"
+                    SelectedItem="{Binding User.Gender}"
+                    Style="{StaticResource Fields}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Man</x:String>
@@ -82,13 +83,21 @@
                 </Picker>
             </Border>
             <Button
-            Margin="30"
-            BackgroundColor="#9747FF"
-            Command="{Binding AddUserCommand}"
-            CornerRadius="25"
-            HorizontalOptions="Fill"
-            Text="Submit Details"
-            WidthRequest="300" />
+                Margin="0,10,0,0"
+                BackgroundColor="#9747FF"
+                Command="{Binding UploadImageCommand}"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Upload Image"
+                WidthRequest="300" />
+            <Button
+                Margin="30"
+                BackgroundColor="#9747FF"
+                Command="{Binding AddUserCommand}"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Submit Details"
+                WidthRequest="300" />
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

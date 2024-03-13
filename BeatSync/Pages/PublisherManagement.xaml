@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Pages.PublisherManagement"
-             xmlns:model="clr-namespace:BeatSync.Models"
-             xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
-             Title="PublisherManagement"
-             x:DataType="viewmodel:PublisherManagementViewModel"
-             NavigationPage.HasNavigationBar="False"
-             BackgroundImageSource="resizedbackgroundpixel.png">
-    
+<ContentPage
+    x:Class="BeatSync.Pages.PublisherManagement"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
+    Title="PublisherManagement"
+    x:DataType="viewmodel:PublisherManagementViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False">
+
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <ImageButton Source="profileicon.png" HeightRequest="35" Margin="30" HorizontalOptions="Start"></ImageButton>
-            <Label Style="{StaticResource SubHeadline}" Text="Publisher Management" TextColor="White" Margin="-25,35,0,0"></Label>
-            <ImageButton Source="search.png" HeightRequest="35" Margin="0,0,0,0" HorizontalOptions="Start"></ImageButton>
-            <ImageButton Source="add.png" HeightRequest="30" Margin="-5,0,0,0" HorizontalOptions="Start"></ImageButton>
+            <ImageButton
+                Margin="30"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Source="profileicon.png" />
+            <Label
+                Margin="-25,35,0,0"
+                Style="{StaticResource SubHeadline}"
+                Text="Publisher Management"
+                TextColor="White" />
+            <ImageButton
+                Margin="0,0,0,0"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Source="search.png" />
+            <ImageButton
+                Margin="-5,0,0,0"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="add.png" />
         </HorizontalStackLayout>
-        <BoxView Margin="0,-10,0,0" HeightRequest="2" WidthRequest="310"  Color="White"/>
+        <BoxView
+            Margin="0,-10,0,0"
+            HeightRequest="2"
+            WidthRequest="310"
+            Color="White" />
         <HorizontalStackLayout Margin="40,10,10,10" Spacing="10">
             <Button
                 Padding="20"
@@ -50,7 +71,7 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 HeightRequest="40"
-                                Source="logo.png" />
+                                Source="{Binding ImageFilePath}" />
                             <VerticalStackLayout
                                 Grid.Row="0"
                                 Grid.Column="1"
@@ -58,31 +79,20 @@
                                 Padding="5"
                                 HeightRequest="50"
                                 VerticalOptions="Center">
+
                                 <HorizontalStackLayout>
                                     <Label
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         Style="{StaticResource SubHeadline}"
-                                        Text=" # "
-                                        TextColor="White"/>
-                                    <Label
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource SubHeadline}"
-                                        Text="{Binding Id}"
+                                        Text="{Binding Id, StringFormat='#{0} | '}"
                                         TextColor="White" />
                                     <Label
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         Style="{StaticResource SubHeadline}"
-                                        Text=" | "
-                                        TextColor="White"/>
-                                    <Label
-                                         FontAttributes="Bold"
-                                         HorizontalOptions="Start"
-                                         Style="{StaticResource SubHeadline}"
-                                         Text="{Binding Username}"
-                                         TextColor="White" />
+                                        Text="{Binding Username}"
+                                        TextColor="White" />
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout Spacing="5">

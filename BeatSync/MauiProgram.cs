@@ -40,8 +40,8 @@ namespace BeatSync
             builder.Services.AddTransient<ArtistManagementViewModel>();
             builder.Services.AddTransient<AddSongViewModel>();
             builder.Services.AddTransient<SongManagementViewModel>();
-            builder.Services.AddTransient < PublisherManagementViewModel >();
-            builder.Services.AddTransient < AddPublisherViewModel >();
+            builder.Services.AddTransient<PublisherManagementViewModel >();
+            builder.Services.AddTransient<AddPublisherViewModel >();
             builder.Services.AddTransient<AddUserViewModel>();
             builder.Services.AddTransient<UserManagementViewModel>();
             
