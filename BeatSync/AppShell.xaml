@@ -12,4 +12,5 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Icon="logo.png"
         Route="MainPage" />
+
 </Shell>
