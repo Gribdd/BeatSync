@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="BeatSync.Views.SignUpPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.LoginAndRegistration"
-    x:DataType="viewmodel:SignUpPageViewModel"
-    Title="SignUpPage"
-    BackgroundImageSource="resizedbackgroundpixel.png"
-    Shell.NavBarIsVisible="False">
-
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeatSync.Pages.CreateAccountUploadImage"
+             xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.LoginAndRegistration"
+             Title="CreateAccountUploadImage"
+             x:DataType="viewmodel:CreateAccountUploadImageViewModel"
+             BackgroundImageSource="resizedbackgroundpixel.png"
+             Shell.NavBarIsVisible="False">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Entry">
@@ -36,29 +35,27 @@
             Style="{StaticResource SubHeadline}"
             Text="Create Account"
             TextColor="White" />
-
         <Label
             Margin="40,50,0,0"
             Style="{StaticResource Fields}"
-            Text="What's your email?"
+            Text="Upload your profile photo"
             TextColor="White" />
-        <Border StrokeShape="RoundRectangle 25">
-            <Entry Text="{Binding User.Email}" />
-        </Border>
-        <Label
-            Margin="40,5,0,0"
-            Style="{StaticResource Reminders}"
-            Text="You'll need to confirm this email later"
-            TextColor="White" />
+        <Button
+            Margin="0,10,0,0"
+            BackgroundColor="#9747FF"
+            Command="{Binding UploadImageCommand}"
+            CornerRadius="25"
+            HorizontalOptions="Fill"
+            Text="Upload Image"
+            WidthRequest="300" />
         <Button
             Margin="30,50,30,0"
             BackgroundColor="#9747FF"
-            Command="{Binding NavigateToCreateUsernameCommand}"
+            Command="{Binding NavigateToLandingPageCommand}"
             CornerRadius="25"
             FontAttributes="Bold"
             Text="Next"
             TextColor="White"
             WidthRequest="100" />
     </VerticalStackLayout>
-
 </ContentPage>

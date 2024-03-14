@@ -29,12 +29,13 @@ namespace BeatSync
             //Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             //Routing.RegisterRoute(nameof(CustomerLandingPage), typeof(CustomerLandingPage));
             Routing.RegisterRoute("mainpage/signup", typeof(SignUpPage));
-            Routing.RegisterRoute("mainpage/signup/createaccountpassword", typeof(CreateAccountPassword));
-            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob", typeof(CreateAccountDOB));
-            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname", typeof(CreateAccountFirstName));
-            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname", typeof(CreateAccountLastName));
-            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname/createaccountgender", typeof(CreateAccountGender));
-
+            Routing.RegisterRoute("mainpage/signup/createaccountusername", typeof(CreateAccountUsername));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword", typeof(CreateAccountPassword));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword/createaccountdob", typeof(CreateAccountDOB));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword/createaccountdob/createaccountfirstname", typeof(CreateAccountFirstName));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname", typeof(CreateAccountLastName));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname/createaccountgender", typeof(CreateAccountGender));
+            Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname/createaccountgender/createaccountuploadimage", typeof(CreateAccountUploadImage));
             InitializeComponent();
         }
     }

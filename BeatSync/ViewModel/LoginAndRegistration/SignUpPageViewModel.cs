@@ -23,6 +23,16 @@ public partial class SignUpPageViewModel : ObservableObject
     }
 
     [RelayCommand]
+    async Task NavigateToCreateUsername()
+    {
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(User), User }
+        };
+        await Shell.Current.GoToAsync("createaccountusername", navigationParameter);
+    }
+
+    /*
     async Task NavigateToCreatePassword()
     {
         var navigationParameter = new Dictionary<string, object>
@@ -31,4 +41,5 @@ public partial class SignUpPageViewModel : ObservableObject
         };
         await Shell.Current.GoToAsync("createaccountpassword", navigationParameter);
     }
+    */
 }
