@@ -13,6 +13,11 @@ public partial class LoginPage : ContentPage
 
     private void OnbtnLogin_Clicked(object sender, EventArgs e)
     {
+        //temporary code to test navigation 
+        //will navigate to publisher landing page
+
+        Application.Current.MainPage = new PublisherLandingPage();
+
 
         //add navigation
 

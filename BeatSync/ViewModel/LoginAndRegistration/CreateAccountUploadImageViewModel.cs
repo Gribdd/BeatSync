@@ -1,6 +1,7 @@
 using BeatSync.Models;
 using BeatSync.Pages;
 using BeatSync.Services;
+using BeatSync.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Storage;
@@ -73,7 +74,8 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 {
                     File.Copy(_fileResult!.FullPath, publisher.ImageFilePath);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
-                    await Shell.Current.GoToAsync("mainpage");
+                    //await Shell.Current.GoToAsync("mainpage");
+                    Application.Current.MainPage = new PublisherLandingPage();
                 }
                 break;
             //customer
