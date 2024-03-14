@@ -17,54 +17,69 @@ namespace BeatSync
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Jua-Regular.ttf", "JuaRegular");
-                });
-
+                })
+                .RegisterServices()
+                .RegisterViewModels()
+                .RegisterViews();
 #if DEBUG
-    		builder.Logging.AddDebug();
+                builder.Logging.AddDebug();
 #endif
-            //View
-            builder.Services.AddTransient<AddArtist>();
-            builder.Services.AddTransient<ArtistManagement>();
-            builder.Services.AddTransient<AddSong>();
-            builder.Services.AddTransient<SongManagement>();
-            builder.Services.AddTransient<PublisherManagement>();
-            builder.Services.AddTransient<AddPublisher>();
-            builder.Services.AddTransient<Admin_LandingPage>();
-            builder.Services.AddTransient<Admin_LoginPage>();
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddTransient<AddUser>();
-            builder.Services.AddTransient<UserManagement>();
-
-            //View Signup and Login
-            builder.Services.AddTransient<LoginPage>(); 
-            builder.Services.AddTransient<SignUpPage>();
-            builder.Services.AddTransient<CreateAccountPassword>();
-            builder.Services.AddTransient<CreateAccountDOB>();
-            builder.Services.AddTransient<CreateAccountFirstName>();
-            builder.Services.AddTransient<CreateAccountLastName>();
-            builder.Services.AddTransient<CreateAccountGender>();
-            builder.Services.AddTransient<CustomerLandingPage>();
-
-
-            //Viewmodel
-            builder.Services.AddTransient<AddArtistViewModel>();
-            builder.Services.AddTransient<ArtistManagementViewModel>();
-            builder.Services.AddTransient<AddSongViewModel>();
-            builder.Services.AddTransient<SongManagementViewModel>();
-            builder.Services.AddTransient<PublisherManagementViewModel >();
-            builder.Services.AddTransient<AddPublisherViewModel >();
-            builder.Services.AddTransient<AddUserViewModel>();
-            builder.Services.AddTransient<UserManagementViewModel>();
-
-            //Viewmodel registration and Login
-            
-            builder.Services.AddTransient<MainPageViewModel>();
-            builder.Services.AddTransient<SignUpPageViewModel>();
-
-            //Service
-            builder.Services.AddTransient<AdminService>();
-
             return builder.Build();
+
         }
+
+        public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
+            {
+                mauiAppBuilder.Services.AddTransient<AdminService>();
+
+                return mauiAppBuilder;
+            }
+
+            public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
+            {
+                //Viewmodel
+                mauiAppBuilder.Services.AddTransient<AddArtistViewModel>();
+                mauiAppBuilder.Services.AddTransient<ArtistManagementViewModel>();
+                mauiAppBuilder.Services.AddTransient<AddSongViewModel>();
+                mauiAppBuilder.Services.AddTransient<SongManagementViewModel>();
+                mauiAppBuilder.Services.AddTransient<PublisherManagementViewModel>();
+                mauiAppBuilder.Services.AddTransient<AddPublisherViewModel>();
+                mauiAppBuilder.Services.AddTransient<AddUserViewModel>();
+                mauiAppBuilder.Services.AddTransient<UserManagementViewModel>();
+
+                //Viewmodel registration and Login
+
+                mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
+                mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+                return mauiAppBuilder;
+            }
+
+            public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
+            {
+                //View
+                mauiAppBuilder.Services.AddTransient<AddArtist>();
+                mauiAppBuilder.Services.AddTransient<ArtistManagement>();
+                mauiAppBuilder.Services.AddTransient<AddSong>();
+                mauiAppBuilder.Services.AddTransient<SongManagement>();
+                mauiAppBuilder.Services.AddTransient<PublisherManagement>();
+                mauiAppBuilder.Services.AddTransient<AddPublisher>();
+                mauiAppBuilder.Services.AddTransient<Admin_LandingPage>();
+                mauiAppBuilder.Services.AddTransient<Admin_LoginPage>();
+                mauiAppBuilder.Services.AddTransient<MainPage>();
+                mauiAppBuilder.Services.AddTransient<AddUser>();
+                mauiAppBuilder.Services.AddTransient<UserManagement>();
+
+                //View Signup and Login
+                mauiAppBuilder.Services.AddTransient<LoginPage>();
+                mauiAppBuilder.Services.AddTransient<SignUpPage>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountPassword>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountDOB>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountFirstName>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountLastName>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountGender>();
+                mauiAppBuilder.Services.AddTransient<CustomerLandingPage>();
+
+                return mauiAppBuilder;
+            }
     }
 }
