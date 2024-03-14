@@ -9,20 +9,7 @@ namespace BeatSync
         {
 
             Routing.RegisterRoute(nameof(Admin_LoginPage), typeof(Admin_LoginPage));
-
-            Routing.RegisterRoute(nameof(ArtistManagement), typeof(ArtistManagement));
-            Routing.RegisterRoute(nameof(UserManagement), typeof(UserManagement));
-            Routing.RegisterRoute(nameof(SongManagement), typeof(SongManagement));
-            Routing.RegisterRoute(nameof(PublisherManagement), typeof(PublisherManagement));
-            Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
-            
-            Routing.RegisterRoute(nameof(AddPublisher), typeof(AddPublisher));
-            Routing.RegisterRoute(nameof(AddArtist), typeof(AddArtist));
-            Routing.RegisterRoute(nameof(AddSong), typeof(AddSong));
-            Routing.RegisterRoute(nameof(AddUser), typeof(AddUser));
-
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-
             //mainpage is already registered in AppShell.xaml, do not declare twice
             //creating route hierarchy
             //Routing.RegisterRoute(nameof(Admin_LandingPage), typeof(Admin_LandingPage));
