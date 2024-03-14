@@ -1,42 +1,33 @@
-﻿using BeatSync.Models;
+using BeatSync.Models;
 using BeatSync.Pages;
 using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
+using Microsoft.Maui.Storage;
 
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
-public partial class CreateAccountGenderViewModel : ObservableObject
+public partial class CreateAccountUploadImageViewModel : ObservableObject
 {
     private AdminService _adminService;
-    [ObservableProperty]
-    private User _user = new();
+    private FileResult? _fileResult;
 
-    public CreateAccountGenderViewModel(AdminService adminService)
+    [ObservableProperty]
+	private User _user = new();
+
+    public CreateAccountUploadImageViewModel(AdminService adminService)
     {
         _adminService = adminService;
     }
 
-    [RelayCommand]
-    async Task Return()
-    {
+	[RelayCommand]
+	async Task Return()
+	{
         await Shell.Current.GoToAsync("..");
     }
 
-
-    [RelayCommand]
-    async Task NavigateToCreateUploadImage()
-    {
-        var navigationParameter = new Dictionary<string, object>
-        {
-            {nameof(User), User }
-        };
-        await Shell.Current.GoToAsync("createaccountuploadimage", navigationParameter);
-    }
-
-    /* moved to CreateAccountUploadImageViewModel
+	[RelayCommand]
     async Task NavigateToLandingPage()
     {
         User.IsDeleted = false;
@@ -55,7 +46,7 @@ public partial class CreateAccountGenderViewModel : ObservableObject
                     Gender = User.Gender
                 };
 
-                if(await _adminService.AddArtistAsync(artist))
+                if (await _adminService.AddArtistAsync(artist))
                 {
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
                     await Shell.Current.GoToAsync("mainpage");
@@ -93,6 +84,33 @@ public partial class CreateAccountGenderViewModel : ObservableObject
                 break;
 
         }
-    }*/
+    }
 
+    [RelayCommand]
+    async Task UploadImage()
+    {
+        if (string.IsNullOrEmpty(User.FirstName) || string.IsNullOrEmpty(User.FirstName))
+        {
+            await Shell.Current.DisplayAlert("Upload picture", "Please enter user first and last name first", "OK");
+            return;
+        }
+
+        _fileResult = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Please pick an image for the user",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (_fileResult == null)
+        {
+            return;
+        }
+
+        //make dir 
+        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Users");
+        _adminService.CreateDirectoryIfMissing(dir);
+
+        User.ImageFilePath = Path.Combine(dir, $"{User.FirstName + User.LastName}.jpg");
+        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+    }
 }

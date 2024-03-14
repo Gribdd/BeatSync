@@ -53,7 +53,7 @@
         <Button
             Margin="30,50,30,0"
             BackgroundColor="#9747FF"
-            Command="{Binding NavigateToLandingPageCommand}"
+            Command="{Binding NavigateToCreateUploadImageCommand}"
             CornerRadius="25"
             FontAttributes="Bold"
             Text="Next"

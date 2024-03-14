@@ -49,12 +49,14 @@ namespace BeatSync
 
                 //Viewmodel registration and Login
                 mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
-            mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+                mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountUsernameViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountPasswordViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountDOBViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountFirstNameViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountLastNameViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountGenderViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountUploadImageViewModel>();
 
                 return mauiAppBuilder;
             }
@@ -77,11 +79,13 @@ namespace BeatSync
                 //View Signup and Login
                 mauiAppBuilder.Services.AddTransient<LoginPage>();
                 mauiAppBuilder.Services.AddTransient<SignUpPage>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountUsername>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountPassword>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountDOB>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountFirstName>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountLastName>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountGender>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountUploadImage>();
                 mauiAppBuilder.Services.AddTransient<CustomerLandingPage>();
 
                 return mauiAppBuilder;

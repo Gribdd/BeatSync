@@ -34,13 +34,14 @@ public partial class AddSongViewModel : ObservableObject
 
         if (string.IsNullOrEmpty(Song.ImageFilePath))
         {
-            File.Copy(_fileResult!.FullPath, Song.ImageFilePath);
             await Shell.Current.DisplayAlert("Upload picture", "Please upload song picture first", "OK");
             return;
         }
 
         if (await _adminService.AddSongAsync(Song))
         {
+            File.Copy(_fileResult!.FullPath, Song.ImageFilePath);
+
             await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
             await Shell.Current.GoToAsync("..");
         }
@@ -61,7 +62,7 @@ public partial class AddSongViewModel : ObservableObject
 
         _fileResult = await FilePicker.PickAsync(new PickOptions
         {
-            PickerTitle = "Please pick an image for the movie",
+            PickerTitle = "Please pick an image for the song",
             FileTypes = FilePickerFileType.Images
         });
 
