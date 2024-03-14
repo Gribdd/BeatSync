@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BeatSync"
+    xmlns:pages="clr-namespace:BeatSync.Pages"
     xmlns:views="clr-namespace:BeatSync.Views"
     Title="BeatSync"
     Shell.FlyoutBehavior="Disabled">
@@ -11,6 +12,7 @@
     <ShellContent
         ContentTemplate="{DataTemplate local:MainPage}"
         Icon="logo.png"
-        Route="MainPage" />
+        Route="mainpage">
+    </ShellContent>
 
 </Shell>

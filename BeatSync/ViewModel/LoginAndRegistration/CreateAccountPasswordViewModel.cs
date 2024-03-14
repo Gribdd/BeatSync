@@ -1,12 +1,7 @@
 ﻿using BeatSync.Models;
-using BeatSync.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
@@ -19,12 +14,16 @@ public partial class CreateAccountPasswordViewModel : ObservableObject
     [RelayCommand]
     async Task Return()
     {
-        await Shell.Current.GoToAsync($"..");
+        await Shell.Current.GoToAsync("..");
     }
 
     [RelayCommand]
-    async Task NavigateToCreatePassword()
+    async Task NavigateToCreateDOB()
     {
-        await Shell.Current.GoToAsync($"{nameof(CreateAccountDOB)}?User={User}");
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(User), User }
+        };
+        await Shell.Current.GoToAsync("createaccountdob", navigationParameter);
     }
 }

@@ -7,33 +7,35 @@ namespace BeatSync
     {
         public AppShell()
         {
-            InitializeComponent();
 
-            Routing.RegisterRoute(nameof(Admin_LandingPage), typeof(Admin_LandingPage));
             Routing.RegisterRoute(nameof(Admin_LoginPage), typeof(Admin_LoginPage));
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
 
             Routing.RegisterRoute(nameof(ArtistManagement), typeof(ArtistManagement));
             Routing.RegisterRoute(nameof(UserManagement), typeof(UserManagement));
             Routing.RegisterRoute(nameof(SongManagement), typeof(SongManagement));
             Routing.RegisterRoute(nameof(PublisherManagement), typeof(PublisherManagement));
+            Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             
             Routing.RegisterRoute(nameof(AddPublisher), typeof(AddPublisher));
             Routing.RegisterRoute(nameof(AddArtist), typeof(AddArtist));
             Routing.RegisterRoute(nameof(AddSong), typeof(AddSong));
-            Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
             Routing.RegisterRoute(nameof(AddUser), typeof(AddUser));
 
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-            Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
-            Routing.RegisterRoute(nameof(CreateAccountPassword), typeof(CreateAccountPassword));
-            Routing.RegisterRoute(nameof(CreateAccountDOB), typeof(CreateAccountDOB));
-            Routing.RegisterRoute(nameof(CreateAccountFirstName), typeof(CreateAccountFirstName));
-            Routing.RegisterRoute(nameof(CreateAccountLastName), typeof(CreateAccountLastName));
-            Routing.RegisterRoute(nameof(CreateAccountGender), typeof(CreateAccountGender));
 
-            Routing.RegisterRoute(nameof(CustomerLandingPage), typeof(CustomerLandingPage));
+            //mainpage is already registered in AppShell.xaml, do not declare twice
+            //creating route hierarchy
+            //Routing.RegisterRoute(nameof(Admin_LandingPage), typeof(Admin_LandingPage));
+            //Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            //Routing.RegisterRoute(nameof(CustomerLandingPage), typeof(CustomerLandingPage));
+            Routing.RegisterRoute("mainpage/signup", typeof(SignUpPage));
+            Routing.RegisterRoute("mainpage/signup/createaccountpassword", typeof(CreateAccountPassword));
+            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob", typeof(CreateAccountDOB));
+            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname", typeof(CreateAccountFirstName));
+            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname", typeof(CreateAccountLastName));
+            Routing.RegisterRoute("mainpage/signup/createaccountpassword/createaccountdob/createaccountfirstname/createaccountlastname/createaccountgender", typeof(CreateAccountGender));
 
+            InitializeComponent();
         }
     }
 }
