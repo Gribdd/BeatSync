@@ -49,6 +49,12 @@ public partial class ArtistManagementViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    async Task Logout()
+    {
+        await _adminService.Logout();
+    }
+
     public ICommand GetArtistsCommand => new Command(GetArtists);
 
     public async void GetArtists()

@@ -6,53 +6,58 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace BeatSync.ViewModel.Admin
+namespace BeatSync.ViewModel.Admin;
+
+public partial class UserManagementViewModel : ObservableObject
 {
-    public partial class UserManagementViewModel: ObservableObject
+    private AdminService _adminService;
+
+    [ObservableProperty]
+    private ObservableCollection<User> _users = new();
+
+    public UserManagementViewModel(AdminService adminService)
     {
-        private AdminService _adminService;
+        _adminService = adminService;
+    }
 
-        [ObservableProperty]
-        private ObservableCollection<User> _users = new();
+    [RelayCommand]
+    async Task NavigateAddUser()
+    {
+        await Shell.Current.GoToAsync($"{nameof(AddUser)}");
+    }
 
-        public UserManagementViewModel(AdminService adminService)
+    [RelayCommand]
+    async Task DeleteUser()
+    {
+        string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
+        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            _adminService = adminService;
+            Users = await _adminService.DeleteUserAsync(id);
         }
 
-        [RelayCommand]
-        async Task NavigateAddUser()
+    }
+
+    [RelayCommand]
+    async Task UpdateUser()
+    {
+        string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to delete:");
+        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            await Shell.Current.GoToAsync($"{nameof(AddUser)}");
+
+            Users = await _adminService.UpdateUserAsync(id);
         }
+    }
 
-        [RelayCommand]
-        async Task DeleteUser()
-        {
-            string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
-            {
-                Users = await _adminService.DeleteUserAsync(id);
-            }
+    [RelayCommand]
+    async Task Logout()
+    {
+        await _adminService.Logout();
+    }
 
-        }
+    public ICommand GetUsersCommand => new Command(GetUsers);
 
-        [RelayCommand]
-        async Task UpdateUser()
-        {
-            string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to delete:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
-            {
-
-                Users = await _adminService.UpdateUserAsync(id);
-            }
-        }
-
-        public ICommand GetUsersCommand => new Command(GetUsers);
-
-        public async void GetUsers()
-        {
-            Users = await _adminService.GetActiveUserAsync();
-        }
+    public async void GetUsers()
+    {
+        Users = await _adminService.GetActiveUserAsync();
     }
 }

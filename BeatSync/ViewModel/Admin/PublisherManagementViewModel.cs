@@ -47,6 +47,12 @@ namespace BeatSync.ViewModel.Admin
             }
         }
 
+        [RelayCommand]
+        async Task Logout()
+        {
+            await _adminService.Logout();
+        }
+
         public ICommand GetPublishersCommand => new Command(GetPublishers);
         public async void GetPublishers()
         {
