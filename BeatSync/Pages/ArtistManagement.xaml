@@ -19,7 +19,10 @@
     </ContentPage.Resources>
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <ImageButton Margin="30" Source="profileicon.png" />
+            <ImageButton
+                Margin="30"
+                Command="{Binding LogoutCommand}"
+                Source="profileicon.png" />
             <Label
                 Margin="-25,35,0,0"
                 Style="{StaticResource SubHeadline}"
@@ -83,27 +86,27 @@
                                         HorizontalOptions="Start"
                                         Style="{StaticResource SubHeadline}"
                                         Text=" # "
-                                        TextColor="White"/>
+                                        TextColor="White" />
                                     <Label
-                                         FontAttributes="Bold"
-                                         HorizontalOptions="Start"
-                                         Style="{StaticResource SubHeadline}"
-                                         Text="{Binding Id}"
-                                         TextColor="White" />
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource SubHeadline}"
+                                        Text="{Binding Id}"
+                                        TextColor="White" />
                                     <Label
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         Style="{StaticResource SubHeadline}"
                                         Text=" | "
-                                        TextColor="White"/>
+                                        TextColor="White" />
                                     <Label
-                                         FontAttributes="Bold"
-                                         HorizontalOptions="Start"
-                                         Style="{StaticResource SubHeadline}"
-                                         Text="{Binding Username}"
-                                         TextColor="White" />       
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        Style="{StaticResource SubHeadline}"
+                                        Text="{Binding Username}"
+                                        TextColor="White" />
                                 </HorizontalStackLayout>
-                                
+
                                 <HorizontalStackLayout Spacing="5">
                                     <Label
                                         Style="{StaticResource Fields}"

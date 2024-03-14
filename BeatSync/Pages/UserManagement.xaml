@@ -16,6 +16,7 @@
                 Margin="30"
                 HeightRequest="35"
                 HorizontalOptions="Start"
+                Command="{Binding LogoutCommand}"
                 Source="profileicon.png" />
             <Label
                 Margin="-25,35,0,0"

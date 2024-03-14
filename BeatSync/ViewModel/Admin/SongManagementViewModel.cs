@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,6 @@ public partial class SongManagementViewModel : ObservableObject
 
     [ObservableProperty]
     private ObservableCollection<String> _artistName = new();
-
 
     public SongManagementViewModel(AdminService adminService)
     {
@@ -55,7 +55,12 @@ public partial class SongManagementViewModel : ObservableObject
             Songs = await _adminService.UpdateSongAsync(id);
         }
     }
-  
+
+    [RelayCommand]
+    async Task Logout()
+    {
+        await _adminService.Logout();
+    }
 
     public async void GetSongs()
     {
@@ -70,4 +75,6 @@ public partial class SongManagementViewModel : ObservableObject
             ArtistName.Add(await _adminService.GetArtistNameById(Songs[index].ArtistID));
         }
     }
+
+
 }

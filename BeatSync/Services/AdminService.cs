@@ -11,6 +11,16 @@ public class AdminService
     private readonly string _publisherFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers.json");
     private readonly string _songFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs.json");
 
+    //logout
+    public async Task Logout()
+    {
+        bool answer = await Shell.Current.DisplayAlert("Logout", "Would you like to log out?", "Yes", "No");
+        if (answer)
+        {
+            Application.Current.MainPage = new AppShell();
+        }
+    }
+
     //file and dirs
     public void CreateDirectoryIfMissing(string dir)
     {

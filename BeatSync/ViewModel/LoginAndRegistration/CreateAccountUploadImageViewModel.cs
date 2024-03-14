@@ -43,11 +43,13 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     DateOfBirth = User.DateOfBirth,
                     FirstName = User.FirstName,
                     LastName = User.LastName,
-                    Gender = User.Gender
+                    Gender = User.Gender,
+                    ImageFilePath = User.ImageFilePath
                 };
 
                 if (await _adminService.AddArtistAsync(artist))
                 {
+                    File.Copy(_fileResult!.FullPath, artist.ImageFilePath);
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
                     await Shell.Current.GoToAsync("mainpage");
                 }
@@ -63,11 +65,13 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     DateOfBirth = User.DateOfBirth,
                     FirstName = User.FirstName,
                     LastName = User.LastName,
-                    Gender = User.Gender
+                    Gender = User.Gender,
+                    ImageFilePath = User.ImageFilePath
                 };
 
                 if (await _adminService.AddPublisherAsync(publisher))
                 {
+                    File.Copy(_fileResult!.FullPath, publisher.ImageFilePath);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
                     await Shell.Current.GoToAsync("mainpage");
                 }
@@ -76,6 +80,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
             case 3:
                 if (await _adminService.AddUserAsync(User))
                 {
+                    File.Copy(_fileResult!.FullPath, User.ImageFilePath);
                     await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
                     Application.Current.MainPage = new LandingPage();
                 }
@@ -106,11 +111,12 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
             return;
         }
 
-        //make dir 
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Users");
+        //make dir
+        string dirName = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publisher" : "Users";
+        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, dirName);
         _adminService.CreateDirectoryIfMissing(dir);
 
-        User.ImageFilePath = Path.Combine(dir, $"{User.FirstName + User.LastName}.jpg");
+        User.ImageFilePath = Path.Combine(dir, $"{User.FirstName+User.LastName}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
     }
 }
