@@ -1,5 +1,4 @@
 ﻿using BeatSync.Models;
-using BeatSync.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
-public partial class SignUpPageViewModel : ObservableObject
+public partial class CreateAccountFirstNameViewModel : ObservableObject
 {
     [ObservableProperty]
     private User _user = new();
@@ -19,16 +18,16 @@ public partial class SignUpPageViewModel : ObservableObject
     [RelayCommand]
     async Task Return()
     {
-        await Shell.Current.GoToAsync($"..");
+        await Shell.Current.GoToAsync("..");
     }
 
     [RelayCommand]
-    async Task NavigateToCreatePassword()
+    async Task NavigateToCreateLastName()
     {
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
         };
-        await Shell.Current.GoToAsync("createaccountpassword", navigationParameter);
+        await Shell.Current.GoToAsync("createaccountlastname", navigationParameter);
     }
 }

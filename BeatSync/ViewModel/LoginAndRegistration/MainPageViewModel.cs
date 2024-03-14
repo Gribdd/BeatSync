@@ -1,4 +1,5 @@
-﻿using BeatSync.Views;
+﻿using BeatSync.Models;
+using BeatSync.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -11,22 +12,40 @@ namespace BeatSync.ViewModel.LoginAndRegistration;
 
 public partial class MainPageViewModel : ObservableObject
 {
+    [ObservableProperty]
+    private User _user = new();
+   
     [RelayCommand]
     async Task SignUpCustomer()
     {
-        await Shell.Current.GoToAsync($"{nameof(SignUpPage)}");
+        User.AccounType = 3;
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(User), User }
+        };
+        await Shell.Current.GoToAsync("signup",navigationParameter);
     }
 
     [RelayCommand]
     async Task SignUpPublisher()
     {
-        await Shell.Current.GoToAsync($"{nameof(SignUpPage)}");
+        User.AccounType = 2;
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(User), User }
+        };
+        await Shell.Current.GoToAsync("signup", navigationParameter);
     }
 
     [RelayCommand]
     async Task SignUpArtist()
     {
-        await Shell.Current.GoToAsync($"{nameof(SignUpPage)}");
+        User.AccounType = 1;
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(User), User }
+        };
+        await Shell.Current.GoToAsync("signup", navigationParameter);
     }
 
     [RelayCommand]

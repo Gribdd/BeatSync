@@ -1,10 +1,13 @@
 
+using BeatSync.ViewModel.LoginAndRegistration;
+
 namespace BeatSync.Pages;
 
 public partial class CreateAccountFirstName : ContentPage
 {
-	public CreateAccountFirstName()
+	public CreateAccountFirstName(CreateAccountFirstNameViewModel vm)
 	{
+		BindingContext = vm;
 		InitializeComponent();
 	}
 

@@ -48,9 +48,14 @@ namespace BeatSync
                 mauiAppBuilder.Services.AddTransient<UserManagementViewModel>();
 
                 //Viewmodel registration and Login
-
                 mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
-                mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+            mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountPasswordViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountDOBViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountFirstNameViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountLastNameViewModel>();
+                mauiAppBuilder.Services.AddTransient<CreateAccountGenderViewModel>();
+
                 return mauiAppBuilder;
             }
 
