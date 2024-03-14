@@ -1,3 +1,4 @@
+
 namespace BeatSync.Pages;
 
 public partial class CreateAccountFirstName : ContentPage
@@ -7,13 +8,4 @@ public partial class CreateAccountFirstName : ContentPage
 		InitializeComponent();
 	}
 
-    private void OnBtnReturn_Clicked(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new CreateAccountDOB());
-    }
-
-    private void OnBtnNext_Clicked(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new CreateAccountLastName());
-    }
 }

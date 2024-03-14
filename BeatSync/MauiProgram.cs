@@ -1,6 +1,7 @@
 ﻿using BeatSync.Pages;
 using BeatSync.Services;
 using BeatSync.ViewModel.Admin;
+using BeatSync.ViewModel.LoginAndRegistration;
 using BeatSync.Views;
 using Microsoft.Extensions.Logging;
 
@@ -33,15 +34,15 @@ namespace BeatSync
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<AddUser>();
             builder.Services.AddTransient<UserManagement>();
+
+            //View Signup and Login
             builder.Services.AddTransient<LoginPage>(); 
             builder.Services.AddTransient<SignUpPage>();
-
             builder.Services.AddTransient<CreateAccountPassword>();
             builder.Services.AddTransient<CreateAccountDOB>();
             builder.Services.AddTransient<CreateAccountFirstName>();
             builder.Services.AddTransient<CreateAccountLastName>();
             builder.Services.AddTransient<CreateAccountGender>();
-
             builder.Services.AddTransient<CustomerLandingPage>();
 
 
@@ -54,7 +55,11 @@ namespace BeatSync
             builder.Services.AddTransient<AddPublisherViewModel >();
             builder.Services.AddTransient<AddUserViewModel>();
             builder.Services.AddTransient<UserManagementViewModel>();
+
+            //Viewmodel registration and Login
             
+            builder.Services.AddTransient<MainPageViewModel>();
+            builder.Services.AddTransient<SignUpPageViewModel>();
 
             //Service
             builder.Services.AddTransient<AdminService>();

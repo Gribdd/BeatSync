@@ -1,36 +1,105 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Views.Admin_LoginPage"
-             Title="Admin_LoginPage"
-             BackgroundImageSource="resizedbackgroundpixel.png"
-             Shell.NavBarIsVisible="False"
-             >
-    
+<ContentPage
+    x:Class="BeatSync.Views.Admin_LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Admin_LoginPage"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+
     <StackLayout>
         <VerticalStackLayout>
-            <Image Source="logo.png" HeightRequest="120" Aspect="AspectFit" VerticalOptions="Center" Margin="10,100,10,10"/>
-            <Label Text="Log in to BeatSync" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" TextColor="White" />
-            <BoxView HeightRequest="2" WidthRequest="350" BackgroundColor="White" Margin="0,15,0,0"></BoxView>
-            <Label Text="Email or username" Margin="40,10,0,0" Style="{StaticResource Fields}" TextColor="White" ></Label>
-            <Border BackgroundColor="White" WidthRequest="310" Margin="0,10,0,0" StrokeShape="RoundRectangle 5" Stroke="White">
-                <Entry x:Name="txtEmail" BackgroundColor="#5C5474" TextColor="White"></Entry>
+            <Image
+                Margin="10,100,10,10"
+                Aspect="AspectFit"
+                HeightRequest="120"
+                Source="logo.png"
+                VerticalOptions="Center" />
+            <Label
+                SemanticProperties.HeadingLevel="Level1"
+                Style="{StaticResource Headline}"
+                Text="Log in to BeatSync"
+                TextColor="White" />
+            <BoxView
+                Margin="0,15,0,0"
+                BackgroundColor="White"
+                HeightRequest="2"
+                WidthRequest="350" />
+            <Label
+                Margin="40,10,0,0"
+                Style="{StaticResource Fields}"
+                Text="Email or username"
+                TextColor="White" />
+            <Border
+                Margin="0,10,0,0"
+                BackgroundColor="White"
+                Stroke="White"
+                StrokeShape="RoundRectangle 5"
+                WidthRequest="310">
+                <Entry
+                    x:Name="txtEmail"
+                    BackgroundColor="#5C5474"
+                    TextColor="White" />
             </Border>
-            <Label Text="Password" Margin="40,10,0,0" Style="{StaticResource Fields}" TextColor="White" ></Label>
-            <Border BackgroundColor="White" WidthRequest="310" Margin="0,10,0,0" StrokeShape="RoundRectangle 5" Stroke="White">
-                <Entry x:Name="txtPassword" BackgroundColor="#5C5474" IsPassword="True" TextColor="White"></Entry>
+            <Label
+                Margin="40,10,0,0"
+                Style="{StaticResource Fields}"
+                Text="Password"
+                TextColor="White" />
+            <Border
+                Margin="0,10,0,0"
+                BackgroundColor="White"
+                Stroke="White"
+                StrokeShape="RoundRectangle 5"
+                WidthRequest="310">
+                <Entry
+                    x:Name="txtPassword"
+                    BackgroundColor="#5C5474"
+                    IsPassword="True"
+                    TextColor="White" />
             </Border>
-            <StackLayout Orientation="Horizontal" Margin="30,5,0,0">
-                <CheckBox x:Name="cbxRememberMe"  IsChecked="False" />
-                <Label Text="Remember Me" VerticalOptions="Center" TextColor="White"/>
+            <StackLayout Margin="30,5,0,0" Orientation="Horizontal">
+                <CheckBox x:Name="cbxRememberMe" IsChecked="False" />
+                <Label
+                    Text="Remember Me"
+                    TextColor="White"
+                    VerticalOptions="Center" />
             </StackLayout>
-            <Button x:Name= "btnLogin" Text="Login"  CornerRadius="25" BackgroundColor="#9747FF" HorizontalOptions="Fill" WidthRequest="300" Margin="0,10,0,0" Clicked="OnbtnLogin_Clicked" />
-            <Label Text="Forgot your password?" TextDecorations="Underline" HorizontalOptions="Center" TextColor="White" Margin="0,10,0,0"/>
-            <BoxView HeightRequest="2" WidthRequest="350" BackgroundColor="White" Margin="0,15,0,0"></BoxView>
-            <Label x:Name="lblDontHaveAnAccount" Text="Don't have an account?" TextColor="#90A5DB" Margin="0,10,0,0" HorizontalOptions="Center"></Label>
-            <Label x:Name="lblSignIn" Text="Sign In" TextColor="#90A5DB" HorizontalOptions="Center" Margin="0,3,0,0" TextDecorations="Underline">
+            <Button
+                x:Name="btnLogin"
+                Margin="0,10,0,0"
+                BackgroundColor="#9747FF"
+                Clicked="OnbtnLogin_Clicked"
+                CornerRadius="25"
+                HorizontalOptions="Fill"
+                Text="Login"
+                WidthRequest="300" />
+            <Label
+                Margin="0,10,0,0"
+                HorizontalOptions="Center"
+                Text="Forgot your password?"
+                TextColor="White"
+                TextDecorations="Underline" />
+            <BoxView
+                Margin="0,15,0,0"
+                BackgroundColor="White"
+                HeightRequest="2"
+                WidthRequest="350" />
+            <Label
+                x:Name="lblDontHaveAnAccount"
+                Margin="0,10,0,0"
+                HorizontalOptions="Center"
+                Text="Don't have an account?"
+                TextColor="#90A5DB" />
+            <Label
+                x:Name="lblSignIn"
+                Margin="0,3,0,0"
+                HorizontalOptions="Center"
+                Text="Sign In"
+                TextColor="#90A5DB"
+                TextDecorations="Underline">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnlblSignInTapped"></TapGestureRecognizer>
+                    <TapGestureRecognizer Tapped="OnlblSignInTapped" />
                 </Label.GestureRecognizers>
             </Label>
         </VerticalStackLayout>

@@ -9,7 +9,7 @@
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
-        ContentTemplate="{DataTemplate views:Admin_LandingPage}"
+        ContentTemplate="{DataTemplate local:MainPage}"
         Icon="logo.png"
         Route="MainPage" />
 

@@ -11,7 +11,7 @@ public partial class Admin_LoginPage : ContentPage
 
     private async void OnlblSignInTapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PushAsync(new MainPage());
+        await Shell.Current.GoToAsync($"{nameof(MainPage)}");
     }
 
     private async void OnbtnLogin_Clicked(object sender, EventArgs e)

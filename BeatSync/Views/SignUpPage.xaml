@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeatSync.Views.SignUpPage"
-             Title="SignUpPage"
-             BackgroundImageSource="resizedbackgroundpixel.png"
-             Shell.NavBarIsVisible="False">
-    
+<ContentPage
+    x:Class="BeatSync.Views.SignUpPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.LoginAndRegistration"
+    x:DataType="viewmodel:SignUpPageViewModel"
+    Title="SignUpPage"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Entry">
@@ -20,15 +23,42 @@
     </ContentPage.Resources>
 
     <VerticalStackLayout>
-        <ImageButton Grid.Row="0" Grid.Column="0" Clicked="OnBtnReturn_Clicked" Margin="-200,30,30,30" HeightRequest="30" HorizontalOptions="Start" Source="returnbtn.png" />
-        <Label Text="Create Account" Style="{StaticResource SubHeadline}" TextColor="White" Margin="0,-55,0,0"></Label>
+        <ImageButton
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="-200,30,30,30"
+            Command="{Binding ReturnCommand}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="returnbtn.png" />
+        <Label
+            Margin="0,-55,0,0"
+            Style="{StaticResource SubHeadline}"
+            Text="Create Account"
+            TextColor="White" />
 
-        <Label Text="What's your email?" Style="{StaticResource Fields}" TextColor="White" Margin="40,50,0,0"></Label>
+        <Label
+            Margin="40,50,0,0"
+            Style="{StaticResource Fields}"
+            Text="What's your email?"
+            TextColor="White" />
         <Border StrokeShape="RoundRectangle 25">
-            <Entry></Entry>
+            <Entry Text="{Binding User.Email}" />
         </Border>
-        <Label Text="You'll need to confirm this email later" Margin="40,5,0,0" TextColor="White" Style="{StaticResource Reminders}"/>
-        <Button Text="Next" Clicked="OnBtnNext_Clicked" Margin="30,50,30,0"  TextColor="White"  FontAttributes="Bold" CornerRadius="25" BackgroundColor="#9747FF" WidthRequest="100"/>
+        <Label
+            Margin="40,5,0,0"
+            Style="{StaticResource Reminders}"
+            Text="You'll need to confirm this email later"
+            TextColor="White" />
+        <Button
+            Margin="30,50,30,0"
+            BackgroundColor="#9747FF"
+            Command="{Binding NavigateToCreatePasswordCommand}"
+            CornerRadius="25"
+            FontAttributes="Bold"
+            Text="Next"
+            TextColor="White"
+            WidthRequest="100" />
     </VerticalStackLayout>
-    
+
 </ContentPage>

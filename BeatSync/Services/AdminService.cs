@@ -157,7 +157,7 @@ public class AdminService
         ObservableCollection<Song> songs = await GetSongsAsync();
 
         song.Id = songs.Count + 1;
-
+        
         songs.Add(song);
 
         var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
