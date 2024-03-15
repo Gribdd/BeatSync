@@ -20,6 +20,13 @@ public partial class CreateAccountPasswordViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToCreateDOB()
     {
+        if (string.IsNullOrEmpty(User.Password))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "We need a password to proceed.", "Ok");
+            return;
+        }
+
+        User.DateOfBirth = DateTime.Now;
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }

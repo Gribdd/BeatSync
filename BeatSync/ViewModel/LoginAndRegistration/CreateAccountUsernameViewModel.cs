@@ -25,6 +25,12 @@ public partial class CreateAccountUsernameViewModel : ObservableObject
 	[RelayCommand]
 	async Task NavigateToCreatePassword()
 	{
+		if (string.IsNullOrEmpty(User.Username))
+		{
+            await Shell.Current.DisplayAlert("Oops!", "We need a username to proceed.", "Ok");
+			return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
 		{
 			{nameof(User), User }

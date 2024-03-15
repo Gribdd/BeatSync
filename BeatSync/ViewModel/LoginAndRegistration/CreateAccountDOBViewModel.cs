@@ -21,9 +21,16 @@ public partial class CreateAccountDOBViewModel : ObservableObject
         await Shell.Current.GoToAsync("..");
     }
 
+
     [RelayCommand]
     async Task NavigateToCreateFirstName()
     {
+        if (User.DateOfBirth >= DateTime.Now.Date)
+        {
+            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
