@@ -2,6 +2,7 @@
 using BeatSync.Services;
 using BeatSync.ViewModel.Admin;
 using BeatSync.ViewModel.LoginAndRegistration;
+using BeatSync.ViewModel.PublisherShell;
 using BeatSync.Views;
 using Microsoft.Extensions.Logging;
 
@@ -57,6 +58,10 @@ namespace BeatSync
                 mauiAppBuilder.Services.AddTransient<CreateAccountLastNameViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountGenderViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountUploadImageViewModel>();
+                
+                //Publisher
+                mauiAppBuilder.Services.AddTransient<SongManagementPubViewModel>();
+                mauiAppBuilder.Services.AddTransient<LibraryPageViewModel>();
 
                 return mauiAppBuilder;
             }
@@ -87,6 +92,12 @@ namespace BeatSync
                 mauiAppBuilder.Services.AddTransient<CreateAccountGender>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountUploadImage>();
                 mauiAppBuilder.Services.AddTransient<CustomerLandingPage>();
+
+                //Publisher
+                mauiAppBuilder.Services.AddTransient<LibraryPage>();
+                mauiAppBuilder.Services.AddTransient<SongManagementPub>();
+
+
 
                 return mauiAppBuilder;
             }
