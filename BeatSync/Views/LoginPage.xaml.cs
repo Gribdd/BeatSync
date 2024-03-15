@@ -1,22 +1,22 @@
+using BeatSync.ViewModel.LoginAndRegistration;
+
 namespace BeatSync.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+	public LoginPage(LoginPageViewModel vm)
 	{
+        BindingContext = vm;
 		InitializeComponent();
 	}
-    private async void OnlblSignInTapped(object sender, TappedEventArgs e)
-    {
-        await Shell.Current.GoToAsync($"{nameof(MainPage)}");
-    }
+
 
     private void OnbtnLogin_Clicked(object sender, EventArgs e)
     {
         //temporary code to test navigation 
         //will navigate to publisher landing page
 
-        Application.Current.MainPage = new PublisherLandingPage();
+        Application.Current!.MainPage = new PublisherLandingPage();
 
 
         //add navigation

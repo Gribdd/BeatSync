@@ -3,7 +3,9 @@
     x:Class="BeatSync.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.LoginAndRegistration"
     Title="LoginPage"
+    x:DataType="viewmodel:LoginPageViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
     <StackLayout>
@@ -36,8 +38,8 @@
                 StrokeShape="RoundRectangle 5"
                 WidthRequest="310">
                 <Entry
-                    x:Name="txtEmail"
                     BackgroundColor="#5C5474"
+                    Text="{Binding Username}"
                     TextColor="White" />
             </Border>
             <Label
@@ -52,9 +54,9 @@
                 StrokeShape="RoundRectangle 5"
                 WidthRequest="310">
                 <Entry
-                    x:Name="txtPassword"
                     BackgroundColor="#5C5474"
                     IsPassword="True"
+                    Text="{Binding Password}"
                     TextColor="White" />
             </Border>
             <StackLayout Margin="30,5,0,0" Orientation="Horizontal">
@@ -65,10 +67,9 @@
                     VerticalOptions="Center" />
             </StackLayout>
             <Button
-                x:Name="btnLogin"
+                Command="{Binding AuthenticateCommand}"
                 Margin="0,10,0,0"
                 BackgroundColor="#9747FF"
-                Clicked="OnbtnLogin_Clicked"
                 CornerRadius="25"
                 HorizontalOptions="Fill"
                 Text="Login"
@@ -91,14 +92,13 @@
                 Text="Don't have an account?"
                 TextColor="#90A5DB" />
             <Label
-                x:Name="lblSignIn"
                 Margin="0,3,0,0"
                 HorizontalOptions="Center"
                 Text="Sign In"
                 TextColor="#90A5DB"
                 TextDecorations="Underline">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnlblSignInTapped" />
+                    <TapGestureRecognizer Command="{Binding NavigateToSignInCommand}" />
                 </Label.GestureRecognizers>
             </Label>
         </VerticalStackLayout>
