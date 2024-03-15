@@ -29,6 +29,12 @@ public partial class CreateAccountGenderViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToCreateUploadImage()
     {
+        if (string.IsNullOrWhiteSpace(User.Gender))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must specify your gender.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }

@@ -24,6 +24,11 @@ public partial class CreateAccountFirstNameViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToCreateLastName()
     {
+        if (string.IsNullOrWhiteSpace(User.FirstName))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a first name.", "Ok");
+            return;
+        }
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
