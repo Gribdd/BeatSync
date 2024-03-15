@@ -2,6 +2,8 @@
 using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Text.RegularExpressions;
+
 
 namespace BeatSync.ViewModel.Admin;
 
@@ -22,6 +24,24 @@ public partial class AddArtistViewModel : ObservableObject
     [RelayCommand]
     async Task AddArtist()
     {
+        if (string.IsNullOrEmpty(Artist.Email) || string.IsNullOrEmpty(Artist.Username) || string.IsNullOrEmpty(Artist.Password) || string.IsNullOrEmpty(Artist.FirstName) || string.IsNullOrEmpty(Artist.LastName) || string.IsNullOrEmpty(Artist.Gender))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
+            return;
+        }
+
+        if (!IsEmailValid(Artist.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
+            return;
+        }
+
+        if (Artist.DateOfBirth >= DateTime.Now.Date)
+        {
+            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return;
+        }
+
         if (string.IsNullOrEmpty(Artist.ImageFilePath))
         {
             await Shell.Current.DisplayAlert("Upload picture", "Please upload artist picture first", "OK");
@@ -74,4 +94,17 @@ public partial class AddArtistViewModel : ObservableObject
         Artist.ImageFilePath = Path.Combine(dir, $"{Artist.FirstName+Artist.LastName}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
     }
+
+    private bool IsEmailValid(string email)
+{
+    if (email != null)
+    {
+        string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
+        return Regex.IsMatch(email, pattern);
+    }
+    else
+    {
+        return false;
+    }
+}
 }

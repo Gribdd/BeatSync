@@ -24,6 +24,12 @@ public partial class CreateAccountLastNameViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToCreateGender()
     {
+        if (string.IsNullOrWhiteSpace(User.LastName))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a last name.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }

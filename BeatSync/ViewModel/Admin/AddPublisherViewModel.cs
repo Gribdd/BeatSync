@@ -2,6 +2,7 @@ using BeatSync.Models;
 using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Text.RegularExpressions;
 
 
 namespace BeatSync.ViewModel.Admin;
@@ -22,6 +23,26 @@ public partial class AddPublisherViewModel : ObservableObject
     [RelayCommand]
     async Task AddPublisher()
     {
+        if (string.IsNullOrEmpty(Publisher.Email) || string.IsNullOrEmpty(Publisher.Username) || string.IsNullOrEmpty(Publisher.Password) || string.IsNullOrEmpty(Publisher.FirstName) || string.IsNullOrEmpty(Publisher.LastName) || string.IsNullOrEmpty(Publisher.Gender))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
+            return;
+        }
+
+        if (!IsEmailValid(Publisher.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
+            return;
+        }
+
+        if (Publisher.DateOfBirth >= DateTime.Now.Date)
+        {
+            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return;
+        }
+
+       
+
         if (string.IsNullOrEmpty(Publisher.ImageFilePath))
         {
             await Shell.Current.DisplayAlert("Upload picture", "Please upload publisher picture first", "OK");
@@ -72,6 +93,19 @@ public partial class AddPublisherViewModel : ObservableObject
 
         Publisher.ImageFilePath = Path.Combine(dir, $"{Publisher.FirstName+Publisher.LastName}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+    }
+
+    private bool IsEmailValid(string email)
+    {
+        if (email != null)
+        {
+            string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
+            return Regex.IsMatch(email, pattern);
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 

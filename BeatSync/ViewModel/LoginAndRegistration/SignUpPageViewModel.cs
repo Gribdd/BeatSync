@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
@@ -25,6 +26,18 @@ public partial class SignUpPageViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToCreateUsername()
     {
+        if (string.IsNullOrEmpty(User.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter an email address.", "Ok");
+            return;
+        }
+
+        if (!IsEmailValid(User.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
@@ -32,14 +45,16 @@ public partial class SignUpPageViewModel : ObservableObject
         await Shell.Current.GoToAsync("createaccountusername", navigationParameter);
     }
 
-    /*
-    async Task NavigateToCreatePassword()
+    private bool IsEmailValid(string email)
     {
-        var navigationParameter = new Dictionary<string, object>
+        if (email != null)
         {
-            {nameof(User), User }
-        };
-        await Shell.Current.GoToAsync("createaccountpassword", navigationParameter);
+            string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
+            return Regex.IsMatch(email, pattern);
+        }
+        else
+        {
+            return false;
+        }
     }
-    */
 }
