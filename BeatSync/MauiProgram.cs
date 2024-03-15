@@ -32,6 +32,7 @@ namespace BeatSync
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
             {
                 mauiAppBuilder.Services.AddTransient<AdminService>();
+                mauiAppBuilder.Services.AddTransient<UserService>();
 
                 return mauiAppBuilder;
             }
@@ -51,6 +52,7 @@ namespace BeatSync
                 //Viewmodel registration and Login
                 mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
                 mauiAppBuilder.Services.AddTransient<SignUpPageViewModel>();
+                mauiAppBuilder.Services.AddTransient<LoginPageViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountUsernameViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountPasswordViewModel>();
                 mauiAppBuilder.Services.AddTransient<CreateAccountDOBViewModel>();

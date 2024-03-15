@@ -50,7 +50,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
 
                 if (await _adminService.AddArtistAsync(artist))
                 {
-                    File.Copy(_fileResult!.FullPath, artist.ImageFilePath);
+                    File.Copy(_fileResult!.FullPath, artist.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
                     await Shell.Current.GoToAsync("mainpage");
                 }
@@ -72,19 +72,19 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
 
                 if (await _adminService.AddPublisherAsync(publisher))
                 {
-                    File.Copy(_fileResult!.FullPath, publisher.ImageFilePath);
+                    File.Copy(_fileResult!.FullPath, publisher.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
                     //await Shell.Current.GoToAsync("mainpage");
-                    Application.Current.MainPage = new PublisherLandingPage();
+                    Application.Current!.MainPage = new PublisherLandingPage();
                 }
                 break;
             //customer
             case 3:
                 if (await _adminService.AddUserAsync(User))
                 {
-                    File.Copy(_fileResult!.FullPath, User.ImageFilePath);
+                    File.Copy(_fileResult!.FullPath, User.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-                    Application.Current.MainPage = new LandingPage();
+                    Application.Current!.MainPage = new LandingPage();
                 }
                 break;
             default:
