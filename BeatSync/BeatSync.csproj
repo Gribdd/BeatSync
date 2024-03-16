@@ -76,6 +76,7 @@
 	  <None Remove="Resources\Images\test.png" />
 	  <None Remove="Resources\Images\update.png" />
 	  <None Remove="Resources\Images\users.png" />
+	  <None Remove="Resources\Raw\carnival.mp3" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
 
@@ -88,6 +89,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="2.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
