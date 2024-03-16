@@ -1,77 +1,100 @@
-﻿using BeatSync.Models;
+﻿
+using BeatSync.Models;
 using BeatSync.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-
 namespace BeatSync.Services;
 
 public class UserService : ObservableObject
 {
-    private readonly string _artistFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Artists.json");
-    private readonly string _userFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Users.json");
-    private readonly string _publisherFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers.json");
+    private readonly UserValidationService _userValidationService;
 
 
-    public async Task<bool> Authenticate(string username, string password)
+    public UserService(UserValidationService userValidationService)
     {
-        var artist = GetArtists().Where(artist => artist.Username == username && artist.Password == password);
-        if(artist.Count() !=  0)
+        _userValidationService = userValidationService;
+    }
+
+
+    public async Task<bool> Authenticate(string identifier, string password)
+    {
+        if(!await _userValidationService.DoesUserExist(identifier))
         {
-            Application.Current!.MainPage = new PublisherLandingPage();
-            return true;
+            return false;
         }
 
-        var publisher = GetPublishers().Where(publisher => publisher.Username == username && publisher.Password == password);
-        if (publisher.Count() != 0)
+        var user = GetUser(identifier, password);
+
+        if(user != null)
         {
-            Application.Current!.MainPage = new PublisherLandingPage();
+            NavigateBasedOnUserType(user);
             return true;
         }
-
-        var user = GetUsers().Where(user => user.Username == username && user.Password == password);
-        if (user.Count() != 0)
-        {
-            Application.Current!.MainPage = new Admin_LandingPage();
-            return true;
-        }
-
+        
         return false;
     }
 
-    private ObservableCollection<Artist> GetArtists()
+    private void NavigateBasedOnUserType(User user)
     {
-        if (!File.Exists(_artistFilePath))
+        switch(user.AccounType)
         {
-            return new ObservableCollection<Artist>();
+            case 1:
+                Application.Current!.MainPage = new PublisherLandingPage();
+                break;
+            case 2:
+                Application.Current!.MainPage = new PublisherLandingPage();
+                break;
+            case 3:
+                Application.Current!.MainPage = new CustomerLandingPage();
+                break;
+            default:
+                break;
         }
-
-        string json = File.ReadAllText(_artistFilePath);
-        var artists = JsonSerializer.Deserialize<ObservableCollection<Artist>>(json);
-        return artists!;
     }
 
-    private ObservableCollection<Publisher> GetPublishers()
+    private User? GetUser(string identifier, string password)
     {
-        if (!File.Exists(_publisherFilePath))
+        var artists = _userValidationService.GetArtists();
+        var artist = artists.FirstOrDefault(a => (a.Username == identifier || a.Email == identifier) && (a.Password == password));
+        if (artist != null)
         {
-            return new ObservableCollection<Publisher>();
+            return new User
+            {
+                Id = artist.Id,
+                Email = artist.Email,
+                Username = artist.Username,
+                Password = artist.Password,
+                DateOfBirth = artist.DateOfBirth,
+                FirstName = artist.FirstName,
+                LastName = artist.LastName,
+                Gender = artist.Gender,
+                AccounType = artist.AccounType,
+                IsDeleted = artist.IsDeleted,
+                ImageFilePath = artist.ImageFilePath
+            };
         }
 
-        string json = File.ReadAllText(_publisherFilePath);
-        var publishers = JsonSerializer.Deserialize<ObservableCollection<Publisher>>(json);
-        return publishers!;
-    }
-
-    private ObservableCollection<User> GetUsers()
-    {
-        if (!File.Exists(_userFilePath))
+        var publishers = _userValidationService.GetPublishers();
+        var publisher = publishers.FirstOrDefault(p => (p.Username == identifier || p.Email == identifier) && (p.Password == password));
+        if (publisher != null)
         {
-            return new ObservableCollection<User>();
+            return new User
+            {
+                Id = publisher.Id,
+                Email = publisher.Email,
+                Username = publisher.Username,
+                Password = publisher.Password,
+                DateOfBirth = publisher.DateOfBirth,
+                FirstName = publisher.FirstName,
+                LastName = publisher.LastName,
+                Gender = publisher.Gender,
+                AccounType = publisher.AccounType,
+                IsDeleted = publisher.IsDeleted,
+                ImageFilePath = publisher.ImageFilePath
+            };
         }
 
-        string json = File.ReadAllText(_userFilePath);
-        var users = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
-        return users!;
-    }
+        var users = _userValidationService.GetUsers();
+        var user = users.FirstOrDefault(u => (u.Username == identifier || u.Email == identifier) && (u.Password == password));
+        return user;
+    }   
 }

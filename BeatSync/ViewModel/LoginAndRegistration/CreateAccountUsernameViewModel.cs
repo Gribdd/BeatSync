@@ -1,4 +1,5 @@
 using BeatSync.Models;
+using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -13,10 +14,19 @@ namespace BeatSync.ViewModel.LoginAndRegistration;
 
 public partial class CreateAccountUsernameViewModel : ObservableObject
 {
+
+    private UserValidationService _userValidationService;
+
 	[ObservableProperty]
 	private User _user = new();
 
-	[RelayCommand]
+    public CreateAccountUsernameViewModel(UserValidationService userValidationService)
+    {
+        _userValidationService = userValidationService;     
+    }
+
+
+    [RelayCommand]
 	async Task Return()
 	{
         await Shell.Current.GoToAsync("..");
@@ -31,10 +41,18 @@ public partial class CreateAccountUsernameViewModel : ObservableObject
 			return;
         }
 
+        if (_userValidationService.DoesUsernameExist(User.Username))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
 		{
 			{nameof(User), User }
         };
+
+
         await Shell.Current.GoToAsync("createaccountpassword", navigationParameter);
     }
 }

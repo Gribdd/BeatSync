@@ -6,17 +6,19 @@ using System.Text.RegularExpressions;
 
 namespace BeatSync.ViewModel.Admin
 {
-    public partial class AddUserViewModel: ObservableObject
+    public partial class AddUserViewModel : ObservableObject
     {
         private AdminService _adminService;
+        private UserValidationService _userValidationService;
         private FileResult? _fileResult;
 
         [ObservableProperty]
         private User _user = new();
 
-        public AddUserViewModel(AdminService adminService)
+        public AddUserViewModel(AdminService adminService, UserValidationService userValidationService)
         {
             _adminService = adminService;
+            _userValidationService = userValidationService;
         }
 
         [RelayCommand]
@@ -34,11 +36,24 @@ namespace BeatSync.ViewModel.Admin
                 return;
             }
 
+            if (_userValidationService.DoesEmailAddressExist(User.Email))
+            {
+                await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
+                return;
+            }
+
+            if (_userValidationService.DoesUsernameExist(User.Username))
+            {
+                await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
+                return;
+            }
+
             if (User.DateOfBirth >= DateTime.Now.Date)
             {
                 await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
                 return;
             }
+
 
             if (string.IsNullOrEmpty(User.ImageFilePath))
             {
@@ -88,7 +103,7 @@ namespace BeatSync.ViewModel.Admin
             string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Users");
             _adminService.CreateDirectoryIfMissing(dir);
 
-            User.ImageFilePath = Path.Combine(dir, $"{User.FirstName+User.LastName}.jpg");
+            User.ImageFilePath = Path.Combine(dir, $"{User.FirstName + User.LastName}.jpg");
             await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
         }
 

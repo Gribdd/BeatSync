@@ -11,14 +11,16 @@ public partial class AddArtistViewModel : ObservableObject
 {
 
     private AdminService _adminService;
+    private UserValidationService _userValidationService;
     private FileResult? _fileResult;
 
     [ObservableProperty]
     private Artist _artist = new();
 
-    public AddArtistViewModel(AdminService adminService)
+    public AddArtistViewModel(AdminService adminService, UserValidationService userValidationService)
     {
         _adminService = adminService;
+        _userValidationService = userValidationService;
     }
 
     [RelayCommand]
@@ -39,6 +41,19 @@ public partial class AddArtistViewModel : ObservableObject
         if (Artist.DateOfBirth >= DateTime.Now.Date)
         {
             await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return;
+        }
+
+        if (_userValidationService.DoesEmailAddressExist(Artist.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
+            return;
+        }
+
+        if (_userValidationService.DoesUsernameExist(Artist.Username))
+
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
             return;
         }
 

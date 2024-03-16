@@ -8,14 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using BeatSync.Services;
 
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
 public partial class SignUpPageViewModel : ObservableObject
 {
+    private UserValidationService _userValidationService;
+
     [ObservableProperty]
     private User _user = new();
+
+    public SignUpPageViewModel(UserValidationService userValidationService)
+    {
+        _userValidationService = userValidationService;
+    }
+
 
     [RelayCommand]
     async Task Return()
@@ -38,10 +47,17 @@ public partial class SignUpPageViewModel : ObservableObject
             return;
         }
 
+        if (_userValidationService.DoesEmailAddressExist(User.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This email address is already in use.", "Ok");
+            return;
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
         };
+
         await Shell.Current.GoToAsync("createaccountusername", navigationParameter);
     }
 

@@ -39,6 +39,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 Artist artist = new()
                 {
                     AccounType = User.AccounType,
+                    Username = User.Username,
                     Email = User.Email,
                     Password = User.Password,
                     DateOfBirth = User.DateOfBirth,
@@ -61,6 +62,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 Publisher publisher = new()
                 {
                     AccounType = User.AccounType,
+                    Username = User.Username,
                     Email = User.Email,
                     Password = User.Password,
                     DateOfBirth = User.DateOfBirth,
