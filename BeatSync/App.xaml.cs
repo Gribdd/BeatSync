@@ -1,4 +1,7 @@
-﻿namespace BeatSync
+﻿using BeatSync.Models;
+using BeatSync.Views;
+
+namespace BeatSync
 {
     public partial class App : Application
     {
@@ -6,7 +9,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new PublisherLandingPage();
         }
     }
 }

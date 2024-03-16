@@ -6,9 +6,7 @@ public partial class PublisherLandingPage : Shell
 {
 	public PublisherLandingPage()
 	{
-		Routing.RegisterRoute(nameof(LandingPage), typeof(LandingPage));
-		Routing.RegisterRoute(nameof(SongManagementPub), typeof(SongManagementPub));
-		Routing.RegisterRoute(nameof(LibraryPage), typeof(LibraryPage));
+		Routing.RegisterRoute($"songs/{nameof(AddSong)}", typeof(AddSong));
 
 		InitializeComponent();
 	}
