@@ -32,7 +32,7 @@ public partial class LoginPageViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToSignIn()
     {
-        await Shell.Current.GoToAsync($"{nameof(MainPage)}");
+        await Shell.Current.GoToAsync($"..");
     }
 
     [RelayCommand]
