@@ -76,7 +76,6 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 {
                     File.Copy(_fileResult!.FullPath, publisher.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
-                    //await Shell.Current.GoToAsync("mainpage");
                     Application.Current!.MainPage = new PublisherLandingPage();
                 }
                 break;
@@ -116,7 +115,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
         }
 
         //make dir
-        string dirName = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publisher" : "Users";
+        string dirName = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publishers" : "Users";
         string dir = Path.Combine(FileSystem.Current.AppDataDirectory, dirName);
         _adminService.CreateDirectoryIfMissing(dir);
 
