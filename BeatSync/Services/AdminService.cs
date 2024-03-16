@@ -173,7 +173,27 @@ public class AdminService
         var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
         await File.WriteAllTextAsync(_songFilePath, json);
         return true;
+    }
+    
+    public async Task<FileResult?> UploadSongAsync()
+    {
+        var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
+                    { DevicePlatform.Android, new[] { ".mp3" } }, // MIME type
+                    { DevicePlatform.WinUI, new[] { ".mp3" } }, // file extension
+                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                    { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // UTType values
+                });
 
+        var fileResult = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Please pick a song",
+            FileTypes = customFileType
+        });
+        
+        return fileResult;
     }
 
     public async Task<ObservableCollection<Song>> GetSongsAsync()
