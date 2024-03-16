@@ -29,10 +29,12 @@ public partial class CreateAccountFirstNameViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Oops!", "You must enter a first name.", "Ok");
             return;
         }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
         };
+
         await Shell.Current.GoToAsync("createaccountlastname", navigationParameter);
     }
 }

@@ -10,14 +10,16 @@ namespace BeatSync.ViewModel.Admin;
 public partial class AddPublisherViewModel : ObservableObject
 {
     private AdminService _adminService;
+    private UserValidationService _userValidationService;
     private FileResult? _fileResult;
 
     [ObservableProperty]
     private Publisher _publisher = new();
 
-    public AddPublisherViewModel(AdminService adminService)
+    public AddPublisherViewModel(AdminService adminService, UserValidationService userValidationService)
     {
         _adminService = adminService;
+        _userValidationService = userValidationService;
     }
 
     [RelayCommand]
@@ -35,12 +37,23 @@ public partial class AddPublisherViewModel : ObservableObject
             return;
         }
 
+        if (_userValidationService.DoesEmailAddressExist(Publisher.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
+            return;
+        }
+
+        if (_userValidationService.DoesUsernameExist(Publisher.Username))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
+            return;
+        }
+
         if (Publisher.DateOfBirth >= DateTime.Now.Date)
         {
             await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
             return;
         }
-
        
 
         if (string.IsNullOrEmpty(Publisher.ImageFilePath))

@@ -33,6 +33,7 @@ namespace BeatSync
             {
                 mauiAppBuilder.Services.AddTransient<AdminService>();
                 mauiAppBuilder.Services.AddTransient<UserService>();
+                mauiAppBuilder.Services.AddTransient<UserValidationService>();
 
                 return mauiAppBuilder;
             }
