@@ -6,6 +6,7 @@ using BeatSync.ViewModel.PublisherShell;
 using BeatSync.Views;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
+using CommunityToolkit.Maui;
 
 namespace BeatSync
 {
@@ -16,6 +17,7 @@ namespace BeatSync
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitMediaElement()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Jua-Regular.ttf", "JuaRegular");

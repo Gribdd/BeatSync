@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
     Title="SongManagementPub"
     x:DataType="viewmodel:SongManagementPubViewModel"
@@ -12,7 +13,7 @@
     Shell.NavBarIsVisible="False">
 
 
-    <Grid RowDefinitions="auto,auto,auto,*">
+    <Grid RowDefinitions="auto,auto,auto,*,auto">
         <HorizontalStackLayout>
             <ImageButton
                 Margin="30"
@@ -105,12 +106,17 @@
                             </VerticalStackLayout>
                         </Grid>
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <toolkit:MediaElement
+            Grid.Row="4"
+            ShouldAutoPlay="True"
+            Source="{Binding MediaSource}"
+            ZIndex="1" />
     </Grid>
 
     <!--<VerticalStackLayout>

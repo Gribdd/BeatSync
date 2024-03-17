@@ -1,5 +1,6 @@
 ﻿using BeatSync.Models;
 using BeatSync.Services;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Plugin.Maui.Audio;
@@ -13,6 +14,9 @@ public partial class SongManagementPubViewModel : ObservableObject
 {
     private AdminService _adminService;
     readonly IAudioManager audioManager;
+
+    [ObservableProperty]
+    private MediaSource _mediaSource;
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
@@ -45,7 +49,7 @@ public partial class SongManagementPubViewModel : ObservableObject
             return;
         }
 
-        await FileSystem.OpenAppPackageFileAsync("test");
+        MediaSource = MediaSource.FromFile(song.FilePath);
     }
 
     public async void GetSongsAsync()
