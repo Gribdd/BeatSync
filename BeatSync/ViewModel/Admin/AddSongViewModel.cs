@@ -13,6 +13,9 @@ public partial class AddSongViewModel : ObservableObject
     private FileResult? _fileResultSong;
 
     [ObservableProperty]
+    private bool _isVisible = false;
+
+    [ObservableProperty]
     private Song _song = new();
 
     [ObservableProperty]

@@ -54,7 +54,7 @@
             <Label
                 HorizontalOptions="Start"
                 Style="{StaticResource SubHeadline}"
-                Text="4 Songs"
+                Text="{Binding Songs.Count, StringFormat=' {0} Songs'}"
                 TextColor="White" />
         </HorizontalStackLayout>
         <CollectionView
