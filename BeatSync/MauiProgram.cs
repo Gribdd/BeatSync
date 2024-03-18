@@ -7,6 +7,7 @@ using BeatSync.Views;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
 using CommunityToolkit.Maui;
+using BeatSync.ViewModel.Users;
 
 namespace BeatSync
 {
@@ -70,6 +71,9 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<SongManagementPubViewModel>();
             mauiAppBuilder.Services.AddTransient<LibraryPageViewModel>();
 
+            //Users
+            mauiAppBuilder.Services.AddTransient<UserHistoryViewModel>();
+
             return mauiAppBuilder;
         }
 
@@ -104,7 +108,8 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<LibraryPage>();
             mauiAppBuilder.Services.AddTransient<SongManagementPub>();
 
-
+            //Users
+            mauiAppBuilder.Services.AddTransient<UserHistory>();
 
             return mauiAppBuilder;
         }
