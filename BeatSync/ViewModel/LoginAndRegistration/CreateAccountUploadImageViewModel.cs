@@ -53,7 +53,8 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 {
                     File.Copy(_fileResult!.FullPath, artist.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
-                    await Shell.Current.GoToAsync("mainpage");
+                    //await Shell.Current.GoToAsync("mainpage");
+                    Application.Current!.MainPage = new PublisherLandingPage();
                 }
 
                 break;
@@ -85,7 +86,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 {
                     File.Copy(_fileResult!.FullPath, User.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-                    Application.Current!.MainPage = new LandingPage();
+                    Application.Current!.MainPage = new CustomerLandingPage();
                 }
                 break;
             default:

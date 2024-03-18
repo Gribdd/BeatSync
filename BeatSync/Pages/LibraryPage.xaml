@@ -7,7 +7,8 @@
     Title="LibraryPage"
     x:DataType="viewmodel:LibraryPageViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
 
     <VerticalStackLayout>
         <!--  Top Elements  -->
