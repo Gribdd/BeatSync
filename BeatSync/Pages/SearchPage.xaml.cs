@@ -2,22 +2,17 @@ using BeatSync.ViewModel.Users;
 
 namespace BeatSync.Pages;
 
-public partial class LandingPage : ContentPage
+public partial class SearchPage : ContentPage
 {
-	LandingPageViewModel _vm;
-	public LandingPage(LandingPageViewModel vm)
+	SearchPageViewModel _vm;
+	public SearchPage(SearchPageViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = _vm = vm;
 	}
 
-	public LandingPage()
-	{
-		InitializeComponent();
-	}
-
 	protected override void OnAppearing()
 	{
         base.OnAppearing();
-    }	
+    }
 }

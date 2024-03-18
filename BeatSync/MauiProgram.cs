@@ -73,6 +73,8 @@ namespace BeatSync
 
             //Users
             mauiAppBuilder.Services.AddTransient<UserHistoryViewModel>();
+            mauiAppBuilder.Services.AddTransient<SearchPageViewModel>();
+            mauiAppBuilder.Services.AddTransient<LandingPageViewModel>();
 
             return mauiAppBuilder;
         }
@@ -110,6 +112,9 @@ namespace BeatSync
 
             //Users
             mauiAppBuilder.Services.AddTransient<UserHistory>();
+            mauiAppBuilder.Services.AddTransient<SearchPage>();
+            mauiAppBuilder.Services.AddTransient<LandingPage>();
+
 
             return mauiAppBuilder;
         }

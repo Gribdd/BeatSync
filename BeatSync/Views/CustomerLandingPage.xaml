@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:BeatSync.Pages"
-             x:Class="BeatSync.Views.CustomerLandingPage"
-             Title="CustomerLandingPage"
-             Shell.TabBarBackgroundColor="#17122E"
-             Shell.TabBarForegroundColor="#FFFFFF"
-             Shell.TabBarTitleColor="#FFFFFF"
-             Shell.TabBarUnselectedColor="#7EA6D9" >
+<Shell
+    x:Class="BeatSync.Views.CustomerLandingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:BeatSync.Pages"
+    Title="CustomerLandingPage"
+    Shell.TabBarBackgroundColor="#17122E"
+    Shell.TabBarForegroundColor="#FFFFFF"
+    Shell.TabBarTitleColor="#FFFFFF"
+    Shell.TabBarUnselectedColor="#7EA6D9">
 
-    <Tab Title="Home" Icon="home.png">
-        <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}"/>
-    </Tab>
+    <TabBar>
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
+        </Tab>
+        <Tab Title="Search" Icon="search.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:SearchPage}" Route="search" />
+        </Tab>
+        <Tab Title="Library" Icon="library.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
+        </Tab>
+        <Tab Title="History" Icon="history.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:UserHistory}" Route="history" />
+        </Tab>
+    </TabBar>
 
 
 </Shell>

@@ -1,9 +1,18 @@
+using BeatSync.ViewModel.Users;
+
 namespace BeatSync.Pages;
 
 public partial class UserHistory : ContentPage
 {
-	public UserHistory()
+	UserHistoryViewModel _vm;
+	public UserHistory(UserHistoryViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = _vm = vm;
 	}
+
+	protected override void OnAppearing()
+	{
+        base.OnAppearing();
+    }
 }

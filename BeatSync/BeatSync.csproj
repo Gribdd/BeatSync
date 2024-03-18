@@ -141,6 +141,9 @@
 	  <MauiXaml Update="Pages\PublisherManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\SongManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
