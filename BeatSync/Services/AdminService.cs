@@ -181,7 +181,7 @@ public class AdminService
                 new Dictionary<DevicePlatform, IEnumerable<string>>
                 {
                     { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
-                    { DevicePlatform.Android, new[] { ".mp3" } }, // MIME type
+                    { DevicePlatform.Android, new[] { "audio/mpeg" } }, // MIME type
                     { DevicePlatform.WinUI, new[] { ".mp3" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
                     { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // UTType values
