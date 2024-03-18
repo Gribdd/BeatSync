@@ -8,224 +8,226 @@
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout>
-        <!--  Top Elements  -->
-        <HorizontalStackLayout>
-            <ImageButton
-                Margin="30"
-                HeightRequest="35"
-                HorizontalOptions="Start"
-                Source="profileicon.png" />
-            <Label
-                Margin="-25,35,0,0"
-                Style="{StaticResource SubHeadline}"
-                Text="Hi, {UserType}!"
-                TextColor="White" />
-            <ImageButton
-                Margin="55,0,0,0"
-                HeightRequest="35"
-                HorizontalOptions="Start"
-                Source="search.png" />
-            <ImageButton
-                Margin="-5,0,0,0"
-                HeightRequest="30"
-                HorizontalOptions="Start"
-                Source="add.png" />
-        </HorizontalStackLayout>
-        <BoxView
-            Margin="0,-10,0,0"
-            HeightRequest="2"
-            WidthRequest="310"
-            Color="White" />
-        <ScrollView>
-            <VerticalStackLayout Margin="35,10,35,10">
-                <!--  Genres Carousel View  -->
-                <CarouselView PeekAreaInsets="100">
-                    <CarouselView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Rap</x:String>
-                            <x:String>Pop</x:String>
-                            <x:String>Indie</x:String>
-                            <x:String>OPM</x:String>
-                            <x:String>Punk Rock</x:String>
-                        </x:Array>
-                    </CarouselView.ItemsSource>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="10">
-                                <Frame HeightRequest="100" WidthRequest="200">
-                                    <HorizontalStackLayout HorizontalOptions="Center">
-                                        <Image
-                                            HeightRequest="40"
-                                            Source="logo.png"
-                                            WidthRequest="50" />
-                                        <Label
-                                            Margin="10,15,0,0"
-                                            FontAttributes="Bold"
-                                            HorizontalTextAlignment="Center"
-                                            Style="{StaticResource Headline}"
-                                            Text="{Binding .}"
-                                            TextColor="Black" />
-                                    </HorizontalStackLayout>
-                                </Frame>
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-
-                <!--  Top Hits  -->
-                <Label
+    <ScrollView>
+        <VerticalStackLayout>
+            <!--  Top Elements  -->
+            <HorizontalStackLayout>
+                <ImageButton
+                    Margin="30"
+                    HeightRequest="35"
                     HorizontalOptions="Start"
-                    Style="{StaticResource SubHeadline}"
-                    Text="Top Hits"
-                    TextColor="White" />
-                <CarouselView PeekAreaInsets="100">
-                    <CarouselView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Rap</x:String>
-                            <x:String>Pop</x:String>
-                            <x:String>Indie</x:String>
-                            <x:String>OPM</x:String>
-                            <x:String>Punk Rock</x:String>
-                        </x:Array>
-                    </CarouselView.ItemsSource>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="10">
-                                <Frame HeightRequest="120" WidthRequest="120">
-                                    <HorizontalStackLayout HorizontalOptions="Center">
-                                        <Image
-                                            HeightRequest="40"
-                                            Source="logo.png"
-                                            WidthRequest="50" />
-                                        <Label
-                                            Margin="10,15,0,0"
-                                            FontAttributes="Bold"
-                                            HorizontalTextAlignment="Center"
-                                            Style="{StaticResource Headline}"
-                                            Text="{Binding .}"
-                                            TextColor="Black" />
-                                    </HorizontalStackLayout>
-                                </Frame>
-                                <Label
-                                    Margin="5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Fields}"
-                                    Text="Song Name"
-                                    TextColor="White" />
-                                <Label
-                                    Margin="5,-5,5,5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Reminders}"
-                                    Text="Artist"
-                                    TextColor="#A39797" />
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-
-                <!--  Recently Played  -->
+                    Source="profileicon.png" />
                 <Label
-                    HorizontalOptions="Start"
+                    Margin="-25,35,0,0"
                     Style="{StaticResource SubHeadline}"
-                    Text="Recently Played"
+                    Text="Hi, {UserType}!"
                     TextColor="White" />
-                <CarouselView PeekAreaInsets="100">
-                    <CarouselView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Rap</x:String>
-                            <x:String>Pop</x:String>
-                            <x:String>Indie</x:String>
-                            <x:String>OPM</x:String>
-                            <x:String>Punk Rock</x:String>
-                        </x:Array>
-                    </CarouselView.ItemsSource>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="10">
-                                <Frame HeightRequest="120" WidthRequest="120">
-                                    <HorizontalStackLayout HorizontalOptions="Center">
-                                        <Image
-                                            HeightRequest="40"
-                                            Source="logo.png"
-                                            WidthRequest="50" />
-                                        <Label
-                                            Margin="10,15,0,0"
-                                            FontAttributes="Bold"
-                                            HorizontalTextAlignment="Center"
-                                            Style="{StaticResource Headline}"
-                                            Text="{Binding .}"
-                                            TextColor="Black" />
-                                    </HorizontalStackLayout>
-                                </Frame>
-                                <Label
-                                    Margin="5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Fields}"
-                                    Text="Song Name"
-                                    TextColor="White" />
-                                <Label
-                                    Margin="5,-5,5,5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Reminders}"
-                                    Text="Artist"
-                                    TextColor="#A39797" />
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
+                <ImageButton
+                    Margin="55,0,0,0"
+                    HeightRequest="35"
+                    HorizontalOptions="Start"
+                    Source="search.png" />
+                <ImageButton
+                    Margin="-5,0,0,0"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="add.png" />
+            </HorizontalStackLayout>
+            <BoxView
+                Margin="0,-10,0,0"
+                HeightRequest="2"
+                WidthRequest="310"
+                Color="White" />
+            <ScrollView>
+                <VerticalStackLayout Margin="35,10,35,10">
+                    <!--  Genres Carousel View  -->
+                    <CarouselView Loop="False" PeekAreaInsets="50">
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Rap</x:String>
+                                <x:String>Pop</x:String>
+                                <x:String>Indie</x:String>
+                                <x:String>OPM</x:String>
+                                <x:String>Punk Rock</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="10">
+                                    <Frame HeightRequest="100" WidthRequest="200">
+                                        <HorizontalStackLayout HorizontalOptions="Center">
+                                            <Image
+                                                HeightRequest="40"
+                                                Source="logo.png"
+                                                WidthRequest="50" />
+                                            <Label
+                                                Margin="10,15,0,0"
+                                                FontAttributes="Bold"
+                                                HorizontalTextAlignment="Center"
+                                                Style="{StaticResource Headline}"
+                                                Text="{Binding .}"
+                                                TextColor="Black" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
 
-                <!--  New Music  -->
-                <Label
-                    HorizontalOptions="Start"
-                    Style="{StaticResource SubHeadline}"
-                    Text="New Music"
-                    TextColor="White" />
-                <CarouselView PeekAreaInsets="100">
-                    <CarouselView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Rap</x:String>
-                            <x:String>Pop</x:String>
-                            <x:String>Indie</x:String>
-                            <x:String>OPM</x:String>
-                            <x:String>Punk Rock</x:String>
-                        </x:Array>
-                    </CarouselView.ItemsSource>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="10">
-                                <Frame HeightRequest="120" WidthRequest="120">
-                                    <HorizontalStackLayout HorizontalOptions="Center">
-                                        <Image
-                                            HeightRequest="40"
-                                            Source="logo.png"
-                                            WidthRequest="50" />
-                                        <Label
-                                            Margin="10,15,0,0"
-                                            FontAttributes="Bold"
-                                            HorizontalTextAlignment="Center"
-                                            Style="{StaticResource Headline}"
-                                            Text="{Binding .}"
-                                            TextColor="Black" />
-                                    </HorizontalStackLayout>
-                                </Frame>
-                                <Label
-                                    Margin="5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Fields}"
-                                    Text="Song Name"
-                                    TextColor="White" />
-                                <Label
-                                    Margin="5,-5,5,5"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource Reminders}"
-                                    Text="Artist"
-                                    TextColor="#A39797" />
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-            </VerticalStackLayout>
-        </ScrollView>
-    </VerticalStackLayout>
+                    <!--  Top Hits  -->
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="Top Hits"
+                        TextColor="White" />
+                    <CarouselView PeekAreaInsets="100">
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Rap</x:String>
+                                <x:String>Pop</x:String>
+                                <x:String>Indie</x:String>
+                                <x:String>OPM</x:String>
+                                <x:String>Punk Rock</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="10">
+                                    <Frame HeightRequest="120" WidthRequest="120">
+                                        <HorizontalStackLayout HorizontalOptions="Center">
+                                            <Image
+                                                HeightRequest="40"
+                                                Source="logo.png"
+                                                WidthRequest="50" />
+                                            <Label
+                                                Margin="10,15,0,0"
+                                                FontAttributes="Bold"
+                                                HorizontalTextAlignment="Center"
+                                                Style="{StaticResource Headline}"
+                                                Text="{Binding .}"
+                                                TextColor="Black" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                    <Label
+                                        Margin="5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Fields}"
+                                        Text="Song Name"
+                                        TextColor="White" />
+                                    <Label
+                                        Margin="5,-5,5,5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Reminders}"
+                                        Text="Artist"
+                                        TextColor="#A39797" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+
+                    <!--  Recently Played  -->
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="Recently Played"
+                        TextColor="White" />
+                    <CarouselView PeekAreaInsets="100">
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Rap</x:String>
+                                <x:String>Pop</x:String>
+                                <x:String>Indie</x:String>
+                                <x:String>OPM</x:String>
+                                <x:String>Punk Rock</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="10">
+                                    <Frame HeightRequest="120" WidthRequest="120">
+                                        <HorizontalStackLayout HorizontalOptions="Center">
+                                            <Image
+                                                HeightRequest="40"
+                                                Source="logo.png"
+                                                WidthRequest="50" />
+                                            <Label
+                                                Margin="10,15,0,0"
+                                                FontAttributes="Bold"
+                                                HorizontalTextAlignment="Center"
+                                                Style="{StaticResource Headline}"
+                                                Text="{Binding .}"
+                                                TextColor="Black" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                    <Label
+                                        Margin="5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Fields}"
+                                        Text="Song Name"
+                                        TextColor="White" />
+                                    <Label
+                                        Margin="5,-5,5,5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Reminders}"
+                                        Text="Artist"
+                                        TextColor="#A39797" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+
+                    <!--  New Music  -->
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="New Music"
+                        TextColor="White" />
+                    <CarouselView PeekAreaInsets="100">
+                        <CarouselView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Rap</x:String>
+                                <x:String>Pop</x:String>
+                                <x:String>Indie</x:String>
+                                <x:String>OPM</x:String>
+                                <x:String>Punk Rock</x:String>
+                            </x:Array>
+                        </CarouselView.ItemsSource>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="10">
+                                    <Frame HeightRequest="120" WidthRequest="120">
+                                        <HorizontalStackLayout HorizontalOptions="Center">
+                                            <Image
+                                                HeightRequest="40"
+                                                Source="logo.png"
+                                                WidthRequest="50" />
+                                            <Label
+                                                Margin="10,15,0,0"
+                                                FontAttributes="Bold"
+                                                HorizontalTextAlignment="Center"
+                                                Style="{StaticResource Headline}"
+                                                Text="{Binding .}"
+                                                TextColor="Black" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                    <Label
+                                        Margin="5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Fields}"
+                                        Text="Song Name"
+                                        TextColor="White" />
+                                    <Label
+                                        Margin="5,-5,5,5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Reminders}"
+                                        Text="Artist"
+                                        TextColor="#A39797" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
