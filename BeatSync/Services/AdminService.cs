@@ -10,6 +10,7 @@ public class AdminService
     private readonly string _userFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Users.json");
     private readonly string _publisherFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers.json");
     private readonly string _songFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs.json");
+    private readonly string _albumFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Albums.json");
 
     //logout
     public async Task Logout()
@@ -533,6 +534,40 @@ public class AdminService
     {
         var users = await GetUsersAsync();
         return new ObservableCollection<User>(users.Where(m => !m.IsDeleted));
+    }
+
+    //albums
+
+    public async Task<bool> AddAlbumAsync(Album album)
+    {
+        if (album == null)
+        {
+            return false;
+        }
+
+        ObservableCollection<Album> albums = await GetAlbumsAsync();
+
+        album.Id = albums.Count + 1;
+        album.IsDeleted = false;
+
+        albums.Add(album);
+
+        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
+        await File.WriteAllTextAsync(_albumFilePath, json);
+        return true;
+    }
+
+    public async Task<ObservableCollection<Album>> GetAlbumsAsync()
+    {
+
+        if (!File.Exists(_albumFilePath))
+        {
+            return new ObservableCollection<Album>();
+        }
+
+        var json = await File.ReadAllTextAsync(_albumFilePath);
+        var albums = JsonSerializer.Deserialize<ObservableCollection<Album>>(json);
+        return albums!;
     }
 
 }

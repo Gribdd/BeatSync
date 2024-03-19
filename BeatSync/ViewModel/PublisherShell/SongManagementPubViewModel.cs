@@ -13,19 +13,17 @@ namespace BeatSync.ViewModel.PublisherShell;
 public partial class SongManagementPubViewModel : ObservableObject
 {
     private AdminService _adminService;
-    readonly IAudioManager audioManager;
 
     [ObservableProperty]
-    private MediaSource _mediaSource;
+    private MediaSource? _mediaSource;
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
 
 
-    public SongManagementPubViewModel(AdminService adminService, IAudioManager audioManager)
+    public SongManagementPubViewModel(AdminService adminService)
     {
         _adminService = adminService;
-        this.audioManager = audioManager;
     }
 
 
@@ -42,14 +40,15 @@ public partial class SongManagementPubViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task PlaySong(Song song)
+    Task PlaySong(Song song)
     {
-        if(song.FilePath == null)
+        if (song.FilePath == null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         MediaSource = MediaSource.FromFile(song.FilePath);
+        return Task.CompletedTask;
     }
 
     public async void GetSongsAsync()

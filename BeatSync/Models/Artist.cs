@@ -4,11 +4,6 @@ namespace BeatSync.Models;
 
 public partial class Artist : ObservableObject
 {
-    /// <summary>
-    /// sample call in the viewmodel
-    /// [ObservableProperty]
-    /// private ObservableColectons<Artist>< _artists;
-    /// </summary>
     [ObservableProperty]
     private int _id;
 

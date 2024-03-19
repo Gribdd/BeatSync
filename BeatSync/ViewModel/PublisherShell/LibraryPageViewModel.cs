@@ -1,17 +1,13 @@
-﻿using BeatSync.Services;
+﻿using BeatSync.Pages;
+using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class LibraryPageViewModel : ObservableObject
 {
-    private AdminService _adminService;
+    private AdminService? _adminService;
 
     public LibraryPageViewModel(AdminService adminService)
     {
@@ -20,8 +16,14 @@ public partial class LibraryPageViewModel : ObservableObject
 
 
     [RelayCommand]
+    async Task AddAlbum()
+    {
+        await Shell.Current.GoToAsync($"{nameof(AddAlbumPublisher)}");
+    }
+
+    [RelayCommand]
     async Task Logout()
     {
-        await _adminService.Logout();
+        await _adminService!.Logout();
     }
 }
