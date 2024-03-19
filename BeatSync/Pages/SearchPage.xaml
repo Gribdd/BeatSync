@@ -25,11 +25,14 @@
                     TextColor="White" />
 
             </HorizontalStackLayout>
-            <BoxView
-                Margin="0,-10,0,0"
-                HeightRequest="2"
-                WidthRequest="310"
-                Color="White" />
+            <SearchBar
+                BackgroundColor="White"
+                Placeholder="What do you want to listen to?"
+                WidthRequest="310" />
+
+
+
+
         </VerticalStackLayout>
     </ScrollView>
 

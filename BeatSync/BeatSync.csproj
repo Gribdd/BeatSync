@@ -74,6 +74,7 @@
 	  <None Remove="Resources\Images\resizedbackgroundpixel.png" />
 	  <None Remove="Resources\Images\returnbtn.png" />
 	  <None Remove="Resources\Images\search.png" />
+	  <None Remove="Resources\Images\searchblack.png" />
 	  <None Remove="Resources\Images\songs.png" />
 	  <None Remove="Resources\Images\test.png" />
 	  <None Remove="Resources\Images\update.png" />
