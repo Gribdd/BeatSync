@@ -31,6 +31,7 @@
                 Source="search.png" />
             <ImageButton
                 Margin="-5,0,0,0"
+                Command="{Binding AddAlbumCommand}"
                 HeightRequest="30"
                 HorizontalOptions="Start"
                 Source="add.png" />

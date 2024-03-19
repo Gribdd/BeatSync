@@ -88,7 +88,6 @@ public partial class AddSongViewModel : ObservableObject
 
         Song.ImageFilePath = Path.Combine(dir, $"{Song.Name}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
-
     }
 
     [RelayCommand]
