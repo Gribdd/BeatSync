@@ -18,6 +18,9 @@ public partial class Album : ObservableObject
 
     [ObservableProperty]
     private string? _name;
+
+    [ObservableProperty]
+    private string? _artistName;
     
     [ObservableProperty]
     private string? _imageFilePath;

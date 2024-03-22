@@ -97,10 +97,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\AddAlbum.xaml">
+	  <MauiXaml Update="Pages\AddAlbumPublisher.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\AddAlbumPublisher.xaml">
+	  <MauiXaml Update="Pages\AddAlbumSongs.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\AddArtist.xaml">

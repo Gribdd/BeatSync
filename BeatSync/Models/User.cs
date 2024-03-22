@@ -36,4 +36,5 @@ public partial class User : ObservableObject
 
     [ObservableProperty]
     private string? _imageFilePath;
+    public string? FullName { get { return $"{FirstName} {LastName}"; } }
 }

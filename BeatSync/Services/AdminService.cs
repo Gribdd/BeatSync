@@ -154,6 +154,13 @@ public class AdminService
         return new ObservableCollection<Artist>(artists.Where(m => !m.IsDeleted));
     }
 
+    public async Task<String> GetArtistNameById(int id )
+    {
+        var artists = await GetArtistsAsync();
+        var artist = artists.FirstOrDefault(m => m.Id == id);
+        return $"{artist!.FirstName} {artist!.LastName}";
+    }
+
 
     //Songs
 
@@ -216,11 +223,13 @@ public class AdminService
         return new ObservableCollection<Song>(songs.Where(m => !m.IsDeleted));
     }
 
-    public async Task<String> GetArtistNameById(int id )
+    public async Task<ObservableCollection<Song>> GetSongsByArtistIdAsync(int? artistId)
     {
-        var artists = await GetArtistsAsync();
-        var artist = artists.FirstOrDefault(m => m.Id == id);
-        return $"{artist!.FirstName} {artist!.LastName}";
+        if (artistId == null) return new ObservableCollection<Song>();
+
+        var songs = await GetSongsAsync();
+
+        return new ObservableCollection<Song>(songs.Where(song => song.ArtistID == artistId));
     }
 
     public async Task<ObservableCollection<Song>> DeleteSongAsync(int id)
@@ -325,6 +334,12 @@ public class AdminService
         return publishers!;
     }
 
+    public async Task<ObservableCollection<Publisher>> GetActivePublisherAsync()
+    {
+        var publishers = await GetPublishersAsync();
+        return new ObservableCollection<Publisher>(publishers.Where(m => !m.IsDeleted));
+    }
+
     public async Task<ObservableCollection<Publisher>> DeletePublisherAsync(int id)
     {
         var publishers = await GetPublishersAsync();
@@ -406,11 +421,6 @@ public class AdminService
         return await GetActivePublisherAsync();
     }
 
-    public async Task<ObservableCollection<Publisher>> GetActivePublisherAsync()
-    {
-        var publishers = await GetPublishersAsync();
-        return new ObservableCollection<Publisher>(publishers.Where(m => !m.IsDeleted));
-    }
 
     //Users
 
@@ -447,6 +457,12 @@ public class AdminService
         var json = await File.ReadAllTextAsync(_userFilePath);
         var users = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
         return users!;
+    }
+
+    public async Task<ObservableCollection<User>> GetActiveUserAsync()
+    {
+        var users = await GetUsersAsync();
+        return new ObservableCollection<User>(users.Where(m => !m.IsDeleted));
     }
 
     public async Task<ObservableCollection<User>> DeleteUserAsync(int id)
@@ -530,11 +546,6 @@ public class AdminService
         return await GetActiveUserAsync();
     }
 
-    public async Task<ObservableCollection<User>> GetActiveUserAsync()
-    {
-        var users = await GetUsersAsync();
-        return new ObservableCollection<User>(users.Where(m => !m.IsDeleted));
-    }
 
     //albums
 

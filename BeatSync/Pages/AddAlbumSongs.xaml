@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.AddAlbumSongs"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.General"
+    Title="AddAlbumSongs"
+    x:DataType="viewmodel:AddAlbumSongsViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="auto,auto,*">
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <ImageButton
+                Margin="-200,30,30,30"
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png" />
+            <Image
+                HeightRequest="187"
+                Source="{Binding Album.ImageFilePath}"
+                WidthRequest="200" />
+        </HorizontalStackLayout>
+        
+        <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center">
+            <Label Text="{Binding Album.Name}" />
+            <HorizontalStackLayout>
+                <Image Source="{Binding .}" />
+                <Label Text="{Binding Album.ArtistName}" />
+            </HorizontalStackLayout>
+            <Button ImageSource="add.png" Text="Add Songs" WidthRequest="200"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2" Margin="10" ItemsSource="{Binding Songs}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Song">
+                    <Frame
+                        Margin="30,10,30,10"
+                        BackgroundColor="#17122E"
+                        HeightRequest="80"
+                        WidthRequest="310">
+                        <Grid ColumnDefinitions=".2*,.8*">
+                            <Image
+                                HeightRequest="40"
+                                Source="{Binding ImageFilePath}" />
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                Padding="5"
+                                HeightRequest="50"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource SubHeadline}"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label
+                                        Style="{StaticResource Fields}"
+                                        Text="{Binding ArtistName}"
+                                        TextColor="#7EA6D9" />
+                                    <Label
+                                        Style="{StaticResource Fields}"
+                                        Text=" | "
+                                        TextColor="#7EA6D9" />
+                                    <Label
+                                        Style="{StaticResource Fields}"
+                                        Text="{Binding Genre}"
+                                        TextColor="#7EA6D9" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

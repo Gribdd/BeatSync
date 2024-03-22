@@ -2,19 +2,14 @@
 using BeatSync.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class AddAlbumPublisherViewModel : ObservableObject
 {
-    private AdminService _adminService;
+    private AdminService? _adminService;
     private FileResult? _fileResultAlbumCoverImage;
 
     [ObservableProperty]
@@ -26,7 +21,7 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
     [ObservableProperty]
     private Artist _selectedArtist = new();
 
-    public AddAlbumPublisherViewModel(AdminService adminService)
+    public AddAlbumPublisherViewModel(AdminService? adminService)
     {
         _adminService = adminService;
     }
@@ -59,7 +54,7 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
 
         //make dir 
         string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Albums");
-        _adminService.CreateDirectoryIfMissing(dir);
+        _adminService!.CreateDirectoryIfMissing(dir);
 
         Album.ImageFilePath = Path.Combine(dir, $"{Album.Name}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
@@ -81,8 +76,11 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
         }
 
         Album.ArtistId = SelectedArtist.Id;
-        if (await _adminService.AddAlbumAsync(Album))
+        Album.ArtistName = SelectedArtist.FullName;
+
+        if (await _adminService!.AddAlbumAsync(Album))
         {
+            File.Copy(_fileResultAlbumCoverImage!.FullPath, Album.ImageFilePath!);
             await Shell.Current.DisplayAlert("Add Album", "Album successfully added", "OK");
             await Shell.Current.GoToAsync("..");
         }
@@ -94,6 +92,6 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
     
     public async void GetArtists()
     {
-        Artists = await _adminService.GetActiveArtistAsync();
+        Artists = await _adminService!.GetActiveArtistAsync();
     }
 }
