@@ -3,6 +3,7 @@
     x:Class="BeatSync.Pages.LibraryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
     Title="LibraryPage"
     x:DataType="viewmodel:LibraryPageViewModel"
@@ -45,72 +46,59 @@
         <!--  Library Elements  -->
         <!--  Created Playlists  -->
 
-        <CollectionView HorizontalScrollBarVisibility="Always">
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Item 1</x:String>
-                    <x:String>Item 1</x:String>
-                    <x:String>Item 1</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
+        <CollectionView
+            x:Name="collectionView"
+            HorizontalScrollBarVisibility="Always"
+            ItemsSource="{Binding Albums}"
+            SelectedItem="{Binding SelectedAlbum}">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Album">
                     <Frame
                         Margin="30,10,30,10"
                         BackgroundColor="#17122E"
                         HeightRequest="80"
                         WidthRequest="310">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".2*" />
-                                <ColumnDefinition Width=".8*" />
-                            </Grid.ColumnDefinitions>
-
+                        <Grid ColumnDefinitions=".2*,.8*">
                             <Image
-                                Grid.Row="0"
                                 Grid.Column="0"
                                 HeightRequest="40"
-                                Source="logo.png" />
-                            <!--  add image source  -->
+                                Source="{Binding ImageFilePath}" />
                             <VerticalStackLayout
-                                Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
                                 Padding="5"
                                 HeightRequest="50"
                                 VerticalOptions="Center">
-                                <!--  add playlist name source here  -->
                                 <Label
                                     FontAttributes="Bold"
                                     HorizontalOptions="Start"
                                     Style="{StaticResource SubHeadline}"
-                                    Text="Song Name"
+                                    Text="{Binding Name}"
                                     TextColor="White" />
 
                                 <HorizontalStackLayout Spacing="10">
-                                    <!--  bind artist name here  -->
                                     <Label
                                         Style="{StaticResource Reminders}"
-                                        Text="Artist Name"
+                                        Text="{Binding ArtistName}"
                                         TextColor="#A39797" />
                                     <Label
                                         Style="{StaticResource Reminders}"
                                         Text=" | "
                                         TextColor="#7EA6D9" />
-                                    <!--  bind song count here  -->
                                     <Label
                                         Style="{StaticResource Reminders}"
-                                        Text="23 Songs"
+                                        Text="{Binding Songs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
                                         TextColor="#A39797" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.NavigateToAddAlbumSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-
     </VerticalStackLayout>
 
 

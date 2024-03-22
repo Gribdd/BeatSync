@@ -36,4 +36,6 @@ public partial class Artist : ObservableObject
 
     [ObservableProperty]
     private string? _imageFilePath;
+
+    public string? FullName { get { return $"{FirstName} {LastName}"; } }
 }

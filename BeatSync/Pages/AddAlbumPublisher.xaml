@@ -35,7 +35,11 @@
             <Entry Text="{Binding Album.Name}" />
         </Border>
         <Border>
-            <Picker ItemsSource="{Binding Artists}" SelectedItem="{Binding SelectedArtist}" Title="--SELECT ARTIST--"/>
+            <Picker
+                Title="--SELECT ARTIST--"
+                ItemDisplayBinding="{Binding Username}"
+                ItemsSource="{Binding Artists}"
+                SelectedItem="{Binding SelectedArtist}" />
         </Border>
         <Button
             Margin="0,10,0,0"

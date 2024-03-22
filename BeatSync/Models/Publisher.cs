@@ -41,4 +41,7 @@ public partial class Publisher : ObservableObject
 
     [ObservableProperty]
     private string? _imageFilePath;
+
+    public string? FullName { get { return $"{FirstName} {LastName}"; } }
+
 }
