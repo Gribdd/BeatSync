@@ -14,6 +14,9 @@ public partial class Song : ObservableObject
     private int _artistID;
 
     [ObservableProperty]
+    private int _albumId;
+
+    [ObservableProperty]
     private string? _artistName;
 
     [ObservableProperty]
@@ -30,4 +33,5 @@ public partial class Song : ObservableObject
 
     [ObservableProperty]
     private bool _isDeleted;
+
 }

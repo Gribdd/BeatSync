@@ -581,4 +581,17 @@ public class AdminService
         return albums!;
     }
 
+    public async Task<ObservableCollection<Song>> AddAlbumSongAsync(Album album)
+    {
+        var albums = await GetAlbumsAsync();
+
+        var indexOfAlbumInTheCollection = albums.ToList().FindIndex(a => a.Id == album.Id);
+        albums[indexOfAlbumInTheCollection] = album;
+
+        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
+        await File.WriteAllTextAsync(_albumFilePath, json);
+
+        await Shell.Current.DisplayAlert("Add Album song", "Successfully added song to album", "OK");
+        return album.Songs!;
+    }
 }
