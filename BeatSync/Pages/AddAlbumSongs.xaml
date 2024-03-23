@@ -24,17 +24,25 @@
                 Source="{Binding Album.ImageFilePath}"
                 WidthRequest="200" />
         </HorizontalStackLayout>
-        
+
         <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center">
             <Label Text="{Binding Album.Name}" />
             <HorizontalStackLayout>
                 <Image Source="{Binding .}" />
                 <Label Text="{Binding Album.ArtistName}" />
             </HorizontalStackLayout>
-            <Button ImageSource="add.png" Text="Add Songs" WidthRequest="200"/>
+            <Button
+                Command="{Binding AddSongToAlbumCommand}"
+                ImageSource="add.png"
+                Text="Add Songs"
+                WidthRequest="200" />
         </VerticalStackLayout>
 
-        <CollectionView Grid.Row="2" Margin="10" ItemsSource="{Binding Songs}">
+        <CollectionView
+            Grid.Row="2"
+            Margin="10"
+            ItemsSource="{Binding Album.Songs}"
+            EmptyView="No songs in the album yet">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
                     <Frame
@@ -43,9 +51,7 @@
                         HeightRequest="80"
                         WidthRequest="310">
                         <Grid ColumnDefinitions=".2*,.8*">
-                            <Image
-                                HeightRequest="40"
-                                Source="{Binding ImageFilePath}" />
+                            <Image HeightRequest="40" Source="{Binding ImageFilePath}" />
                             <VerticalStackLayout
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
