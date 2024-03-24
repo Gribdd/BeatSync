@@ -26,14 +26,35 @@ public partial class AddAlbumSongsViewModel : ObservableObject
         _adminService = adminService;
     }
 
+
     //public async void GetSongsByArtistId()
     //{
     //    Songs = await _adminService.GetSongsByArtistIdAsync(Album.ArtistId);
     //}
 
+
     [RelayCommand]
     async Task Return()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
+    async Task AddSongToAlbum()
+    {
+        string[] songNames = Songs.Select(s => s.Name!).ToArray();
+        string selectedSongName = await Shell.Current.DisplayActionSheet("Add song to album", "Cancel", null, songNames);
+
+        if(selectedSongName == null)
+        {
+            return;
+        }
+        
+        Song? selectedSong = Songs.FirstOrDefault(song => string.Equals(selectedSongName, song.Name));
+        // Initialize the album's songs collection if it's null
+        Album.Songs ??= new();
+
+        Album.Songs!.Add(selectedSong!);
+        Album.Songs = await _adminService.AddAlbumSongAsync(Album);
     }
 }

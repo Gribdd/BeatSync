@@ -29,5 +29,5 @@ public partial class Album : ObservableObject
     private bool _isDeleted;
 
     [ObservableProperty]
-    private ObservableCollection<Album>? _songs;
+    private ObservableCollection<Song>? _songs;
 }

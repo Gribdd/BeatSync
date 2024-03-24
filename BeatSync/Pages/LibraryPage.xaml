@@ -49,8 +49,7 @@
         <CollectionView
             x:Name="collectionView"
             HorizontalScrollBarVisibility="Always"
-            ItemsSource="{Binding Albums}"
-            SelectedItem="{Binding SelectedAlbum}">
+            ItemsSource="{Binding Albums}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Album">
                     <Frame
