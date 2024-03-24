@@ -9,7 +9,8 @@ namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class LibraryPageViewModel : ObservableObject
 {
-    private AdminService? _adminService;
+    private AdminService adminService;
+    private AlbumService albumService;
 
     [ObservableProperty]
     private ObservableCollection<Album> _albums = new();
@@ -17,9 +18,10 @@ public partial class LibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private Album _selectedAlbum = new();
 
-    public LibraryPageViewModel(AdminService? adminService)
+    public LibraryPageViewModel(AdminService adminService, AlbumService albumService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.albumService = albumService;
     }
 
 
@@ -42,11 +44,11 @@ public partial class LibraryPageViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await _adminService!.Logout();
+        await adminService!.Logout();
     }
 
     public async void GetAlbums()
     {
-        Albums = await _adminService!.GetAlbumsAsync();
+        Albums = await albumService.GetAlbumsAsync();
     }
 }

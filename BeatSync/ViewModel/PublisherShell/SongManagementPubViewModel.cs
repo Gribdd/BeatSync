@@ -12,7 +12,8 @@ namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class SongManagementPubViewModel : ObservableObject
 {
-    private AdminService _adminService;
+    private AdminService adminService;
+    private SongService songService;
 
     [ObservableProperty]
     private MediaSource? _mediaSource;
@@ -21,16 +22,17 @@ public partial class SongManagementPubViewModel : ObservableObject
     private ObservableCollection<Song> _songs = new();
 
 
-    public SongManagementPubViewModel(AdminService adminService)
+    public SongManagementPubViewModel(AdminService adminService, SongService songService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.songService = songService;
     }
 
 
     [RelayCommand]
     async Task Logout()
     {
-        await _adminService.Logout();
+        await adminService.Logout();
     }
 
     [RelayCommand]
@@ -53,6 +55,6 @@ public partial class SongManagementPubViewModel : ObservableObject
 
     public async void GetSongsAsync()
     {
-        Songs = await _adminService.GetActiveSongAsync();
+        Songs = await songService.GetActiveSongAsync();
     }
 }

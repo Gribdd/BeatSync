@@ -8,9 +8,13 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class AddSongViewModel : ObservableObject
 {
-    private AdminService _adminService;
-    private FileResult? _fileResultSongImage;
-    private FileResult? _fileResultSong;
+    private const string Directory = "Songs";
+    private AdminService adminService;
+    private ArtistService artistService;
+    private SongService songService;
+    private FileUploadService fileUploadService;
+    private FileResult? fileResultSongImage;
+    private FileResult? fileResultSong;
 
     [ObservableProperty]
     private bool _isVisible = false;
@@ -25,9 +29,13 @@ public partial class AddSongViewModel : ObservableObject
     private ObservableCollection<Artist> _artists = new();
 
     public string[] Genres { get; set; } = { "Rap", "Pop", "Indie", "OPM", "Punk Rock" };
-    public AddSongViewModel(AdminService adminService)
+
+    public AddSongViewModel(AdminService adminService, ArtistService artistService, SongService songService, FileUploadService fileUploadService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.artistService = artistService;
+        this.songService = songService;
+        this.fileUploadService = fileUploadService;
     }
 
     [RelayCommand]
@@ -39,20 +47,18 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        Song.ArtistID = SelectedArtist.Id;
-        Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
-
         if (string.IsNullOrEmpty(Song.ImageFilePath))
         {
             await Shell.Current.DisplayAlert("Upload picture", "Please upload song picture first", "OK");
             return;
         }
 
-        if (await _adminService.AddSongAsync(Song))
+        Song.ArtistID = SelectedArtist.Id;
+        Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
+        if (await songService.AddSongAsync(Song))
         {
-            File.Copy(_fileResultSongImage!.FullPath, Song.ImageFilePath);
-            File.Copy(_fileResultSong!.FullPath, Song.FilePath!);
-
+            File.Copy(fileResultSongImage!.FullPath, Song.ImageFilePath);
+            File.Copy(fileResultSong!.FullPath, Song.FilePath!);
             await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
             await Shell.Current.GoToAsync("..");
         }
@@ -71,23 +77,7 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        _fileResultSongImage = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Please pick an image for the song",
-            FileTypes = FilePickerFileType.Images
-        });
-
-        if (_fileResultSongImage == null)
-        {
-            return;
-        }
-
-        //make dir 
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs");
-        _adminService.CreateDirectoryIfMissing(dir);
-
-        Song.ImageFilePath = Path.Combine(dir, $"{Song.Name}.jpg");
-        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+        (fileResultSongImage, Song.ImageFilePath) = await fileUploadService.UploadImage(Song.Name, Directory);
     }
 
     [RelayCommand]
@@ -99,17 +89,7 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        _fileResultSong = await _adminService.UploadSongAsync();
-        if(_fileResultSong == null)
-        {
-            return;
-        }
-
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "SongsPlayer");
-        _adminService.CreateDirectoryIfMissing(dir);
-
-        Song.FilePath = Path.Combine(dir, $"{Song.Name}.mp3");
-        await Shell.Current.DisplayAlert("Upload song", "Song successfully uploaded ", "OK");
+        (fileResultSong, Song.FilePath) = await fileUploadService.UploadSong(Song.Name);
     }
 
     [RelayCommand]
@@ -120,6 +100,6 @@ public partial class AddSongViewModel : ObservableObject
 
     public async Task PopulateArtist()
     {
-        Artists = await _adminService.GetActiveArtistAsync();
+        Artists = await artistService.GetActiveArtistAsync();
     }
 }

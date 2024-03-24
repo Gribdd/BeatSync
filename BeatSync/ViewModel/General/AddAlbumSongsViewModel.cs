@@ -26,11 +26,12 @@ public partial class AddAlbumSongsViewModel : ObservableObject
         _adminService = adminService;
     }
 
-    public async void GetSongsByArtistId()
-    {
 
-        Songs = await _adminService.GetSongsByArtistIdAsync(Album.ArtistId);
-    }
+    //public async void GetSongsByArtistId()
+    //{
+    //    Songs = await _adminService.GetSongsByArtistIdAsync(Album.ArtistId);
+    //}
+
 
     [RelayCommand]
     async Task Return()
