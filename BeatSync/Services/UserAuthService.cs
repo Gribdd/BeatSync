@@ -6,18 +6,18 @@ namespace BeatSync.Services;
 
 public class UserAuthService : ObservableObject
 {
-    private readonly UserValidationService _userValidationService;
+    private readonly UserValidationService userValidationService;
 
 
     public UserAuthService(UserValidationService userValidationService)
     {
-        _userValidationService = userValidationService;
+        this.userValidationService = userValidationService;
     }
 
 
     public async Task<bool> Authenticate(string identifier, string password)
     {
-        if(!await _userValidationService.DoesUserExist(identifier))
+        if(!await userValidationService.DoesUserExist(identifier))
         {
             return false;
         }
@@ -53,7 +53,7 @@ public class UserAuthService : ObservableObject
 
     private async Task<User?> GetUser(string identifier, string password)
     {
-        var artists =  await _userValidationService.GetArtists();
+        var artists =  await userValidationService.GetArtists();
         var artist = artists.FirstOrDefault(a => (a.Username == identifier || a.Email == identifier) && (a.Password == password));
         if (artist != null)
         {
@@ -73,7 +73,7 @@ public class UserAuthService : ObservableObject
             };
         }
 
-        var publishers = await _userValidationService.GetPublishers();
+        var publishers = await userValidationService.GetPublishers();
         var publisher = publishers.FirstOrDefault(p => (p.Username == identifier || p.Email == identifier) && (p.Password == password));
         if (publisher != null)
         {
@@ -93,7 +93,7 @@ public class UserAuthService : ObservableObject
             };
         }
 
-        var users = await _userValidationService.GetUsers();
+        var users = await userValidationService.GetUsers();
         var user = users.FirstOrDefault(u => (u.Username == identifier || u.Email == identifier) && (u.Password == password));
         return user;
     }   

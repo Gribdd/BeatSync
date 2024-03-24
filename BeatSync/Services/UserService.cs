@@ -8,7 +8,7 @@ namespace BeatSync.Services;
 
 public class UserService
 {
-    private readonly string _userFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Users.json");
+    private readonly string userFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Users.json");
     public async Task<bool> AddUserAsync(User user)
     {
         if (user == null)
@@ -25,18 +25,18 @@ public class UserService
         users.Add(user);
 
         var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
-        await File.WriteAllTextAsync(_userFilePath, json);
+        await File.WriteAllTextAsync(userFilePath, json);
         return true;
     }
 
     public async Task<ObservableCollection<User>> GetUsersAsync()
     {
-        if (!File.Exists(_userFilePath))
+        if (!File.Exists(userFilePath))
         {
             return new ObservableCollection<User>();
         }
 
-        var json = await File.ReadAllTextAsync(_userFilePath);
+        var json = await File.ReadAllTextAsync(userFilePath);
         var users = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
         return users!;
     }
@@ -65,7 +65,7 @@ public class UserService
 
         userToBeDeleted.IsDeleted = true;
         var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
-        await File.WriteAllTextAsync(_userFilePath, json);
+        await File.WriteAllTextAsync(userFilePath, json);
 
         users.Remove(userToBeDeleted);
         await Shell.Current.DisplayAlert("Delete User", "Successfully deleted user", "OK");
@@ -122,7 +122,7 @@ public class UserService
         int count = users.ToList().FindIndex(m => m.Id == id);
         users[count] = userToBeUpdated;
         var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
-        await File.WriteAllTextAsync(_userFilePath, json);
+        await File.WriteAllTextAsync(userFilePath, json);
 
         await Shell.Current.DisplayAlert("Update User", "Successfully updated user", "OK");
         return await GetActiveUserAsync();
