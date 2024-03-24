@@ -11,7 +11,7 @@ namespace BeatSync.Services;
 
 public class AlbumService
 {
-    private readonly string _albumFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Albums.json");
+    private readonly string albumFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Albums.json");
     public async Task<bool> AddAlbumAsync(Album album)
     {
         if (album == null)
@@ -27,20 +27,34 @@ public class AlbumService
         albums.Add(album);
 
         var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
-        await File.WriteAllTextAsync(_albumFilePath, json);
+        await File.WriteAllTextAsync(albumFilePath, json);
         return true;
     }
 
     public async Task<ObservableCollection<Album>> GetAlbumsAsync()
     {
 
-        if (!File.Exists(_albumFilePath))
+        if (!File.Exists(albumFilePath))
         {
             return new ObservableCollection<Album>();
         }
 
-        var json = await File.ReadAllTextAsync(_albumFilePath);
+        var json = await File.ReadAllTextAsync(albumFilePath);
         var albums = JsonSerializer.Deserialize<ObservableCollection<Album>>(json);
         return albums!;
+    }
+
+    public async Task<ObservableCollection<Song>> AddAlbumSongAsync(Album album)
+    {
+        var albums = await GetAlbumsAsync();
+
+        var indexOfAlbumInTheCollection = albums.ToList().FindIndex(a => a.Id == album.Id);
+        albums[indexOfAlbumInTheCollection] = album;
+
+        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
+        await File.WriteAllTextAsync(albumFilePath, json);
+
+        await Shell.Current.DisplayAlert("Add Album song", "Successfully added song to album", "OK");
+        return album.Songs!;
     }
 }

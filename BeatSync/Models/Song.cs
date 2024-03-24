@@ -14,7 +14,7 @@ public partial class Song : ObservableObject
     private int _artistID;
 
     [ObservableProperty]
-    private int _albumId;
+    private int? _albumId;
 
     [ObservableProperty]
     private string? _artistName;

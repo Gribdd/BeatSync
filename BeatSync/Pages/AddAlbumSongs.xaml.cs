@@ -14,6 +14,6 @@ public partial class AddAlbumSongs : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-		//_vm.GetSongsByArtistId();
-    }
+		_vm.GetSongsByArtistId();
+	}
 }

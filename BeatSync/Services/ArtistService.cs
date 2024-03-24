@@ -6,7 +6,7 @@ namespace BeatSync.Services;
 
 public class ArtistService
 {
-    private readonly string _artistFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Artists.json");
+    private readonly string artistFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Artists.json");
 
     public async Task<bool> AddArtistAsync(Artist artist)
     {
@@ -25,7 +25,7 @@ public class ArtistService
         artists.Add(artist);
 
         var json = JsonSerializer.Serialize<ObservableCollection<Artist>>(artists);
-        await File.WriteAllTextAsync(_artistFilePath, json);
+        await File.WriteAllTextAsync(artistFilePath, json);
         return true;
 
     }
@@ -48,7 +48,7 @@ public class ArtistService
 
         artistToBeDeleted.IsDeleted = true;
         var json = JsonSerializer.Serialize<ObservableCollection<Artist>>(artists);
-        await File.WriteAllTextAsync(_artistFilePath, json);
+        await File.WriteAllTextAsync(artistFilePath, json);
 
         artists.Remove(artistToBeDeleted);
         await Shell.Current.DisplayAlert("Delete Artist", "Successfully deleted artist", "OK");
@@ -105,7 +105,7 @@ public class ArtistService
         int count = artists.ToList().FindIndex(m => m.Id == id);
         artists[count] = artistToBeUpdated;
         var json = JsonSerializer.Serialize<ObservableCollection<Artist>>(artists);
-        await File.WriteAllTextAsync(_artistFilePath, json);
+        await File.WriteAllTextAsync(artistFilePath, json);
 
         await Shell.Current.DisplayAlert("Update Artist", "Successfully updated artist", "OK");
         return await GetActiveArtistAsync();
@@ -113,12 +113,12 @@ public class ArtistService
 
     public async Task<ObservableCollection<Artist>> GetArtistsAsync()
     {
-        if (!File.Exists(_artistFilePath))
+        if (!File.Exists(artistFilePath))
         {
             return new ObservableCollection<Artist>();
         }
 
-        var json = await File.ReadAllTextAsync(_artistFilePath);
+        var json = await File.ReadAllTextAsync(artistFilePath);
         var artists = JsonSerializer.Deserialize<ObservableCollection<Artist>>(json);
         return artists!;
     }
