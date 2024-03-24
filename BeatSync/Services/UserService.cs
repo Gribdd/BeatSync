@@ -1,100 +1,130 @@
 ﻿
+
 using BeatSync.Models;
-using BeatSync.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+
 namespace BeatSync.Services;
 
-public class UserService : ObservableObject
+public class UserService
 {
-    private readonly UserValidationService _userValidationService;
-
-
-    public UserService(UserValidationService userValidationService)
+    private readonly string _userFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Users.json");
+    public async Task<bool> AddUserAsync(User user)
     {
-        _userValidationService = userValidationService;
-    }
-
-
-    public async Task<bool> Authenticate(string identifier, string password)
-    {
-        if(!await _userValidationService.DoesUserExist(identifier))
+        if (user == null)
         {
             return false;
         }
 
-        var user = GetUser(identifier, password);
+        ObservableCollection<User> users = await GetUsersAsync();
 
-        if(user != null)
-        {
-            NavigateBasedOnUserType(user);
-            return true;
-        }
-        
-        return false;
+        user.Id = users.Count + 1;
+        user.AccounType = 3;
+        user.IsDeleted = false;
+
+        users.Add(user);
+
+        var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
+        await File.WriteAllTextAsync(_userFilePath, json);
+        return true;
     }
 
-    private void NavigateBasedOnUserType(User user)
+    public async Task<ObservableCollection<User>> GetUsersAsync()
     {
-        switch(user.AccounType)
+        if (!File.Exists(_userFilePath))
         {
-            case 1:
-                Application.Current!.MainPage = new PublisherLandingPage();
-                break;
-            case 2:
-                Application.Current!.MainPage = new PublisherLandingPage();
-                break;
-            case 3:
-                Application.Current!.MainPage = new CustomerLandingPage();
-                break;
-            default:
-                break;
+            return new ObservableCollection<User>();
         }
+
+        var json = await File.ReadAllTextAsync(_userFilePath);
+        var users = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
+        return users!;
     }
 
-    private User? GetUser(string identifier, string password)
+    public async Task<ObservableCollection<User>> GetActiveUserAsync()
     {
-        var artists = _userValidationService.GetArtists();
-        var artist = artists.FirstOrDefault(a => (a.Username == identifier || a.Email == identifier) && (a.Password == password));
-        if (artist != null)
+        var users = await GetUsersAsync();
+        return new ObservableCollection<User>(users.Where(m => !m.IsDeleted));
+    }
+
+    public async Task<ObservableCollection<User>> DeleteUserAsync(int id)
+    {
+        var users = await GetUsersAsync();
+        var userToBeDeleted = users.FirstOrDefault(m => m.Id == id);
+        if (userToBeDeleted == null)
         {
-            return new User
-            {
-                Id = artist.Id,
-                Email = artist.Email,
-                Username = artist.Username,
-                Password = artist.Password,
-                DateOfBirth = artist.DateOfBirth,
-                FirstName = artist.FirstName,
-                LastName = artist.LastName,
-                Gender = artist.Gender,
-                AccounType = artist.AccounType,
-                IsDeleted = artist.IsDeleted,
-                ImageFilePath = artist.ImageFilePath
-            };
+            await Shell.Current.DisplayAlert("Error", "User not found", "OK");
+            return users;
         }
 
-        var publishers = _userValidationService.GetPublishers();
-        var publisher = publishers.FirstOrDefault(p => (p.Username == identifier || p.Email == identifier) && (p.Password == password));
-        if (publisher != null)
+        if (userToBeDeleted.IsDeleted)
         {
-            return new User
-            {
-                Id = publisher.Id,
-                Email = publisher.Email,
-                Username = publisher.Username,
-                Password = publisher.Password,
-                DateOfBirth = publisher.DateOfBirth,
-                FirstName = publisher.FirstName,
-                LastName = publisher.LastName,
-                Gender = publisher.Gender,
-                AccounType = publisher.AccounType,
-                IsDeleted = publisher.IsDeleted,
-                ImageFilePath = publisher.ImageFilePath
-            };
+            await Shell.Current.DisplayAlert("Error", "User already deleted", "OK");
+            return users;
         }
 
-        var users = _userValidationService.GetUsers();
-        var user = users.FirstOrDefault(u => (u.Username == identifier || u.Email == identifier) && (u.Password == password));
-        return user;
-    }   
+        userToBeDeleted.IsDeleted = true;
+        var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
+        await File.WriteAllTextAsync(_userFilePath, json);
+
+        users.Remove(userToBeDeleted);
+        await Shell.Current.DisplayAlert("Delete User", "Successfully deleted user", "OK");
+        return await GetActiveUserAsync();
+    }
+
+    public async Task<ObservableCollection<User>> UpdateUserAsync(int id)
+    {
+        var users = await GetUsersAsync();
+        var userToBeUpdated = users.FirstOrDefault(m => m.Id == id);
+        if (userToBeUpdated == null)
+        {
+            await Shell.Current.DisplayAlert("Error", "User not found", "OK");
+            return users;
+        }
+
+        string[] editOptions = { "Email", "Username", "Password", "First Name", "Last Name" };
+        string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
+
+        var newValue = string.Empty;
+        for (int index = 0; index < editOptions.Length; index++)
+        {
+            if (editOptions[index] == selectedOption)
+            {
+                switch (index)
+                {
+                    case 0: // Email
+                        newValue = await Shell.Current.DisplayPromptAsync($"Edit User {selectedOption}", $"Enter new {selectedOption}:", initialValue: userToBeUpdated.Email);
+                        userToBeUpdated.Email = newValue;
+                        break;
+                    case 1: // Username
+                        newValue = await Shell.Current.DisplayPromptAsync($"Edit User {selectedOption}", $"Enter new {selectedOption}:", initialValue: userToBeUpdated.Username);
+                        userToBeUpdated.Username = newValue;
+                        break;
+                    case 2: // Password
+                        newValue = await Shell.Current.DisplayPromptAsync($"Edit User {selectedOption}", $"Enter new {selectedOption}:", initialValue: userToBeUpdated.Password);
+                        userToBeUpdated.Password = newValue;
+                        break;
+                    case 3: // first name
+                        newValue = await Shell.Current.DisplayPromptAsync($"Edit User {selectedOption}", $"Enter new {selectedOption}:", initialValue: userToBeUpdated.FirstName);
+                        userToBeUpdated.FirstName = newValue;
+                        break;
+                    case 4: // last name
+                        newValue = await Shell.Current.DisplayPromptAsync($"Edit User {selectedOption}", $"Enter new {selectedOption}:", initialValue: userToBeUpdated.LastName);
+                        userToBeUpdated.LastName = newValue;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            }
+        }
+
+        int count = users.ToList().FindIndex(m => m.Id == id);
+        users[count] = userToBeUpdated;
+        var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
+        await File.WriteAllTextAsync(_userFilePath, json);
+
+        await Shell.Current.DisplayAlert("Update User", "Successfully updated user", "OK");
+        return await GetActiveUserAsync();
+    }
 }

@@ -9,62 +9,36 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class AddPublisherViewModel : ObservableObject
 {
-    private AdminService _adminService;
-    private UserValidationService _userValidationService;
-    private FileResult? _fileResult;
+    const string Directory = "Publishers";
+    private AdminService adminService;
+    private PublisherService publisherService;
+    private FileUploadService fileUploadService;
+    private UserValidationService userValidationService;
+    private FileResult? fileResult;
 
     [ObservableProperty]
     private Publisher _publisher = new();
 
-    public AddPublisherViewModel(AdminService adminService, UserValidationService userValidationService)
+    public AddPublisherViewModel(AdminService adminService, UserValidationService userValidationService, PublisherService publisherService, FileUploadService fileUploadService)
     {
-        _adminService = adminService;
-        _userValidationService = userValidationService;
+        this.adminService = adminService;
+        this.userValidationService = userValidationService;
+        this.publisherService = publisherService;
+        this.fileUploadService = fileUploadService;
     }
 
     [RelayCommand]
     async Task AddPublisher()
     {
-        if (string.IsNullOrEmpty(Publisher.Email) || string.IsNullOrEmpty(Publisher.Username) || string.IsNullOrEmpty(Publisher.Password) || string.IsNullOrEmpty(Publisher.FirstName) || string.IsNullOrEmpty(Publisher.LastName) || string.IsNullOrEmpty(Publisher.Gender))
+        bool isValidPublisher = await ValidateFields();
+        if(!isValidPublisher)
         {
-            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
             return;
         }
 
-        if (!IsEmailValid(Publisher.Email))
+        if (await publisherService.AddPublisherAsync(Publisher))
         {
-            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
-            return;
-        }
-
-        if (_userValidationService.DoesEmailAddressExist(Publisher.Email))
-        {
-            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
-            return;
-        }
-
-        if (_userValidationService.DoesUsernameExist(Publisher.Username))
-        {
-            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
-            return;
-        }
-
-        if (Publisher.DateOfBirth >= DateTime.Now.Date)
-        {
-            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
-            return;
-        }
-       
-
-        if (string.IsNullOrEmpty(Publisher.ImageFilePath))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please upload publisher picture first", "OK");
-            return;
-        }
-
-        if (await _adminService.AddPublisherAsync(Publisher))
-        {
-            File.Copy(_fileResult!.FullPath, Publisher.ImageFilePath);
+            File.Copy(fileResult!.FullPath, Publisher.ImageFilePath!);
             await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
             await Shell.Current.GoToAsync("..");
         }
@@ -83,29 +57,56 @@ public partial class AddPublisherViewModel : ObservableObject
     [RelayCommand]
     async Task UploadImage()
     {
+
         if (string.IsNullOrEmpty(Publisher.FirstName) || string.IsNullOrEmpty(Publisher.LastName))
         {
             await Shell.Current.DisplayAlert("Upload picture", "Please enter first and last name first", "OK");
             return;
         }
 
-        _fileResult = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Please pick an image for the movie",
-            FileTypes = FilePickerFileType.Images
-        });
+        (fileResult, Publisher.ImageFilePath) = await fileUploadService.UploadImage(Publisher.Username, Directory);
 
-        if (_fileResult == null)
+    }
+
+    private async Task<bool> ValidateFields()
+    {
+        if (string.IsNullOrEmpty(Publisher.Email) || string.IsNullOrEmpty(Publisher.Username) || string.IsNullOrEmpty(Publisher.Password) || string.IsNullOrEmpty(Publisher.FirstName) || string.IsNullOrEmpty(Publisher.LastName) || string.IsNullOrEmpty(Publisher.Gender))
         {
-            return;
+            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
+            return false;
         }
 
-        //make dir 
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers");
-        _adminService.CreateDirectoryIfMissing(dir);
+        if (!IsEmailValid(Publisher.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
+            return false;
+        }
 
-        Publisher.ImageFilePath = Path.Combine(dir, $"{Publisher.FirstName+Publisher.LastName}.jpg");
-        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+        if (userValidationService.DoesEmailAddressExist(Publisher.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
+            return false;
+        }
+
+        if (userValidationService.DoesUsernameExist(Publisher.Username))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
+            return false;
+        }
+
+        if (Publisher.DateOfBirth >= DateTime.Now.Date)
+        {
+            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(Publisher.ImageFilePath))
+        {
+            await Shell.Current.DisplayAlert("Upload picture", "Please upload publisher picture first", "OK");
+            return false;
+        }
+
+        return true;
     }
 
     private bool IsEmailValid(string email)

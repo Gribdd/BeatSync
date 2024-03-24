@@ -10,14 +10,16 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class UserManagementViewModel : ObservableObject
 {
-    private AdminService _adminService;
+    private AdminService adminService;
+    private UserService userService;
 
     [ObservableProperty]
     private ObservableCollection<User> _users = new();
 
-    public UserManagementViewModel(AdminService adminService)
+    public UserManagementViewModel(AdminService adminService, UserService userService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.userService = userService;
     }
 
     [RelayCommand]
@@ -32,7 +34,7 @@ public partial class UserManagementViewModel : ObservableObject
         string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            Users = await _adminService.DeleteUserAsync(id);
+            Users = await userService.DeleteUserAsync(id);
         }
 
     }
@@ -44,20 +46,18 @@ public partial class UserManagementViewModel : ObservableObject
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
 
-            Users = await _adminService.UpdateUserAsync(id);
+            Users = await userService.UpdateUserAsync(id);
         }
     }
 
     [RelayCommand]
     async Task Logout()
     {
-        await _adminService.Logout();
+        await adminService.Logout();
     }
-
-    public ICommand GetUsersCommand => new Command(GetUsers);
 
     public async void GetUsers()
     {
-        Users = await _adminService.GetActiveUserAsync();
+        Users = await userService.GetActiveUserAsync();
     }
 }

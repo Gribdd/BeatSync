@@ -11,24 +11,32 @@ namespace BeatSync.ViewModel.LoginAndRegistration;
 [QueryProperty(nameof(User), nameof(User))]
 public partial class CreateAccountUploadImageViewModel : ObservableObject
 {
-    private AdminService _adminService;
-    private FileResult? _fileResult;
+    private AdminService adminService;
+    private ArtistService artistService;
+    private PublisherService publisherService;
+    private UserService userService;
+    private FileUploadService fileUploadService;
+    private FileResult? fileResult;
 
     [ObservableProperty]
-	private User _user = new();
+    private User _user = new();
 
-    public CreateAccountUploadImageViewModel(AdminService adminService)
+    public CreateAccountUploadImageViewModel(AdminService adminService, ArtistService artistService, PublisherService publisherService, UserService userService, FileUploadService fileUploadService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.artistService = artistService;
+        this.publisherService = publisherService;
+        this.userService = userService;
+        this.fileUploadService = fileUploadService;
     }
 
-	[RelayCommand]
-	async Task Return()
-	{
+    [RelayCommand]
+    async Task Return()
+    {
         await Shell.Current.GoToAsync("..");
     }
 
-	[RelayCommand]
+    [RelayCommand]
     async Task NavigateToLandingPage()
     {
         User.IsDeleted = false;
@@ -49,9 +57,9 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     ImageFilePath = User.ImageFilePath
                 };
 
-                if (await _adminService.AddArtistAsync(artist))
+                if (await artistService.AddArtistAsync(artist))
                 {
-                    File.Copy(_fileResult!.FullPath, artist.ImageFilePath!);
+                    File.Copy(fileResult!.FullPath, artist.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
                     //await Shell.Current.GoToAsync("mainpage");
                     Application.Current!.MainPage = new PublisherLandingPage();
@@ -73,18 +81,18 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     ImageFilePath = User.ImageFilePath
                 };
 
-                if (await _adminService.AddPublisherAsync(publisher))
+                if (await publisherService.AddPublisherAsync(publisher))
                 {
-                    File.Copy(_fileResult!.FullPath, publisher.ImageFilePath!);
+                    File.Copy(fileResult!.FullPath, publisher.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
                     Application.Current!.MainPage = new PublisherLandingPage();
                 }
                 break;
             //customer
             case 3:
-                if (await _adminService.AddUserAsync(User))
+                if (await userService.AddUserAsync(User))
                 {
-                    File.Copy(_fileResult!.FullPath, User.ImageFilePath!);
+                    File.Copy(fileResult!.FullPath, User.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
                     Application.Current!.MainPage = new CustomerLandingPage();
                 }
@@ -104,23 +112,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
             return;
         }
 
-        _fileResult = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Please pick an image for the user",
-            FileTypes = FilePickerFileType.Images
-        });
-
-        if (_fileResult == null)
-        {
-            return;
-        }
-
-        //make dir
-        string dirName = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publishers" : "Users";
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, dirName);
-        _adminService.CreateDirectoryIfMissing(dir);
-
-        User.ImageFilePath = Path.Combine(dir, $"{User.FirstName+User.LastName}.jpg");
-        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+        string directory = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publishers" : "Users";
+        (fileResult, User.ImageFilePath) = await fileUploadService.UploadImage(User.Username, directory);
     }
 }

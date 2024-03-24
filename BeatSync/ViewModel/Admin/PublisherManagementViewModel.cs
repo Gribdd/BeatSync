@@ -11,14 +11,16 @@ namespace BeatSync.ViewModel.Admin
 {
     public partial class PublisherManagementViewModel : ObservableObject
     {
-        private AdminService _adminService;
+        private AdminService adminService;
+        private PublisherService publisherService;
 
         [ObservableProperty]
         private ObservableCollection<Publisher> _publishers = new();
 
-        public PublisherManagementViewModel(AdminService adminService)
+        public PublisherManagementViewModel(AdminService adminService, PublisherService publisherService)
         {
-            _adminService = adminService;
+            this.adminService = adminService;
+            this.publisherService = publisherService;
         }
 
         [RelayCommand]
@@ -33,7 +35,7 @@ namespace BeatSync.ViewModel.Admin
             string inputId = await Shell.Current.DisplayPromptAsync("Delete Publisher", "Enter Publisher ID to delete:");
             if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
             {
-                Publishers = await _adminService.DeletePublisherAsync(id);
+                Publishers = await publisherService.DeletePublisherAsync(id);
             }
         }
 
@@ -43,20 +45,19 @@ namespace BeatSync.ViewModel.Admin
             string inputId = await Shell.Current.DisplayPromptAsync("Update Publisher", "Enter Publisher ID to delete:");
             if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
             {
-                Publishers = await _adminService.UpdatePublisherAsync(id);
+                Publishers = await publisherService.UpdatePublisherAsync(id);
             }
         }
 
         [RelayCommand]
         async Task Logout()
         {
-            await _adminService.Logout();
+            await adminService.Logout();
         }
 
-        public ICommand GetPublishersCommand => new Command(GetPublishers);
         public async void GetPublishers()
         {
-            Publishers = await _adminService.GetActivePublisherAsync();
+            Publishers = await publisherService.GetActivePublisherAsync();
         }
     }
 }

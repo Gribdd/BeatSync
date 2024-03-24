@@ -16,7 +16,8 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class SongManagementViewModel : ObservableObject
 {
-    private AdminService _adminService;
+    private AdminService adminService;
+    private SongService songService;
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
@@ -24,9 +25,10 @@ public partial class SongManagementViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<String> _artistName = new();
 
-    public SongManagementViewModel(AdminService adminService)
+    public SongManagementViewModel(AdminService adminService, SongService songService)
     {
-        _adminService = adminService;
+        this.adminService = adminService;
+        this.songService = songService;
     }
 
     [RelayCommand]
@@ -41,7 +43,7 @@ public partial class SongManagementViewModel : ObservableObject
         string inputId = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            Songs = await _adminService.DeleteSongAsync(id);
+            Songs = await songService.DeleteSongAsync(id);
         }
     }
 
@@ -52,29 +54,18 @@ public partial class SongManagementViewModel : ObservableObject
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
 
-            Songs = await _adminService.UpdateSongAsync(id);
+            Songs = await songService.UpdateSongAsync(id);
         }
     }
 
     [RelayCommand]
     async Task Logout()
     {
-        await _adminService.Logout();
+        await adminService.Logout();
     }
 
     public async void GetSongs()
     {
-        Songs = await _adminService.GetActiveSongAsync();
+        Songs = await songService.GetActiveSongAsync();
     }
-
-    public async void GetArtists()
-    {
-        for (int index = 0; index < Songs.Count; index++)
-        {
-
-            ArtistName.Add(await _adminService.GetArtistNameById(Songs[index].ArtistID));
-        }
-    }
-
-
 }

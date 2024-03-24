@@ -12,7 +12,7 @@ namespace BeatSync.ViewModel.LoginAndRegistration;
 
 public partial class LoginPageViewModel : ObservableObject
 {
-    private readonly UserService _userSevice;
+    private readonly UserAuthService _userSevice;
     
     [ObservableProperty]
     private object _user = new();
@@ -23,7 +23,7 @@ public partial class LoginPageViewModel : ObservableObject
     [ObservableProperty]
     private string? _password;
 
-    public LoginPageViewModel(UserService userService)
+    public LoginPageViewModel(UserAuthService userService)
     {
         _userSevice = userService;    
     }

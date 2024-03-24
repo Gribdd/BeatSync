@@ -37,9 +37,14 @@ namespace BeatSync
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
             mauiAppBuilder.Services.AddTransient<AdminService>();
-            mauiAppBuilder.Services.AddTransient<UserService>();
+            mauiAppBuilder.Services.AddTransient<UserAuthService>();
             mauiAppBuilder.Services.AddTransient<UserValidationService>();
-            mauiAppBuilder.Services.AddSingleton(AudioManager.Current);
+            mauiAppBuilder.Services.AddTransient<UserService>();
+            mauiAppBuilder.Services.AddTransient<SongService>();
+            mauiAppBuilder.Services.AddTransient<AlbumService>();
+            mauiAppBuilder.Services.AddTransient<PublisherService>();
+            mauiAppBuilder.Services.AddTransient<ArtistService>();
+            mauiAppBuilder.Services.AddTransient<FileUploadService>();
 
             return mauiAppBuilder;
         }

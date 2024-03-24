@@ -9,64 +9,36 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class AddArtistViewModel : ObservableObject
 {
-
-    private AdminService _adminService;
-    private UserValidationService _userValidationService;
-    private FileResult? _fileResult;
+    private const string Directory = "Artists";
+    private AdminService adminService;
+    private ArtistService artistService;
+    private FileUploadService fileUploadService;
+    private UserValidationService userValidationService;
+    private FileResult? fileResult;
 
     [ObservableProperty]
     private Artist _artist = new();
 
-    public AddArtistViewModel(AdminService adminService, UserValidationService userValidationService)
+    public AddArtistViewModel(AdminService adminService, UserValidationService userValidationService, ArtistService artistService, FileUploadService fileUploadService)
     {
-        _adminService = adminService;
-        _userValidationService = userValidationService;
+        this.adminService = adminService;
+        this.userValidationService = userValidationService;
+        this.artistService = artistService;
+        this.fileUploadService = fileUploadService;
     }
 
     [RelayCommand]
     async Task AddArtist()
     {
-        if (string.IsNullOrEmpty(Artist.Email) || string.IsNullOrEmpty(Artist.Username) || string.IsNullOrEmpty(Artist.Password) || string.IsNullOrEmpty(Artist.FirstName) || string.IsNullOrEmpty(Artist.LastName) || string.IsNullOrEmpty(Artist.Gender))
+        bool isValidArtist = await ValidateFields();
+        if (!isValidArtist)
         {
-            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
             return;
         }
 
-        if (!IsEmailValid(Artist.Email))
+        if (await artistService.AddArtistAsync(Artist))
         {
-            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
-            return;
-        }
-
-        if (Artist.DateOfBirth >= DateTime.Now.Date)
-        {
-            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
-            return;
-        }
-
-        if (_userValidationService.DoesEmailAddressExist(Artist.Email))
-        {
-            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
-            return;
-        }
-
-        if (_userValidationService.DoesUsernameExist(Artist.Username))
-
-        {
-            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(Artist.ImageFilePath))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please upload artist picture first", "OK");
-            return;
-        }
-
-
-        if (await _adminService.AddArtistAsync(Artist))
-        {
-            File.Copy(_fileResult!.FullPath, Artist.ImageFilePath);
+            File.Copy(fileResult!.FullPath, Artist.ImageFilePath!);
             await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
             await Shell.Current.GoToAsync("..");
         }
@@ -91,35 +63,59 @@ public partial class AddArtistViewModel : ObservableObject
             return;
         }
 
-        _fileResult = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Please pick an image for the movie",
-            FileTypes = FilePickerFileType.Images
-        });
+        (fileResult, Artist.ImageFilePath) = await fileUploadService.UploadImage(Artist.Username, Directory);
+    }
 
-        if (_fileResult == null)
+    private async Task<bool> ValidateFields()
+    {
+        if (string.IsNullOrEmpty(Artist.Email) || string.IsNullOrEmpty(Artist.Username) || string.IsNullOrEmpty(Artist.Password) || string.IsNullOrEmpty(Artist.FirstName) || string.IsNullOrEmpty(Artist.LastName) || string.IsNullOrEmpty(Artist.Gender))
         {
-            return;
+            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
+            return false;
         }
 
-        //make dir 
-        string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "Artists");
-        _adminService.CreateDirectoryIfMissing(dir);
+        if (!IsEmailValid(Artist.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
+            return false;
+        }
 
-        Artist.ImageFilePath = Path.Combine(dir, $"{Artist.FirstName+Artist.LastName}.jpg");
-        await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
+        if (Artist.DateOfBirth >= DateTime.Now.Date)
+        {
+            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
+            return false;
+        }
+
+        if (userValidationService.DoesEmailAddressExist(Artist.Email))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
+            return false;
+        }
+
+        if (userValidationService.DoesUsernameExist(Artist.Username))
+        {
+            await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(Artist.ImageFilePath))
+        {
+            await Shell.Current.DisplayAlert("Upload picture", "Please upload artist picture first", "OK");
+            return false;
+        }
+        return true;
     }
 
     private bool IsEmailValid(string email)
-{
-    if (email != null)
     {
-        string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
-        return Regex.IsMatch(email, pattern);
+        if (email != null)
+        {
+            string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
+            return Regex.IsMatch(email, pattern);
+        }
+        else
+        {
+            return false;
+        }
     }
-    else
-    {
-        return false;
-    }
-}
 }
