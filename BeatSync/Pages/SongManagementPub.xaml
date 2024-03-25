@@ -65,11 +65,12 @@
             ItemsSource="{Binding Songs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
-                    <controls:CardView Margin="30,10,30,10"
-                                       CardImage="{Binding ImageFilePath}"
-                                       CardTitle="{Binding Name}"
-                                       CardSubtitleLeft="{Binding ArtistName}"
-                                       CardSubtitleRight="{Binding Genre}">
+                    <controls:CardView
+                        Margin="30,10,30,10"
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="{Binding ArtistName}"
+                        CardSubtitleRight="{Binding Genre}"
+                        CardTitle="{Binding Name}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
@@ -77,7 +78,15 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <toolkit:MediaElement
+
+        <controls:MediaPlayerControl
+            Grid.Row="4"
+            IsVisible="{Binding IsVisible}"
+            AudioSource="{Binding MediaSource}"
+            SongName="{Binding SelectedSong.Name}"
+            ArtistName="{Binding SelectedSong.ArtistName}"
+            ImageSource="{Binding SelectedSong.ImageFilePath}" />
+        <!--<toolkit:MediaElement
             Grid.Row="4"
             Background="Wheat"
             HeightRequest="50"
@@ -86,7 +95,7 @@
             ShouldShowPlaybackControls="True"
             Source="{Binding MediaSource}"
             WidthRequest="500"
-            ZIndex="1" />
+            ZIndex="1" />-->
     </Grid>
 
     <!--<VerticalStackLayout>

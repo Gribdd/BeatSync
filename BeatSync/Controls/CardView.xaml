@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="thisCardView"
     BackgroundColor="#17122E"
+    CornerRadius="10"
     HeightRequest="80"
     WidthRequest="310">
 

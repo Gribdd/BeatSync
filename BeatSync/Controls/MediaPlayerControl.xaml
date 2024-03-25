@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Frame
+    x:Class="BeatSync.Controls.MediaPlayerControl"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Name="thisMediaPlayerControl"
+    Margin="0,0,0,10"
+    BackgroundColor="#17122E"
+    CornerRadius="10"
+    HeightRequest="100"
+    WidthRequest="400">
+    <Grid ColumnDefinitions="auto,auto" ColumnSpacing="100">
+        <HorizontalStackLayout Spacing="10">
+            <Image Aspect="AspectFit" Source="{Binding Source={x:Reference thisMediaPlayerControl}, Path=ImageSource}" />
+            <VerticalStackLayout Spacing="20">
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SubHeadline}"
+                    Text="{Binding Source={x:Reference thisMediaPlayerControl}, Path=SongName}"/>
+                <Label
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Source={x:Reference thisMediaPlayerControl}, Path=ArtistName}"
+                    TextColor="#7EA6D9" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout
+            Grid.Column="1"
+            HorizontalOptions="Center"
+            Spacing="10"
+            VerticalOptions="Center">
+            <ImageButton
+                x:Name="btnPlay"
+                Clicked="OnButtonPlayClicked"
+                HeightRequest="30"
+                Source="{Binding Source={x:Reference thisMediaPlayerControl}, Path=MediaPlayerState}" />
+        </HorizontalStackLayout>
+        <toolkit:MediaElement
+            x:Name="mediaPlayer"
+            IsVisible="False"
+            Source="{Binding Source={x:Reference thisMediaPlayerControl}, Path=AudioSource}" />
+    </Grid>
+</Frame>

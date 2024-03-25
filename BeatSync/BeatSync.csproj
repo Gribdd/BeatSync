@@ -67,6 +67,8 @@
 	  <None Remove="Resources\Images\library.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\options.png" />
+	  <None Remove="Resources\Images\pause.png" />
+	  <None Remove="Resources\Images\play.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\profileicon.png" />
 	  <None Remove="Resources\Images\publishers.png" />
@@ -98,6 +100,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Controls\CardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\MediaPlayerControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\AddAlbumPublisher.xaml">

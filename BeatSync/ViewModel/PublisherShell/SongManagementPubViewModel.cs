@@ -21,6 +21,11 @@ public partial class SongManagementPubViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
 
+    [ObservableProperty]
+    private Song _selectedSong = new();
+
+    [ObservableProperty]
+    private bool _isVisible;
 
     public SongManagementPubViewModel(AdminService adminService, SongService songService)
     {
@@ -47,6 +52,12 @@ public partial class SongManagementPubViewModel : ObservableObject
         if (song.FilePath == null)
         {
             return Task.CompletedTask;
+        }
+
+        SelectedSong = song;
+        if (!IsVisible)
+        {
+            IsVisible = true;
         }
 
         MediaSource = MediaSource.FromFile(song.FilePath);
