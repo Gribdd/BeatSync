@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Frame
+    x:Class="BeatSync.Controls.CardView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="thisCardView"
+    BackgroundColor="#17122E"
+    HeightRequest="80"
+    WidthRequest="310">
+
+    <Grid ColumnDefinitions=".2*,.8*">
+        <Image HeightRequest="40" Source="{Binding Path=CardImage, Source={x:Reference thisCardView}}" />
+        <VerticalStackLayout
+            Grid.Column="1"
+            Margin="10,0,0,0"
+            Padding="5"
+            HeightRequest="50"
+            VerticalOptions="Center">
+            <Label
+                FontAttributes="Bold"
+                HorizontalOptions="Start"
+                Style="{StaticResource SubHeadline}"
+                Text="{Binding Path=CardTitle, Source={x:Reference thisCardView}}"
+                TextColor="White" />
+            <HorizontalStackLayout Spacing="10">
+                <Label
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Path=CardSubtitleLeft, Source={x:Reference thisCardView}}"
+                    TextColor="#7EA6D9" />
+                <Label
+                    Style="{StaticResource Fields}"
+                    Text=" | "
+                    TextColor="#7EA6D9" />
+                <Label
+                    Style="{StaticResource Fields}"
+                    Text="{Binding Path=CardSubtitleRight, Source={x:Reference thisCardView}}"
+                    TextColor="#7EA6D9" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</Frame>

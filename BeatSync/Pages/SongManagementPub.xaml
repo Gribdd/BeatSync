@@ -3,6 +3,7 @@
     x:Class="BeatSync.Pages.SongManagementPub"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
@@ -64,52 +65,15 @@
             ItemsSource="{Binding Songs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
-                    <Frame
-                        Margin="30,10,30,10"
-                        BackgroundColor="#17122E"
-                        HeightRequest="80"
-                        WidthRequest="310">
-                        <Grid ColumnDefinitions=".2*,.8*">
-                            <Image
-                                Grid.Column="0"
-                                HeightRequest="40"
-                                Source="{Binding ImageFilePath}" />
-                            <!--  add image source  -->
-                            <VerticalStackLayout
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                Padding="5"
-                                HeightRequest="50"
-                                VerticalOptions="Center">
-                                <!--  add song name source here  -->
-                                <Label
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="Start"
-                                    Style="{StaticResource SubHeadline}"
-                                    Text="{Binding Name}"
-                                    TextColor="White" />
-                                <HorizontalStackLayout Spacing="10">
-                                    <!--  bind artist name here  -->
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding ArtistName}"
-                                        TextColor="#7EA6D9" />
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text=" | "
-                                        TextColor="#7EA6D9" />
-                                    <!--  bind genre here  -->
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding Genre}"
-                                        TextColor="#7EA6D9" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Grid>
+                    <controls:CardView Margin="30,10,30,10"
+                                       CardImage="{Binding ImageFilePath}"
+                                       CardTitle="{Binding Name}"
+                                       CardSubtitleLeft="{Binding ArtistName}"
+                                       CardSubtitleRight="{Binding Genre}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
                         </Frame.GestureRecognizers>
-                    </Frame>
+                    </controls:CardView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

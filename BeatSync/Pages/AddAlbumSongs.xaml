@@ -3,6 +3,7 @@
     x:Class="BeatSync.Pages.AddAlbumSongs"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.General"
     Title="AddAlbumSongs"
@@ -41,46 +42,16 @@
         <CollectionView
             Grid.Row="2"
             Margin="10"
-            ItemsSource="{Binding Album.Songs}"
-            EmptyView="No songs in the album yet">
+            EmptyView="No songs in the album yet"
+            ItemsSource="{Binding Album.Songs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
-                    <Frame
+                    <controls:CardView
                         Margin="30,10,30,10"
-                        BackgroundColor="#17122E"
-                        HeightRequest="80"
-                        WidthRequest="310">
-                        <Grid ColumnDefinitions=".2*,.8*">
-                            <Image HeightRequest="40" Source="{Binding ImageFilePath}" />
-                            <VerticalStackLayout
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                Padding="5"
-                                HeightRequest="50"
-                                VerticalOptions="Center">
-                                <Label
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="Start"
-                                    Style="{StaticResource SubHeadline}"
-                                    Text="{Binding Name}"
-                                    TextColor="White" />
-                                <HorizontalStackLayout Spacing="10">
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding ArtistName}"
-                                        TextColor="#7EA6D9" />
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text=" | "
-                                        TextColor="#7EA6D9" />
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding Genre}"
-                                        TextColor="#7EA6D9" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Frame>
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="{Binding ArtistName}"
+                        CardSubtitleRight="{Binding Genre}"
+                        CardTitle="{Binding Name}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
