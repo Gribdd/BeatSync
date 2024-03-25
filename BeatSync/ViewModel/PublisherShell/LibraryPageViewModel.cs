@@ -32,6 +32,28 @@ public partial class LibraryPageViewModel : ObservableObject
     }
 
     [RelayCommand]
+    async Task UpdateAlbum()
+    {
+        string albumName = await Shell.Current.DisplayPromptAsync("Update Album", "Enter Album Name to update:");
+        if (!string.IsNullOrEmpty(albumName))
+        {
+
+            Albums = await albumService.UpdateAlbumAsync(albumName);
+        }
+    }
+
+    [RelayCommand]
+    async Task DeleteAlbum()
+    {
+        string albumName = await Shell.Current.DisplayPromptAsync("Delete Album", "Enter Album Name to delete:");
+        if (!string.IsNullOrEmpty(albumName))
+        {
+            Albums = await albumService.DeleteAlbumAsync(albumName);
+        }
+    }
+    
+
+    [RelayCommand]
     async Task NavigateToAddAlbumSongs(Album album)
     {
         var navigationParameter = new Dictionary<string, object>

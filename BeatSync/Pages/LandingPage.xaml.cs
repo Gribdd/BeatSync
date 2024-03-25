@@ -11,11 +11,6 @@ public partial class LandingPage : ContentPage
 		BindingContext = _vm = vm;
 	}
 
-	public LandingPage()
-	{
-		InitializeComponent();
-	}
-
 	protected override void OnAppearing()
 	{
         base.OnAppearing();

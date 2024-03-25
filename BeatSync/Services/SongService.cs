@@ -9,7 +9,6 @@ public class SongService
     private readonly string songFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs.json");
     public async Task<bool> AddSongAsync(Song song)
     {
-
         if (song == null)
         {
             return false;
