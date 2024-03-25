@@ -38,14 +38,27 @@
                 HorizontalOptions="Start"
                 Source="add.png" />
         </HorizontalStackLayout>
+
+        <HorizontalStackLayout Margin="40,10,10,10" Spacing="10">
+            <Button
+                Padding="20"
+                BackgroundColor="#9747FF"
+                Command="{Binding UpdateAlbumCommand}"
+                CornerRadius="25"
+                Text="Update" />
+            <Button
+                Padding="20"
+                BackgroundColor="#9747FF"
+                Command="{Binding DeleteAlbumCommand}"
+                CornerRadius="25"
+                Text="Delete" />
+        </HorizontalStackLayout>
+
         <BoxView
             Margin="0,-10,0,10"
             HeightRequest="2"
             WidthRequest="310"
             Color="White" />
-
-        <!--  Library Elements  -->
-        <!--  Created Playlists  -->
 
         <CollectionView
             x:Name="collectionView"

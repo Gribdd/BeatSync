@@ -3,6 +3,7 @@
     x:Class="BeatSync.Pages.ArtistManagement"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Admin"
     Title="ArtistManagement"
@@ -62,65 +63,12 @@
         <CollectionView ItemsSource="{Binding Artists}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Artist">
-                    <Frame Margin="30,5,30,5" BackgroundColor="#17122E">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".1*" />
-                                <ColumnDefinition Width=".8*" />
-                            </Grid.ColumnDefinitions>
-                            <Image
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                HeightRequest="40"
-                                Source="{Binding ImageFilePath}" />
-                            <VerticalStackLayout
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
-                                Padding="5"
-                                HeightRequest="50"
-                                VerticalOptions="Center">
-                                <HorizontalStackLayout>
-                                    <Label
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource SubHeadline}"
-                                        Text=" # "
-                                        TextColor="White" />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource SubHeadline}"
-                                        Text="{Binding Id}"
-                                        TextColor="White" />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource SubHeadline}"
-                                        Text=" | "
-                                        TextColor="White" />
-                                    <Label
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        Style="{StaticResource SubHeadline}"
-                                        Text="{Binding Username}"
-                                        TextColor="White" />
-                                </HorizontalStackLayout>
-
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding FirstName}"
-                                        TextColor="#7EA6D9" />
-
-                                    <Label
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding LastName}"
-                                        TextColor="#7EA6D9" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Frame>
+                    <controls:CardView
+                        Margin="30,5,30,5"
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="{Binding Id, StringFormat='Id: #{0}'}"
+                        CardSubtitleRight="{Binding FullName}"
+                        CardTitle="{Binding Username}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
