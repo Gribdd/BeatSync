@@ -11,6 +11,7 @@ public partial class SearchPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _vm = vm;
+
     }
 
     protected override void OnAppearing()
@@ -25,6 +26,8 @@ public partial class SearchPage : ContentPage
             // Clear the search results
             _vm.SearchQuery = string.Empty;
             _vm.MyList.Clear();
+            ((SearchPageViewModel)BindingContext).IsResultsVisible = false;
+
         }
         
     }

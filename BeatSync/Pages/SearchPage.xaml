@@ -34,25 +34,37 @@
                 SearchCommand="{Binding SearchCommandCommand}"
                 SearchCommandParameter="{Binding SearchQuery}"
                 Text="{Binding SearchQuery, Mode=TwoWay}"
+                TextChanged="SearchBar_TextChanged"
                 WidthRequest="310"
-                TextChanged="SearchBar_TextChanged"/>
+                ZIndex="1" />
 
             <!--  Display Search Results  -->
-            <CollectionView x:Name="viewResults" ItemsSource="{Binding MyList}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <!--  Define ItemTemplate for different types of objects  -->
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding .}" />
+            <Frame
+                x:Name="frmResults"
+                Margin="40,-5,40,5"
+                BackgroundColor="#17122E"
+                BorderColor="Transparent"
+                IsVisible="{Binding IsResultsVisible}">
+                <CollectionView x:Name="viewResults" ItemsSource="{Binding MyList}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <!--  Define ItemTemplate for different types of objects  -->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="10">
+                                <Label Text="{Binding .}" TextColor="White" />
+                                <BoxView
+                                    Margin="0,15,0,5"
+                                    BackgroundColor="White"
+                                    HeightRequest="1" />
+                            </StackLayout>
+                            <!--  Add more Bindings as needed based on the properties of different objects  -->
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
 
-                        </StackLayout>
-                        <!--  Add more Bindings as needed based on the properties of different objects  -->
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
