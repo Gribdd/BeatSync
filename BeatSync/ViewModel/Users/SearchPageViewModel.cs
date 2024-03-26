@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 
 using System.Threading.Tasks;
+using static Android.Provider.MediaStore.Audio;
+using static Java.Util.Concurrent.Flow;
 
 namespace BeatSync.ViewModel.Users;
 
@@ -57,35 +59,35 @@ public partial class SearchPageViewModel : ObservableObject
             switch (item)
             {
                 case BeatSync.Models.Song song when song.Name.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Song"));
+                    MyList.Add(String.Concat(song.Name, " - Song"));
                     found = true;
                     break;
                 case BeatSync.Models.Album album when album.Name.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Album"));
+                    MyList.Add(String.Concat(album.Name, " - Album"));
                     found = true;
                     break;
-                case BeatSync.Models.Artist artist when artist.FullName.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Artist"));
+                case BeatSync.Models.Artist artist when artist.FullName.Contains(SearchQuery) || artist.FirstName.Contains(SearchQuery) || artist.LastName.Contains(SearchQuery):
+                    MyList.Add(artist.FullName + " - Artist");
                     found = true;
                     break;
                 case BeatSync.Models.Artist artist when artist.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Artist"));
+                    MyList.Add(String.Concat(artist.Username, " - Artist"));
                     found = true;
                     break;
-                case BeatSync.Models.Publisher publisher when publisher.FullName.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Publisher"));
+                case BeatSync.Models.Publisher publisher when publisher.FullName.Contains(SearchQuery) || publisher.FirstName.Contains(SearchQuery) || publisher.LastName.Contains(SearchQuery):
+                    MyList.Add(String.Concat(publisher.FullName, " - Publisher"));
                     found = true;
                     break;
                 case BeatSync.Models.Publisher publisher when publisher.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - Publisher"));
+                    MyList.Add(String.Concat(publisher.Username, " - Publisher"));
                     found = true;
                     break;
-                case BeatSync.Models.User user when user.FullName.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - User"));
+                case BeatSync.Models.User user when user.FullName.Contains(SearchQuery) || user.FirstName.Contains(SearchQuery) || user.LastName.Contains(SearchQuery):
+                    MyList.Add(String.Concat(user.FullName, " - User"));
                     found = true;
                     break;
                 case BeatSync.Models.User user when user.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(SearchQuery, " - User"));
+                    MyList.Add(String.Concat(user.Username, " - User"));
                     found = true;
                     break;
             }
