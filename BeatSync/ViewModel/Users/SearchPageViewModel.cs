@@ -52,6 +52,7 @@ public partial class SearchPageViewModel : ObservableObject
     {
         _myCollection.Filter(SearchQuery);
         MyList.Clear(); 
+        IsResultsVisible = true;
 
         bool found = false; 
         foreach (var item in _myCollection.FilteredCollection)
@@ -60,6 +61,7 @@ public partial class SearchPageViewModel : ObservableObject
             {
                 case BeatSync.Models.Song song when song.Name.Contains(SearchQuery):
                     MyList.Add(String.Concat(song.Name, " - Song"));
+                    
                     found = true;
                     break;
                 case BeatSync.Models.Album album when album.Name.Contains(SearchQuery):
@@ -101,6 +103,7 @@ public partial class SearchPageViewModel : ObservableObject
         }
     }
 
-
+    [ObservableProperty]
+    private bool _isResultsVisible;
 
 }
