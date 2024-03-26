@@ -3,10 +3,13 @@
     x:Class="BeatSync.Pages.SearchPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BeatSync.ViewModel.Users"
     Title="SearchPage"
+    x:DataType="local:SearchPageViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">
+
 
     <ScrollView>
         <VerticalStackLayout>
@@ -28,13 +31,28 @@
             <SearchBar
                 BackgroundColor="White"
                 Placeholder="What do you want to listen to?"
-                WidthRequest="310" />
+                SearchCommand="{Binding SearchCommandCommand}"
+                SearchCommandParameter="{Binding SearchQuery}"
+                Text="{Binding SearchQuery, Mode=TwoWay}"
+                WidthRequest="310"
+                TextChanged="SearchBar_TextChanged"/>
 
+            <!--  Display Search Results  -->
+            <CollectionView x:Name="viewResults" ItemsSource="{Binding MyList}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <!--  Define ItemTemplate for different types of objects  -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding .}" />
 
-
-
+                        </StackLayout>
+                        <!--  Add more Bindings as needed based on the properties of different objects  -->
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
-
-
 </ContentPage>
