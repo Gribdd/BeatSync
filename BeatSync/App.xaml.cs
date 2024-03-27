@@ -9,7 +9,7 @@ namespace BeatSync
         {
             InitializeComponent();
 
-            MainPage = new CustomerLandingPage();
+            MainPage = new AppShell();
         }
     }
 }

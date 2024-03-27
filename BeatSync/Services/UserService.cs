@@ -127,4 +127,13 @@ public class UserService
         await Shell.Current.DisplayAlert("Update User", "Successfully updated user", "OK");
         return await GetActiveUserAsync();
     }
+
+    public async Task<User> GetCurrentUser()
+    {
+        int userId = Preferences.Default.Get("currentUserId", -1);
+        var users = await GetActiveUserAsync();
+        var user = users.FirstOrDefault(u => u.Id == userId);
+
+        return user!;
+    }
 }

@@ -20,6 +20,9 @@
                 <Setter Property="BackgroundColor" Value="#453D62" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 10" />
             </Style>
+            <Style TargetType="Entry">
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -36,7 +39,6 @@
             <Border>
                 <Entry
                     Margin="5"
-                    ClearButtonVisibility="WhileEditing"
                     Keyboard="Email"
                     Placeholder="Enter Name"
                     Style="{StaticResource Fields}"

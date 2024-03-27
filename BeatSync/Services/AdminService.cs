@@ -13,6 +13,7 @@ public class AdminService
         if (answer)
         {
             Application.Current!.MainPage = new AppShell();
+            Preferences.Default.Set("currentUserId", -1);
         }
     }
 }

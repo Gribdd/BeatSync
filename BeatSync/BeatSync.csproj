@@ -59,9 +59,12 @@
 	  <None Remove="Resources\AppIcon\icon.png" />
 	  <None Remove="Resources\Fonts\Jua-Regular.ttf" />
 	  <None Remove="Resources\Images\add.png" />
+	  <None Remove="Resources\Images\addalbumsong.png" />
 	  <None Remove="Resources\Images\addperson.png" />
 	  <None Remove="Resources\Images\artists.png" />
 	  <None Remove="Resources\Images\deleteperson.png" />
+	  <None Remove="Resources\Images\heartoutline.png" />
+	  <None Remove="Resources\Images\heartoutlinefill.png" />
 	  <None Remove="Resources\Images\history.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\library.png" />
@@ -79,8 +82,10 @@
 	  <None Remove="Resources\Images\searchblack.png" />
 	  <None Remove="Resources\Images\songs.png" />
 	  <None Remove="Resources\Images\test.png" />
+	  <None Remove="Resources\Images\testplaylistcover.png" />
 	  <None Remove="Resources\Images\update.png" />
 	  <None Remove="Resources\Images\users.png" />
+	  <None Remove="Resources\Images\usjr.png" />
 	  <None Remove="Resources\Raw\carnival.mp3" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
@@ -114,6 +119,12 @@
 	  <MauiXaml Update="Pages\AddArtist.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddPlaylistCustomer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AddPlaylistSongsCustomer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\AddPublisher.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -145,6 +156,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\CreateAccountUsername.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\CustomerLibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LandingPage.xaml">

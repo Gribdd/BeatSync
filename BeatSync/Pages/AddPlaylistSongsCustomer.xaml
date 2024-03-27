@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.AddPlaylistSongsCustomer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
+    Title="AddPlaylistSongsCustomer"
+    x:DataType="viewmodel:AddPlaylistSongsCustomerViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+    <Grid Padding="34,98,34,0" RowDefinitions="auto,auto,auto,auto,*">
+        <HorizontalStackLayout Spacing="40">
+            <ImageButton
+                Margin="0,0,0,20"
+                Command="{Binding LogoutCommand}"
+                CornerRadius="3"
+                HeightRequest="31"
+                Source="returnbtn.png"
+                VerticalOptions="Start"
+                WidthRequest="24" />
+            <ImageButton
+                CornerRadius="3"
+                HeightRequest="187"
+                Source="usjr.png"
+                VerticalOptions="Center"
+                WidthRequest="200" />
+        </HorizontalStackLayout>
+        <Label
+            Grid.Row="1"
+            Margin="0,18,0,0"
+            FontSize="25"
+            Text="My playlist #1" />
+        <HorizontalStackLayout
+            Grid.Row="2"
+            Margin="0,5,0,0"
+            Spacing="5">
+            <Border
+                BackgroundColor="Transparent"
+                StrokeShape="RoundRectangle 50"
+                StrokeThickness="0">
+                <Image
+                    HeightRequest="30"
+                    Source="usjr.png"
+                    WidthRequest="30" />
+            </Border>
+            <Label
+                FontSize="15"
+                Text="AS_Tech"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout
+            Grid.Row="3"
+            Margin="0,20,0,0"
+            Spacing="12">
+            <ImageButton
+                Command="{Binding AddAlbumSongsCommand}"
+                HeightRequest="45"
+                Source="addalbumsong.png"
+                VerticalOptions="Start"
+                WidthRequest="45" />
+            <Label
+                FontSize="18"
+                Text="Add Songs"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <CollectionView Grid.Row="5" Margin="0,38,0,0">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Rockstar</x:String>
+                    <x:String>Kiss Me More</x:String>
+                    <x:String>I'm Not The Only One</x:String>
+                    <x:String>Bugambilya</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <FlexLayout JustifyContent="SpaceBetween">
+                        <Grid
+                            ColumnDefinitions="auto,auto"
+                            ColumnSpacing="12"
+                            RowDefinitions="auto,auto">
+                            <Image
+                                Grid.RowSpan="2"
+                                HeightRequest="45"
+                                Source="logo.png"
+                                WidthRequest="45" />
+                            <Label
+                                Grid.Column="1"
+                                FontSize="18"
+                                Text="{Binding .}"
+                                VerticalTextAlignment="Center" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontSize="12"
+                                Text="Artist Name"
+                                TextColor="#A39797"
+                                VerticalTextAlignment="Start" />
+                        </Grid>
+                        <HorizontalStackLayout Spacing="5">
+                            <ImageButton
+                                HeightRequest="25"
+                                Source="heartoutline.png"
+                                WidthRequest="25" />
+                            <ImageButton
+                                HeightRequest="25"
+                                Source="options.png"
+                                WidthRequest="25" />
+                        </HorizontalStackLayout>
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.AddPlaylistCustomer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
+    Title="AddPlaylistCustomer"
+    x:DataType="viewmodel:AddPlaylistCustomerViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="Margin" Value="30,5,30,5" />
+                <Setter Property="BackgroundColor" Value="#453D62" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Margin="22" Spacing="20">
+        <HorizontalStackLayout Spacing="20">
+            <ImageButton
+                Command="{Binding LogoutCommand}"
+                HeightRequest="25"
+                HorizontalOptions="Start"
+                Source="returnbtn.png"
+                VerticalOptions="Start"
+                WidthRequest="25" />
+            <Label
+                Margin="0,5,0,0"
+                FontSize="20"
+                Text="Give your playlist a name"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <Border>
+            <Entry
+                HeightRequest="50"
+                Placeholder="Enter playlist name"
+                Style="{StaticResource Fields}"
+                Text="{Binding Playlist.Name}" />
+        </Border>
+
+        <Button
+            BackgroundColor="#9747ff"
+            Command="{Binding UploadImageCommand}"
+            CornerRadius="25"
+            Text="Upload Image"
+            TextColor="White"
+            WidthRequest="300" />
+        <Button
+            BackgroundColor="#9747ff"
+            Command="{Binding AddPlaylistCommand}"
+            CornerRadius="25"
+            Text="Create"
+            TextColor="White"
+            WidthRequest="300" />
+    </VerticalStackLayout>
+</ContentPage>
