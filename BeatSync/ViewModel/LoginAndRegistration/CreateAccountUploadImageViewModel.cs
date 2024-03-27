@@ -39,6 +39,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
     [RelayCommand]
     async Task NavigateToLandingPage()
     {
+        int activeUserId = -1;
         User.IsDeleted = false;
         switch (User.AccounType)
         {
@@ -99,8 +100,8 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 break;
             default:
                 break;
-
         }
+        Preferences.Default.Set("currentUserId", activeUserId);
     }
 
     [RelayCommand]

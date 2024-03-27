@@ -11,14 +11,17 @@
     Shell.TabBarUnselectedColor="#7EA6D9">
 
     <TabBar>
-        <Tab Title="Home" Icon="home.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
-        </Tab>
         <Tab Title="Search" Icon="search.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SearchPage}" Route="search" />
         </Tab>
-        <Tab Title="Library" Icon="library.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
+        <Tab
+            Title="Library"
+            Icon="library.png"
+            Route="library">
+            <ShellContent ContentTemplate="{DataTemplate pages:CustomerLibraryPage}" Route="library" />
+        </Tab>
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
         </Tab>
         <Tab Title="History" Icon="history.png">
             <ShellContent ContentTemplate="{DataTemplate pages:UserHistory}" Route="history" />

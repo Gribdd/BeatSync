@@ -33,64 +33,45 @@ public class UserAuthService : ObservableObject
         return false;
     }
 
-    private void NavigateBasedOnUserType(User user)
+    private void NavigateBasedOnUserType(Object incomingUser)
     {
-        switch(user.AccounType)
+        int activeUserId = -1;
+        switch (incomingUser)
         {
-            case 1:
+            //artist
+            case Artist artist:
+                activeUserId = artist.Id;
                 Application.Current!.MainPage = new PublisherLandingPage();
                 break;
-            case 2:
+            //publisher
+            case Publisher publisher:
+                activeUserId = publisher.Id;
                 Application.Current!.MainPage = new PublisherLandingPage();
                 break;
-            case 3:
+            case User user:
                 Application.Current!.MainPage = new CustomerLandingPage();
+                activeUserId = user.Id;
                 break;
             default:
                 break;
         }
+        Preferences.Default.Set("currentUserId", activeUserId);
     }
 
-    private async Task<User?> GetUser(string identifier, string password)
+    private async Task<Object?> GetUser(string identifier, string password)
     {
         var artists =  await userValidationService.GetArtists();
         var artist = artists.FirstOrDefault(a => (a.Username == identifier || a.Email == identifier) && (a.Password == password));
         if (artist != null)
         {
-            return new User
-            {
-                Id = artist.Id,
-                Email = artist.Email,
-                Username = artist.Username,
-                Password = artist.Password,
-                DateOfBirth = artist.DateOfBirth,
-                FirstName = artist.FirstName,
-                LastName = artist.LastName,
-                Gender = artist.Gender,
-                AccounType = artist.AccounType,
-                IsDeleted = artist.IsDeleted,
-                ImageFilePath = artist.ImageFilePath
-            };
+            return artist;
         }
 
         var publishers = await userValidationService.GetPublishers();
         var publisher = publishers.FirstOrDefault(p => (p.Username == identifier || p.Email == identifier) && (p.Password == password));
         if (publisher != null)
         {
-            return new User
-            {
-                Id = publisher.Id,
-                Email = publisher.Email,
-                Username = publisher.Username,
-                Password = publisher.Password,
-                DateOfBirth = publisher.DateOfBirth,
-                FirstName = publisher.FirstName,
-                LastName = publisher.LastName,
-                Gender = publisher.Gender,
-                AccounType = publisher.AccounType,
-                IsDeleted = publisher.IsDeleted,
-                ImageFilePath = publisher.ImageFilePath
-            };
+            return publisher;
         }
 
         var users = await userValidationService.GetUsers();

@@ -6,8 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 
 using System.Threading.Tasks;
-using static Android.Provider.MediaStore.Audio;
-using static Java.Util.Concurrent.Flow;
 
 namespace BeatSync.ViewModel.Users;
 
