@@ -1,11 +1,3 @@
-using BeatSync.Models;
-using BeatSync.Pages;
-using BeatSync.Services;
-using BeatSync.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Storage;
-
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]

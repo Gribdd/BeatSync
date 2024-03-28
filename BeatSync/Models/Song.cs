@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace BeatSync.Models;
+﻿namespace BeatSync.Models;
 
 /// <summary>
 /// if artist is deleted all songs associated with that artist will be deleted

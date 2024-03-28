@@ -1,11 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BeatSync.Models;
+﻿namespace BeatSync.Models;
 
 public partial class Publisher : ObservableObject
 {

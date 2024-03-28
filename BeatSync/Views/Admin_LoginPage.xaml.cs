@@ -1,4 +1,3 @@
-using BeatSync.Pages;
 
 namespace BeatSync.Views;
 

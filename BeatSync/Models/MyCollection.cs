@@ -1,7 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using BeatSync.Services;
-
 namespace BeatSync.Models;
 
 public partial class MyCollection : ObservableObject

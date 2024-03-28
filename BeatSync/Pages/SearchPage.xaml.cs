@@ -1,7 +1,3 @@
-using BeatSync.ViewModel.Users;
-using BeatSync.Services;
-using System.IO;
-
 namespace BeatSync.Pages;
 
 public partial class SearchPage : ContentPage

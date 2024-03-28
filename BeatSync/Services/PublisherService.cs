@@ -1,9 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json;
-using BeatSync.Models;
-using CommunityToolkit.Mvvm.Input;
 
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
+
 
 public partial class PublisherService
 {

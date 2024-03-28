@@ -1,16 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Pages;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using BeatSync.Services;
-
-namespace BeatSync.ViewModel.LoginAndRegistration;
+﻿namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
 public partial class SignUpPageViewModel : ObservableObject
