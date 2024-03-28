@@ -1,4 +1,5 @@
-﻿namespace BeatSync.ViewModel.Users;
+﻿
+namespace BeatSync.ViewModel.Users;
 
 [QueryProperty(nameof(Playlist), nameof(Playlist))]
 [QueryProperty(nameof(User), nameof(User))]
@@ -16,6 +17,9 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
 
+    [ObservableProperty]
+    private ObservableCollection<PlaylistSongs> _playlistSongs = new();
+
     public AddPlaylistSongsCustomerViewModel(PlaylistService playlistService, SongService songService)
     {
         this.playlistService = playlistService;
@@ -29,8 +33,25 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task AddAlbumSongs()
+    async Task NavigateToAddPlaylistSongsSearch()
     {
-        await Shell.Current.DisplayAlert("Test","Test","OK");
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {"PlaylistId", Playlist.Id },
+        };
+
+        await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsSearch)}", navigationParameter);
     }
+
+    public async Task GetSongsByPlaylistId()
+    {
+        var songIds = PlaylistSongs.Select(playlistSong => playlistSong.SongId).ToList();
+        Songs = await songService.GetSongsBySongIds(songIds);
+    }
+
+    public async Task GetPlaylistSongsPlaylistId()
+    {
+        PlaylistSongs = await playlistService.GetPlaylistSongsByPlaylistId(Playlist.Id);
+    }
+    
 }

@@ -2,9 +2,18 @@ namespace BeatSync.Pages;
 
 public partial class AddPlaylistSongsCustomer : ContentPage
 {
-	public AddPlaylistSongsCustomer(AddPlaylistSongsCustomerViewModel vm)
+	AddPlaylistSongsCustomerViewModel _vm;
+
+    public AddPlaylistSongsCustomer(AddPlaylistSongsCustomerViewModel vm)
 	{
-		BindingContext = vm;
+		BindingContext = _vm = vm;
 		InitializeComponent();
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _vm.GetPlaylistSongsPlaylistId();
+        await _vm.GetSongsByPlaylistId();
+    }
 }

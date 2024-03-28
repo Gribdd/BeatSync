@@ -1,8 +1,10 @@
-﻿namespace BeatSync.Services;
+﻿
+namespace BeatSync.Services;
 
 public partial class PlaylistService
 {
     private readonly string playlistFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Playlists.json");
+    private readonly string playlistSongFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "PlaylistSongs.json");
 
     public async Task<bool> AddPlaylist(Playlist playlist)
     {
@@ -45,5 +47,49 @@ public partial class PlaylistService
         return new ObservableCollection<Playlist>(activePlaylist.Where(m => m.UserId == userId));
     }
 
+    public async Task<bool> AddPlaylistSong(int playlistId, int songId)
+    {
+        if (playlistId <= 0 || songId <= 0)
+        {
+            return false;
+        }
+
+        ObservableCollection<PlaylistSongs> playlistSongs = await GetPlaylistSongsAsync();
+        var playlistSong = new PlaylistSongs
+        {
+            Id = playlistSongs.Count + 1,
+            SongId = songId,
+            PlaylistId = playlistId
+        };
+
+        playlistSongs.Add(playlistSong);
+
+        var json = JsonSerializer.Serialize<ObservableCollection<PlaylistSongs>>(playlistSongs);
+        await File.WriteAllTextAsync(playlistSongFilePath, json);
+        return true;
+    }
+
+    public async Task<ObservableCollection<PlaylistSongs>> GetPlaylistSongsAsync()
+    {
+        if (!File.Exists(playlistSongFilePath))
+        {
+            return new ObservableCollection<PlaylistSongs>();
+        }
+
+        var json = await File.ReadAllTextAsync(playlistSongFilePath);
+        var playlistSongs = JsonSerializer.Deserialize<ObservableCollection<PlaylistSongs>>(json);
+        return playlistSongs!;
+    }
+
+    public async Task<ObservableCollection<PlaylistSongs>> GetPlaylistSongsByPlaylistId(int playlistId)
+    {
+        if (playlistId <= 0)
+        {
+            return new ObservableCollection<PlaylistSongs>();
+        }
+
+        var playlistSongs = await GetPlaylistSongsAsync();
+        return new ObservableCollection<PlaylistSongs>(playlistSongs.Where(playlistSong => playlistSong.PlaylistId == playlistId));
+    }
 
 }

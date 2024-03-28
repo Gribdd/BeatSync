@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.AddPlaylistSongsSearch"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
+    Title="AddPlaylistSongsSearch"
+    x:DataType="viewmodel:AddPlaylistSongsSearchViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    Shell.NavBarIsVisible="False">
+    <Grid
+        Padding="34,98,34,0"
+        RowDefinitions="auto,*"
+        RowSpacing="20">
+        <SearchBar
+            BackgroundColor="White"
+            Placeholder="Search"
+            SearchCommand="{Binding SearchSongCommand}"
+            Text="{Binding SearchQuery}"
+            WidthRequest="310"
+            ZIndex="1" />
+        <CollectionView
+            x:Name="collectionView"
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            ItemsSource="{Binding Songs}">
+            <CollectionView.EmptyView>
+                <Label Text="No Songs Found" VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Song">
+                    <Grid
+                        ColumnDefinitions="auto,auto"
+                        ColumnSpacing="12"
+                        RowDefinitions="auto,auto">
+                        <Image
+                            Grid.RowSpan="2"
+                            HeightRequest="45"
+                            Source="{Binding ImageFilePath}"
+                            WidthRequest="45" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="{Binding Name}"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontSize="12"
+                            Text="{Binding ArtistName}"
+                            TextColor="#A39797"
+                            VerticalTextAlignment="Start" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.AddToPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

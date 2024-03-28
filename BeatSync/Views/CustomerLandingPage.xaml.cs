@@ -7,6 +7,7 @@ public partial class CustomerLandingPage : Shell
 	{
 		Routing.RegisterRoute($"library/{nameof(AddPlaylistCustomer)}",typeof(AddPlaylistCustomer));
 		Routing.RegisterRoute($"library/{nameof(AddPlaylistSongsCustomer)}",typeof(AddPlaylistSongsCustomer));
+		Routing.RegisterRoute($"library/{nameof(AddPlaylistSongsCustomer)}/{nameof(AddPlaylistSongsSearch)}",typeof(AddPlaylistSongsSearch));
 		InitializeComponent();
 	}
 }
