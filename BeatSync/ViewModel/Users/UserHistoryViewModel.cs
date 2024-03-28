@@ -13,8 +13,9 @@ public partial class UserHistoryViewModel : ObservableObject
 {
 	private AdminService _adminService;
 
-	[ObservableProperty]
-	private ObservableCollection<UserHistory> _userHistories = new();
+	//will double check if needed
+	//[ObservableProperty]
+	//private ObservableCollection<UserHistory> _userHistories = new();
 
 	public UserHistoryViewModel(AdminService adminService)
 	{

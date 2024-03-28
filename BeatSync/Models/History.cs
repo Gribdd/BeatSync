@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace BeatSync.Models
 {
     public partial class History : ObservableObject
-    {
+    { //model
         [ObservableProperty]
         private int _id; //History Id
 
@@ -20,7 +20,7 @@ namespace BeatSync.Models
         private DateTime _timeStamp; //DateTime of recently played song
 
         [ObservableProperty]
-        private ObservableCollection<Song> _song;
+        private string? _songName; //Name of the song
 
     }
 }

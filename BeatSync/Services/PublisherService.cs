@@ -1,13 +1,14 @@
-﻿using BeatSync.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Text.Json;
+using BeatSync.Models;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BeatSync.Services;
 
-public class PublisherService
+public partial class PublisherService
 {
     private readonly string _publisherFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Publishers.json");
-
+    private readonly string _historyFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "PubUserHistory.json");
     public async Task<bool> AddPublisherAsync(Publisher publisher)
     {
 
@@ -128,5 +129,34 @@ public class PublisherService
 
         await Shell.Current.DisplayAlert("Update Publisher", "Successfully updated publisher", "OK");
         return await GetActivePublisherAsync();
+    }
+
+    public async Task<Publisher> GetCurrentUser()
+    {
+        int userId = Preferences.Default.Get("currentUserId", -1);
+        var publishers = await GetActivePublisherAsync();
+        var publisher = publishers.FirstOrDefault(p => p.Id == userId);
+
+        return publisher!;
+    }
+
+    public async Task SaveUserHistoryAsync(History history)
+    {
+        ObservableCollection<History> userHistories = await LoadUserHistoriesAsync();
+        userHistories.Add(history);
+        string json = JsonSerializer.Serialize<ObservableCollection<History>>(userHistories);
+        await File.WriteAllTextAsync(_historyFilePath, json);
+    }
+
+    [RelayCommand]
+    public async Task<ObservableCollection<History>> LoadUserHistoriesAsync()
+    {
+        ObservableCollection<History> userHistories = new ObservableCollection<History>();
+        if (File.Exists(_historyFilePath))
+        {
+            string json = await File.ReadAllTextAsync(_historyFilePath);
+            userHistories = JsonSerializer.Deserialize<ObservableCollection<History>>(json);
+        }
+       return userHistories;
     }
 }
