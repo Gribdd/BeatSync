@@ -1,10 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Text.RegularExpressions;
-
-
+﻿
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddArtistViewModel : ObservableObject

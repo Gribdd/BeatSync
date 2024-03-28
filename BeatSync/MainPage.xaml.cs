@@ -1,6 +1,4 @@
 ﻿
-using BeatSync.ViewModel.LoginAndRegistration;
-
 namespace BeatSync;
 
 public partial class MainPage : ContentPage

@@ -1,13 +1,4 @@
-﻿using BeatSync.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
 
 public partial class PlaylistService
 {
@@ -53,4 +44,6 @@ public partial class PlaylistService
         var activePlaylist = await GetActivePlaylistAsync();
         return new ObservableCollection<Playlist>(activePlaylist.Where(m => m.UserId == userId));
     }
+
+
 }

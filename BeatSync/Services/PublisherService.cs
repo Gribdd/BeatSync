@@ -1,8 +1,4 @@
-﻿using BeatSync.Models;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
 
 public class PublisherService
 {

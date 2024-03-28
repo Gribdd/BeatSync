@@ -21,7 +21,7 @@
             <ImageButton
                 CornerRadius="3"
                 HeightRequest="187"
-                Source="usjr.png"
+                Source="{Binding Playlist.ImageFilePath}"
                 VerticalOptions="Center"
                 WidthRequest="200" />
         </HorizontalStackLayout>
@@ -29,7 +29,7 @@
             Grid.Row="1"
             Margin="0,18,0,0"
             FontSize="25"
-            Text="My playlist #1" />
+            Text="{Binding Playlist.Name}" />
         <HorizontalStackLayout
             Grid.Row="2"
             Margin="0,5,0,0"
@@ -40,12 +40,12 @@
                 StrokeThickness="0">
                 <Image
                     HeightRequest="30"
-                    Source="usjr.png"
+                    Source="{Binding User.ImageFilePath}"
                     WidthRequest="30" />
             </Border>
             <Label
                 FontSize="15"
-                Text="AS_Tech"
+                Text="{Binding User.FullName}"
                 VerticalTextAlignment="Center" />
         </HorizontalStackLayout>
         <HorizontalStackLayout

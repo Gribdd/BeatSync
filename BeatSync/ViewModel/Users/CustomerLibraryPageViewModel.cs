@@ -1,10 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Pages;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-namespace BeatSync.ViewModel.Users;
+﻿namespace BeatSync.ViewModel.Users;
 
 public partial class CustomerLibraryPageViewModel : ObservableObject
 {
@@ -40,9 +34,14 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task NavigateAddPlaylistSongs()
+    async Task NavigateAddPlaylistSongs(Playlist playlist)
     {
-        await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsCustomer)}");
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(Playlist), playlist },
+            {nameof(User), User}
+        };
+        await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsCustomer)}", navigationParameter);
     }
 
     public async Task LoadCurrentUser()

@@ -74,7 +74,7 @@
                             TextColor="#A39797"
                             VerticalTextAlignment="Center" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" />
+                            <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
                         </Grid.GestureRecognizers>
                     </Grid>
                 </DataTemplate>

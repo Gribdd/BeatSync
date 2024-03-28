@@ -1,11 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-
-
-namespace BeatSync.ViewModel.PublisherShell;
+﻿namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class AddAlbumPublisherViewModel : ObservableObject
 {

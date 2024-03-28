@@ -1,10 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-
-
+﻿
 namespace BeatSync.ViewModel.General;
 
 //first parameter receives the data
