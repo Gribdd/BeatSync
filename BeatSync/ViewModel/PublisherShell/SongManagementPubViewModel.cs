@@ -1,14 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Services;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Plugin.Maui.Audio;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-
-
-namespace BeatSync.ViewModel.PublisherShell;
+﻿namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class SongManagementPubViewModel : ObservableObject
 {

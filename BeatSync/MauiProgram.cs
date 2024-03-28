@@ -1,14 +1,5 @@
-﻿using BeatSync.Pages;
-using BeatSync.Services;
-using BeatSync.ViewModel.Admin;
-using BeatSync.ViewModel.LoginAndRegistration;
-using BeatSync.ViewModel.PublisherShell;
-using BeatSync.Views;
-using Microsoft.Extensions.Logging;
-using Plugin.Maui.Audio;
+﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using BeatSync.ViewModel.Users;
-using BeatSync.ViewModel.General;
 
 namespace BeatSync
 {

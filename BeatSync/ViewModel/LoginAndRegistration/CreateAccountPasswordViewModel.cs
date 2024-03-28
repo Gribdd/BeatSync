@@ -1,9 +1,4 @@
-﻿using BeatSync.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-
-
-namespace BeatSync.ViewModel.LoginAndRegistration;
+﻿namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
 public partial class CreateAccountPasswordViewModel : ObservableObject

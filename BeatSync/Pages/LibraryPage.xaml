@@ -80,8 +80,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
-        <ContentPresenter Content="{StaticResource SharedMediaPlayerView}"/>
     </VerticalStackLayout>
 
 

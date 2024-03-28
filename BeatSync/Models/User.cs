@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace BeatSync.Models;
+﻿namespace BeatSync.Models;
 
 public partial class User : ObservableObject
 {

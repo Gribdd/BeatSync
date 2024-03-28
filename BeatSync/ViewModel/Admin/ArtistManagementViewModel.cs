@@ -1,12 +1,4 @@
-﻿using BeatSync.Models;
-using BeatSync.Pages;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-
+﻿
 namespace BeatSync.ViewModel.Admin;
 
 public partial class ArtistManagementViewModel : ObservableObject
@@ -56,8 +48,6 @@ public partial class ArtistManagementViewModel : ObservableObject
     {
         await adminService.Logout();
     }
-
-    public ICommand GetArtistsCommand => new Command(GetArtists);
 
     public async void GetArtists()
     {

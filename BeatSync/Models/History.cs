@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace BeatSync.Models
+﻿namespace BeatSync.Models
 {
     public partial class History : ObservableObject
     {

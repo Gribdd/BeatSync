@@ -1,12 +1,11 @@
-﻿using BeatSync.Models;
-using System.Collections.ObjectModel;
-using System.Text.Json;
-
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
 
 public class AdminService
 {
-    //logout
+    /// <summary>
+    /// Logouts user and sets Preferences currentUserId to -1 or null
+    /// </summary>
+    /// <returns>void</returns>
     public async Task Logout()
     {
         bool answer = await Shell.Current.DisplayAlert("Logout", "Would you like to log out?", "Yes", "No");

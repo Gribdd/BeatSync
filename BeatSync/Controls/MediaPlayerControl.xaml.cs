@@ -1,8 +1,3 @@
-using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Maui.Views;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
 namespace BeatSync.Controls;
 
 public partial class MediaPlayerControl : Frame, INotifyPropertyChanged

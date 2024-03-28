@@ -1,5 +1,3 @@
-using BeatSync.ViewModel.PublisherShell;
-
 namespace BeatSync.Pages;
 
 public partial class AddAlbumPublisher : ContentPage

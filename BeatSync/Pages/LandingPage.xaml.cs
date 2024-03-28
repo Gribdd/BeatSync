@@ -1,5 +1,3 @@
-using BeatSync.ViewModel.Users;
-
 namespace BeatSync.Pages;
 
 public partial class LandingPage : ContentPage

@@ -1,8 +1,4 @@
-﻿
-using BeatSync.Models;
-using BeatSync.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
 
 public class UserAuthService : ObservableObject
 {
