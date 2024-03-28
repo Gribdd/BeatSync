@@ -80,6 +80,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<CustomerLibraryPageViewModel>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistCustomerViewModel>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsCustomerViewModel>();
+            mauiAppBuilder.Services.AddTransient<AddPlaylistSongsSearchViewModel>();
 
             return mauiAppBuilder;
         }
@@ -127,6 +128,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<CustomerLibraryPage>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistCustomer>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsCustomer>();
+            mauiAppBuilder.Services.AddTransient<AddPlaylistSongsSearch>();
 
 
             return mauiAppBuilder;

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
     Title="AddPlaylistSongsCustomer"
+    xmlns:model="clr-namespace:BeatSync.Models"
     x:DataType="viewmodel:AddPlaylistSongsCustomerViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
@@ -53,7 +54,6 @@
             Margin="0,20,0,0"
             Spacing="12">
             <ImageButton
-                Command="{Binding AddAlbumSongsCommand}"
                 HeightRequest="45"
                 Source="addalbumsong.png"
                 VerticalOptions="Start"
@@ -62,21 +62,16 @@
                 FontSize="18"
                 Text="Add Songs"
                 VerticalTextAlignment="Center" />
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToAddPlaylistSongsSearchCommand}"/>
+            </HorizontalStackLayout.GestureRecognizers>
         </HorizontalStackLayout>
-        <CollectionView Grid.Row="5" Margin="0,38,0,0">
+        <CollectionView Grid.Row="5" Margin="0,38,0,0" ItemsSource="{Binding Songs}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Rockstar</x:String>
-                    <x:String>Kiss Me More</x:String>
-                    <x:String>I'm Not The Only One</x:String>
-                    <x:String>Bugambilya</x:String>
-                </x:Array>
-            </CollectionView.ItemsSource>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Song">
                     <FlexLayout JustifyContent="SpaceBetween">
                         <Grid
                             ColumnDefinitions="auto,auto"
@@ -85,18 +80,18 @@
                             <Image
                                 Grid.RowSpan="2"
                                 HeightRequest="45"
-                                Source="logo.png"
+                                Source="{Binding ImageFilePath}"
                                 WidthRequest="45" />
                             <Label
                                 Grid.Column="1"
                                 FontSize="18"
-                                Text="{Binding .}"
+                                Text="{Binding Name}"
                                 VerticalTextAlignment="Center" />
                             <Label
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 FontSize="12"
-                                Text="Artist Name"
+                                Text="{Binding ArtistName}"
                                 TextColor="#A39797"
                                 VerticalTextAlignment="Start" />
                         </Grid>

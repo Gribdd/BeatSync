@@ -1,4 +1,5 @@
-﻿namespace BeatSync.Services;
+﻿
+namespace BeatSync.Services;
 
 public class SongService
 {
@@ -125,6 +126,48 @@ public class SongService
 
         var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
         await File.WriteAllTextAsync(songFilePath, json);
+    }
+
+    public async Task<ObservableCollection<Song>> GetSongsBySearchQuery(string? query)
+    {
+        if (string.IsNullOrEmpty(query))
+        {
+            return new ObservableCollection<Song>();
+        }
+
+        var songs = await GetActiveSongAsync();
+        return new ObservableCollection<Song>(songs.Where(s => s.Name!.Contains(query)));
+    }
+
+    public async Task<Song> GetSongBySongId(int songId, ObservableCollection<Song> songs)
+    {
+        var song = new Song();
+        if (songId <= 0)
+        {
+            return song;
+        }
+
+        return songs.FirstOrDefault(s => s.Id == songId)!;
+    }
+    public async Task<ObservableCollection<Song>> GetSongsBySongIds(List<int> songIds)
+    {
+        var songs = new ObservableCollection<Song>();
+        if (songIds == null)
+        {
+            return songs;
+        }
+
+        var allSongs = await GetActiveSongAsync();
+        foreach (var songId in songIds)
+        {
+            var song = await GetSongBySongId(songId, allSongs);
+            if (song != null)
+            {
+                songs.Add(song);
+            }
+        }
+
+        return songs;
     }
 
 }
