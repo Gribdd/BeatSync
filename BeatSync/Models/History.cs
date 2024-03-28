@@ -1,7 +1,7 @@
 ﻿namespace BeatSync.Models
 {
     public partial class History : ObservableObject
-    {
+    { //model
         [ObservableProperty]
         private int _id; //History Id
 
@@ -12,7 +12,7 @@
         private DateTime _timeStamp; //DateTime of recently played song
 
         [ObservableProperty]
-        private ObservableCollection<Song> _song;
+        private string? _songName; //Name of the song
 
     }
 }

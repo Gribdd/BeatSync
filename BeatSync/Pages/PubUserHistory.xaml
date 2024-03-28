@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.PubUserHistory"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
+    Title="PubUserHistory"
+    x:DataType="viewmodel:PubUserHistoryViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+    <!--  add PubUserHistoryViewModel to ViewModel/PublisherShell  -->
+    <ScrollView>
+        <StackLayout>
+            <VerticalStackLayout>
+                <!--  Top Elements  -->
+                <HorizontalStackLayout>
+                    <ImageButton
+                        Margin="30"
+                        Command="{Binding LogoutCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Start"
+                        Source="profileicon.png" />
+                    <Label
+                        Margin="-25,35,0,0"
+                        Style="{StaticResource SubHeadline}"
+                        Text="User History"
+                        TextColor="White" />
+                    <ImageButton
+                        Margin="80,0,0,0"
+                        HeightRequest="35"
+                        HorizontalOptions="Start"
+                        Source="search.png" />
+                    <ImageButton
+                        Margin="-5,0,0,0"
+                        HeightRequest="30"
+                        HorizontalOptions="Start"
+                        Source="add.png" />
+                </HorizontalStackLayout>
+                <BoxView
+                    Margin="0,-10,0,0"
+                    HeightRequest="2"
+                    WidthRequest="310"
+                    Color="White" />
+            </VerticalStackLayout>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Frame
+                    Margin="40,20,40,20"
+                    BackgroundColor="#17122E"
+                    BorderColor="Transparent">
+                    <CollectionView
+                        Grid.Row="1"
+                        HorizontalOptions="CenterAndExpand"
+                        IsVisible="True"
+                        ItemsSource="{Binding UserHistories}"
+                        VerticalOptions="CenterAndExpand">
+                        <CollectionView.Header>
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                                    <Label
+                                        Grid.Column="0"
+                                        Text="History ID"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="Song Played"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Column="2"
+                                        Text="Date Played"
+                                        TextColor="White" />
+                                </Grid>
+                                <BoxView
+                                    Margin="0,10,0,10"
+                                    HeightRequest="2"
+                                    WidthRequest="310"
+                                    Color="White" />
+                            </StackLayout>
+                        </CollectionView.Header>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:History">
+                                <Grid ColumnDefinitions="*,*,*">
+                                    <Label
+                                        Grid.Column="0"
+                                        Text="{Binding Id}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding SongName}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Column="2"
+                                        Text="{Binding TimeStamp}"
+                                        TextColor="White" />
+                                    <BoxView
+                                        Margin="0,40,0,20"
+                                        BackgroundColor="White"
+                                        HeightRequest="2"
+                                        WidthRequest="500" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
