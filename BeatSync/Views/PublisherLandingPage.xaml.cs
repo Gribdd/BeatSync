@@ -3,26 +3,46 @@ namespace BeatSync.Views;
 
 public partial class PublisherLandingPage : Shell
 {
-	public PublisherLandingPage()
+    PublisherLandingPageViewModel _vm;
+	public PublisherLandingPage(PublisherLandingPageViewModel vm)
 	{
 		Routing.RegisterRoute($"songs/{nameof(AddSong)}", typeof(AddSong));
 		Routing.RegisterRoute($"library/{nameof(AddAlbumPublisher)}", typeof(AddAlbumPublisher));
 		Routing.RegisterRoute($"library/{nameof(AddAlbumSongs)}", typeof(AddAlbumSongs));
 
-		BindingContext = this;
-
-		Routing.RegisterRoute($"history/{nameof(PubUserHistory)}", typeof(PubUserHistory));
-
+		BindingContext = _vm = vm;
 		InitializeComponent();
 	}
 
-    private async void OnProfileIconClicked(object sender, EventArgs e)
+    protected async override void OnAppearing()
     {
-        bool answer = await Shell.Current.DisplayAlert("Logout", "Would you like to log out?", "Yes", "No");
-        if (answer)
+        base.OnAppearing();
+        await _vm.GetActivePublisher();
+    }
+
+    protected override void OnNavigating(ShellNavigatingEventArgs args)
+    {
+        var navigationParameter = new Dictionary<string, object>
         {
-            Application.Current!.MainPage = new AppShell();
-            Preferences.Default.Set("currentUserId", -1);
+            {"Publisher", _vm.Publisher}
+        };
+
+        base.OnNavigating(args);
+        if (args.Target.Location.OriginalString.Contains("library"))
+        {
+            Shell.Current.GoToAsync("library", navigationParameter);
+        }
+        else if (args.Target.Location.OriginalString.Contains("songs"))
+        {
+            Shell.Current.GoToAsync("songs", navigationParameter);
+        }
+        else if (args.Target.Location.OriginalString.Contains("history"))
+        {
+            Shell.Current.GoToAsync("history", navigationParameter);
+        }
+        else
+        {
+            Shell.Current.GoToAsync("home", navigationParameter);
         }
     }
 }

@@ -30,7 +30,6 @@ public partial class PublisherService
 
     public async Task<ObservableCollection<Publisher>> GetPublishersAsync()
     {
-
         if (!File.Exists(_publisherFilePath))
         {
             return new ObservableCollection<Publisher>();
@@ -140,6 +139,7 @@ public partial class PublisherService
     public async Task SaveUserHistoryAsync(History history)
     {
         ObservableCollection<History> userHistories = await LoadUserHistoriesAsync();
+        history.Id = userHistories.Count + 1;
         userHistories.Add(history);
         string json = JsonSerializer.Serialize<ObservableCollection<History>>(userHistories);
         await File.WriteAllTextAsync(_historyFilePath, json);
@@ -148,12 +148,13 @@ public partial class PublisherService
     [RelayCommand]
     public async Task<ObservableCollection<History>> LoadUserHistoriesAsync()
     {
-        ObservableCollection<History> userHistories = new ObservableCollection<History>();
-        if (File.Exists(_historyFilePath))
+        if (!File.Exists(_historyFilePath))
         {
-            string json = await File.ReadAllTextAsync(_historyFilePath);
-            userHistories = JsonSerializer.Deserialize<ObservableCollection<History>>(json);
+            return new ObservableCollection<History>();
         }
-       return userHistories;
+
+        var json = await File.ReadAllTextAsync(_historyFilePath);
+        var userHistories = JsonSerializer.Deserialize<ObservableCollection<History>>(json);
+        return userHistories!;
     }
 }

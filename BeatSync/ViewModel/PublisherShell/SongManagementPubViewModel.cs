@@ -1,11 +1,11 @@
 ﻿namespace BeatSync.ViewModel.PublisherShell;
 
+[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class SongManagementPubViewModel : ObservableObject
 {
     private AdminService _adminService;
     private SongService _songService;
     private PublisherService _publisherService;
-    private PubUserHistoryViewModel _pubUserHistoryViewModel;
 
     [ObservableProperty]
     private MediaSource? _mediaSource;
@@ -14,25 +14,29 @@ public partial class SongManagementPubViewModel : ObservableObject
     private ObservableCollection<Song> _songs = new();
 
     [ObservableProperty]
-    private Song _selectedSong = new Song();
+    private ObservableCollection<History> _userHistories = new();
 
+    [ObservableProperty]
+    private Song _selectedSong = new Song();
+    
     [ObservableProperty]
     private bool _isVisible;
 
+    [ObservableProperty]
+    private Publisher _publisher = new();
 
-    public SongManagementPubViewModel(AdminService adminService, SongService songService, PublisherService publisherService, PubUserHistoryViewModel pubUserHistoryViewModel)
+
+    public SongManagementPubViewModel(AdminService adminService, SongService songService, PublisherService publisherService)
     {
         _adminService = adminService;
         _songService = songService;
         _publisherService = publisherService;
-        _pubUserHistoryViewModel = pubUserHistoryViewModel;
     }
 
 
     [RelayCommand]
-    async Task Logout()
+    void Logout()
     {
-
         Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
@@ -43,59 +47,45 @@ public partial class SongManagementPubViewModel : ObservableObject
     }
 
     [RelayCommand]
-    Task PlaySong(Song song)
+    async Task PlaySong(Song song)
     {
         if (song.FilePath == null)
         {
-            return Task.CompletedTask;
+            return;
         }
 
-        _selectedSong = song;
+        SelectedSong = song;
         if (!IsVisible)
         {
             IsVisible = true;
         }
 
         //Calling a method to save user history
-        SaveUserHistoryAsync(song);
+        await SaveUserHistoryAsync(song);
 
         MediaSource = MediaSource.FromFile(song.FilePath);
-        return Task.CompletedTask;
     }
 
-    public async void GetSongsAsync()
-    {
-        var songsList = await _songService.GetActiveSongAsync();
-        Songs = new ObservableCollection<Song>(songsList);
-    }
     [RelayCommand]
-    public async Task SaveUserHistoryAsync(Song song)
+    async Task SaveUserHistoryAsync(Song? song)
     {
-        int userId = Preferences.Default.Get("currentUserId", -1);  
-        if(userId <= 0) {
+        int userId = Preferences.Default.Get("currentUserId", -1);
+        if(userId <= 0)
+        {
             return;
         }
-        string songTitle = song.Name;
-        var userHistories = await _publisherService.LoadUserHistoriesAsync();
-        int newHistoryId = userHistories.Count + 1;
+
+        string songTitle = song!.Name!;
         await _publisherService.SaveUserHistoryAsync(new History
         {
-            Id = newHistoryId,
             UserId = userId,
             TimeStamp = DateTime.Now,
             SongName = songTitle
         });
-        await GetSavedHistories(); 
-        
     }
 
-    [ObservableProperty]
-    private ObservableCollection<History> _userHistories = new();
-    
-
-    [RelayCommand]
-    public async Task GetSavedHistories()
+    public async void GetSongsAsync()
     {
-        UserHistories = new ObservableCollection<History>(await _publisherService.LoadUserHistoriesAsync());
+        Songs = await _songService.GetActiveSongAsync();
     }
 }

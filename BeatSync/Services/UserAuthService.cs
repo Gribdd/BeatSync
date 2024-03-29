@@ -3,11 +3,13 @@
 public class UserAuthService : ObservableObject
 {
     private readonly UserValidationService userValidationService;
+    private readonly PublisherLandingPageViewModel vm;
 
-
-    public UserAuthService(UserValidationService userValidationService)
+    public UserAuthService(UserValidationService userValidationService,
+        PublisherLandingPageViewModel vm)
     {
         this.userValidationService = userValidationService;
+        this.vm = vm;
     }
 
 
@@ -37,12 +39,12 @@ public class UserAuthService : ObservableObject
             //artist
             case Artist artist:
                 activeUserId = artist.Id;
-                Application.Current!.MainPage = new PublisherLandingPage();
+                Application.Current!.MainPage = new PublisherLandingPage(vm);
                 break;
             //publisher
             case Publisher publisher:
                 activeUserId = publisher.Id;
-                Application.Current!.MainPage = new PublisherLandingPage();
+                Application.Current!.MainPage = new PublisherLandingPage(vm);
                 break;
             case User user:
                 Application.Current!.MainPage = new CustomerLandingPage();

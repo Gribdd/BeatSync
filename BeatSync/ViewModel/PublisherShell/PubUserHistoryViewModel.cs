@@ -1,19 +1,9 @@
-using BeatSync.Models;
-using BeatSync.Pages;
-using BeatSync.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Linq;
-
 
 namespace BeatSync.ViewModel.PublisherShell;
 
+[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class PubUserHistoryViewModel : ObservableObject
 {
-
-	private AdminService _adminService;
 	private PublisherService _publisherService;
 
     [ObservableProperty]
@@ -22,17 +12,19 @@ public partial class PubUserHistoryViewModel : ObservableObject
 	[ObservableProperty]
 	private ObservableCollection<History> _filteredHistories = new();
 
-    public PubUserHistoryViewModel(AdminService adminService, PublisherService publisherService)
+    [ObservableProperty]
+    private Publisher _publisher = new();
+
+    public PubUserHistoryViewModel(PublisherService publisherService)
 	{
-		_adminService = adminService;
 		_publisherService = publisherService;
 	}
 
 
 	[RelayCommand]
-	async Task Logout()
+	void Logout()
 	{
-        await _adminService.Logout();
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     [RelayCommand]
