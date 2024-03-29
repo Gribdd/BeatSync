@@ -2,7 +2,7 @@
 
 public partial class SongManagementPubViewModel : ObservableObject
 {
-
+    private AdminService _adminService;
     private SongService _songService;
     private PublisherService _publisherService;
     private PubUserHistoryViewModel _pubUserHistoryViewModel;
@@ -71,7 +71,10 @@ public partial class SongManagementPubViewModel : ObservableObject
     [RelayCommand]
     public async Task SaveUserHistoryAsync(Song song)
     {
-        int userId = _publisherService.GetCurrentUser().Id;
+        int userId = Preferences.Default.Get("currentUserId", -1);  
+        if(userId <= 0) {
+            return;
+        }
         string songTitle = song.Name;
         var userHistories = await _publisherService.LoadUserHistoriesAsync();
         int newHistoryId = userHistories.Count + 1;

@@ -53,7 +53,7 @@
                         Grid.Row="1"
                         HorizontalOptions="CenterAndExpand"
                         IsVisible="True"
-                        ItemsSource="{Binding UserHistories}"
+                        ItemsSource="{Binding FilteredHistories}"
                         VerticalOptions="CenterAndExpand">
                         <CollectionView.Header>
                             <StackLayout>
