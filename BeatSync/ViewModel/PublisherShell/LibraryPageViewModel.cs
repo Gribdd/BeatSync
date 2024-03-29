@@ -1,5 +1,6 @@
 ﻿namespace BeatSync.ViewModel.PublisherShell;
 
+[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class LibraryPageViewModel : ObservableObject
 {
     private AlbumService albumService;
@@ -10,6 +11,8 @@ public partial class LibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private Album _selectedAlbum = new();
 
+    [ObservableProperty]
+    private Publisher _publisher = new();
     public LibraryPageViewModel(AlbumService albumService)
     {
         this.albumService = albumService;
@@ -55,7 +58,7 @@ public partial class LibraryPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task Logout()
+    void Logout()
     {
         Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }

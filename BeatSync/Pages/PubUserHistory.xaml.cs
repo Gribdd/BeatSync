@@ -12,9 +12,9 @@ public partial class PubUserHistory : ContentPage
         BindingContext = _viewModel = vm;
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel.GetUserHistories();
+        await _viewModel.GetUserHistories();
     }
 }

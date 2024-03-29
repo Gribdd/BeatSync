@@ -4,9 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:BeatSync.Pages"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
     x:Name="publisherShell"
     Title="PublisherLandingPage"
-    FlyoutIcon="profileicon.png"
+    x:DataType="viewmodel:PublisherLandingPageViewModel"
+    FlyoutBackgroundImage="overlayprofilepicpressed.png"
+    FlyoutBackgroundImageAspect="AspectFill"
     FlyoutIsPresented="False"
     Shell.FlyoutBehavior="Flyout"
     Shell.TabBarBackgroundColor="#17122E"
@@ -20,11 +23,12 @@
             ColumnDefinitions="auto,*"
             ColumnSpacing="10">
             <ImageButton
+                CornerRadius="20"
                 HeightRequest="50"
-                Source="profileicon.png"
+                Source="{Binding Publisher.ImageFilePath}"
                 WidthRequest="50" />
             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                <Label FontSize="15" Text="AS Tech" />
+                <Label FontSize="15" Text="{Binding Publisher.FullName}" />
                 <Label
                     FontSize="12"
                     Text="View Profile"
@@ -37,26 +41,24 @@
         <Button
             Margin="20"
             BackgroundColor="#9747FF"
-            Clicked="OnProfileIconClicked"
+            Command="{Binding ProfileIconClickedCommand}"
             CornerRadius="25"
             Text="Logout"
             TextColor="White" />
     </Shell.FlyoutFooter>
 
     <TabBar>
+        <Tab Title="Library" Icon="library.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library"/>
+        </Tab>
         <Tab Title="Songs" Icon="songs.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SongManagementPub}" Route="songs" />
         </Tab>
         <Tab Title="Home" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
         </Tab>
-        <Tab Title="Library" Icon="library.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
-        </Tab>
         <Tab Title="History" Icon="history.png">
             <ShellContent ContentTemplate="{DataTemplate pages:PubUserHistory}" Route="history" />
         </Tab>
     </TabBar>
-
-
 </Shell>

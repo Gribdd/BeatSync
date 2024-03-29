@@ -10,16 +10,24 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
     private FileUploadService fileUploadService;
     private FileResult? fileResult;
 
+    PublisherLandingPageViewModel vm;
+
     [ObservableProperty]
     private User _user = new();
 
-    public CreateAccountUploadImageViewModel(AdminService adminService, ArtistService artistService, PublisherService publisherService, UserService userService, FileUploadService fileUploadService)
+    public CreateAccountUploadImageViewModel(AdminService adminService, 
+        ArtistService artistService, 
+        PublisherService publisherService, 
+        UserService userService, 
+        FileUploadService fileUploadService, 
+        PublisherLandingPageViewModel vm)
     {
         this.adminService = adminService;
         this.artistService = artistService;
         this.publisherService = publisherService;
         this.userService = userService;
         this.fileUploadService = fileUploadService;
+        this.vm = vm;
     }
 
     [RelayCommand]
@@ -55,7 +63,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     File.Copy(fileResult!.FullPath, artist.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
                     //await Shell.Current.GoToAsync("mainpage");
-                    Application.Current!.MainPage = new PublisherLandingPage();
+                    Application.Current!.MainPage = new PublisherLandingPage(vm);
                 }
 
                 break;
@@ -78,7 +86,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                 {
                     File.Copy(fileResult!.FullPath, publisher.ImageFilePath!);
                     await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
-                    Application.Current!.MainPage = new PublisherLandingPage();
+                    Application.Current!.MainPage = new PublisherLandingPage(vm);
                 }
                 break;
             //customer
