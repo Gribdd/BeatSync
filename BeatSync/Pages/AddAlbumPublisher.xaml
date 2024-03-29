@@ -7,7 +7,6 @@
     Title="AddAlbumPublisher"
     x:DataType="viewmodel:AddAlbumPublisherViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
-    NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>

@@ -70,6 +70,7 @@
 	  <None Remove="Resources\Images\library.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\options.png" />
+	  <None Remove="Resources\Images\overlayprofilepicpressed.png" />
 	  <None Remove="Resources\Images\pause.png" />
 	  <None Remove="Resources\Images\play.png" />
 	  <None Remove="Resources\Images\profile.png" />
@@ -207,5 +208,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionBeatSyncHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>
