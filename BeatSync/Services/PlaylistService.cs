@@ -17,7 +17,6 @@ public partial class PlaylistService
         playlist.Id = playlists.Count + 1;
         playlists.Add(playlist);
 
-
         var json = JsonSerializer.Serialize<ObservableCollection<Playlist>>(playlists);
         await File.WriteAllTextAsync(playlistFilePath, json);
         return true;
@@ -91,5 +90,4 @@ public partial class PlaylistService
         var playlistSongs = await GetPlaylistSongsAsync();
         return new ObservableCollection<PlaylistSongs>(playlistSongs.Where(playlistSong => playlistSong.PlaylistId == playlistId));
     }
-
 }

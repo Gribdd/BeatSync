@@ -7,7 +7,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(Admin_LoginPage), typeof(Admin_LoginPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-
+        
         Routing.RegisterRoute("mainpage/signup", typeof(SignUpPage));
         Routing.RegisterRoute("mainpage/signup/createaccountusername", typeof(CreateAccountUsername));
         Routing.RegisterRoute("mainpage/signup/createaccountusername/createaccountpassword", typeof(CreateAccountPassword));

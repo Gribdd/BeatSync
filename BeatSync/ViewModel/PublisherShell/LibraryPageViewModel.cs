@@ -2,7 +2,6 @@
 
 public partial class LibraryPageViewModel : ObservableObject
 {
-    private AdminService adminService;
     private AlbumService albumService;
 
     [ObservableProperty]
@@ -11,9 +10,8 @@ public partial class LibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private Album _selectedAlbum = new();
 
-    public LibraryPageViewModel(AdminService adminService, AlbumService albumService)
+    public LibraryPageViewModel(AlbumService albumService)
     {
-        this.adminService = adminService;
         this.albumService = albumService;
     }
 
@@ -59,7 +57,7 @@ public partial class LibraryPageViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await adminService!.Logout();
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     public async void GetAlbums()

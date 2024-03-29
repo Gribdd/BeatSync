@@ -2,7 +2,7 @@
 
 public partial class SongManagementPubViewModel : ObservableObject
 {
-    private AdminService _adminService;
+
     private SongService _songService;
     private PublisherService _publisherService;
     private PubUserHistoryViewModel _pubUserHistoryViewModel;
@@ -19,6 +19,7 @@ public partial class SongManagementPubViewModel : ObservableObject
     [ObservableProperty]
     private bool _isVisible;
 
+
     public SongManagementPubViewModel(AdminService adminService, SongService songService, PublisherService publisherService, PubUserHistoryViewModel pubUserHistoryViewModel)
     {
         _adminService = adminService;
@@ -31,7 +32,8 @@ public partial class SongManagementPubViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await _adminService.Logout();
+
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     [RelayCommand]
