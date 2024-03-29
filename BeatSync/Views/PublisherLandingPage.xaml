@@ -54,7 +54,7 @@
             <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
         </Tab>
         <Tab Title="History" Icon="history.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:UserHistory}" Route="history" />
+            <ShellContent ContentTemplate="{DataTemplate pages:PubUserHistory}" Route="history" />
         </Tab>
     </TabBar>
 

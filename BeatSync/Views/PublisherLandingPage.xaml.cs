@@ -10,6 +10,9 @@ public partial class PublisherLandingPage : Shell
 		Routing.RegisterRoute($"library/{nameof(AddAlbumSongs)}", typeof(AddAlbumSongs));
 
 		BindingContext = this;
+
+		Routing.RegisterRoute($"history/{nameof(PubUserHistory)}", typeof(PubUserHistory));
+
 		InitializeComponent();
 	}
 
