@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
+
 namespace BeatSync.ViewModel.Users;
 
 public partial class SearchPageViewModel : ObservableObject
 {
+    private UserService _userService;
 
     [ObservableProperty]
     private string? _searchQuery;
@@ -9,42 +12,37 @@ public partial class SearchPageViewModel : ObservableObject
     [ObservableProperty]
     private MyCollection _myCollection = new();
 
+    [ObservableProperty]
+    private User _user = new();
+
+    [ObservableProperty]
+    private bool _isResultsVisible;
 
     [ObservableProperty]
     private ObservableCollection<object> _myList = new();
 
-    private AdminService _adminService;
-    private ArtistService _artistService;
-    private AlbumService _albumService;
-    private PublisherService _publisherService;
-    private SongService _songService;
-    private UserService _userService;
 
-    public SearchPageViewModel(AdminService adminService, ArtistService artistService, AlbumService albumService, PublisherService publisherService, SongService songService, UserService userService)
+    public SearchPageViewModel(UserService userService)
     {
-        _adminService = adminService;
-        _artistService = artistService;
-        _albumService = albumService;
-        _publisherService = publisherService;
-        _songService = songService;
         _userService = userService;
     }
 
+
     [RelayCommand]
-    async Task Logout()
+    void Logout()
     {
-        await _adminService.Logout();
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     [RelayCommand]
-    public async Task SearchCommand()
+    public Task SearchCommand()
     {
-        _myCollection.Filter(SearchQuery);
+        MyCollection.Filter(SearchQuery!);
         MyList.Clear(); 
         IsResultsVisible = true;
 
         bool found = false; 
-        foreach (var item in _myCollection.FilteredCollection)
+        foreach (var item in MyCollection.FilteredCollection)
         {
             switch (item)
             {
@@ -90,9 +88,12 @@ public partial class SearchPageViewModel : ObservableObject
             string foundNothing = "No search result found.";
             MyList.Add(foundNothing);
         }
+
+        return Task.CompletedTask;
     }
 
-    [ObservableProperty]
-    private bool _isResultsVisible;
-
+    public async void LoadCurrentUser()
+    {
+        User = await _userService.GetCurrentUser();
+    }
 }

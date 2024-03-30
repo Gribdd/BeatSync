@@ -1,9 +1,9 @@
 ﻿namespace BeatSync.ViewModel.PublisherShell;
 
-[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class LibraryPageViewModel : ObservableObject
 {
-    private AlbumService albumService;
+    private readonly AlbumService albumService;
+    private readonly PublisherService publisherService;
 
     [ObservableProperty]
     private ObservableCollection<Album> _albums = new();
@@ -13,9 +13,11 @@ public partial class LibraryPageViewModel : ObservableObject
 
     [ObservableProperty]
     private Publisher _publisher = new();
-    public LibraryPageViewModel(AlbumService albumService)
+
+    public LibraryPageViewModel(AlbumService albumService, PublisherService publisherService)
     {
         this.albumService = albumService;
+        this.publisherService = publisherService;
     }
 
 
@@ -66,5 +68,10 @@ public partial class LibraryPageViewModel : ObservableObject
     public async void GetAlbums()
     {
         Albums = await albumService.GetAlbumsAsync();
+    }
+
+    public async void GetActivePublisher()
+    {
+        Publisher = await publisherService.GetCurrentUser();
     }
 }

@@ -12,5 +12,6 @@ public partial class UserHistory : ContentPage
 	protected override void OnAppearing()
 	{
         base.OnAppearing();
+		_vm.LoadCurrentUser();
     }
 }

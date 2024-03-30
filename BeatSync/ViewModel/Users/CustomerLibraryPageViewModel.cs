@@ -22,9 +22,9 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
 
 
     [RelayCommand]
-    async Task Logout()
+    void Logout()
     {
-        await adminService.Logout();
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     [RelayCommand]

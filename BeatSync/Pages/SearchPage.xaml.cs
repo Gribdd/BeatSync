@@ -7,15 +7,15 @@ public partial class SearchPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _vm = vm;
-
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        _vm.LoadCurrentUser();
     }
 
-    private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(e.NewTextValue))
         {
@@ -25,6 +25,5 @@ public partial class SearchPage : ContentPage
             ((SearchPageViewModel)BindingContext).IsResultsVisible = false;
 
         }
-        
     }
 }

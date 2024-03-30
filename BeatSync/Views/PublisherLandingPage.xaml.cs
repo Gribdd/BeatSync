@@ -17,32 +17,7 @@ public partial class PublisherLandingPage : Shell
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.GetActivePublisher();
+		await _vm.GetActivePublisher();
     }
-
-    protected override void OnNavigating(ShellNavigatingEventArgs args)
-    {
-        var navigationParameter = new Dictionary<string, object>
-        {
-            {"Publisher", _vm.Publisher}
-        };
-
-        base.OnNavigating(args);
-        if (args.Target.Location.OriginalString.Contains("library"))
-        {
-            Shell.Current.GoToAsync("library", navigationParameter);
-        }
-        else if (args.Target.Location.OriginalString.Contains("songs"))
-        {
-            Shell.Current.GoToAsync("songs", navigationParameter);
-        }
-        else if (args.Target.Location.OriginalString.Contains("history"))
-        {
-            Shell.Current.GoToAsync("history", navigationParameter);
-        }
-        else
-        {
-            Shell.Current.GoToAsync("home", navigationParameter);
-        }
-    }
+   
 }

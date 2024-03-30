@@ -13,5 +13,6 @@ public partial class LibraryPage : ContentPage
     {
         base.OnAppearing();
 		_vm.GetAlbums();
+		_vm.GetActivePublisher();
     }
 }
