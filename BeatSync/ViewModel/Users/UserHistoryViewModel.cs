@@ -2,20 +2,24 @@ namespace BeatSync.ViewModel.Users;
 
 public partial class UserHistoryViewModel : ObservableObject
 {
-	private AdminService _adminService;
+	private UserService userService;
 
-	//will double check if needed
-	//[ObservableProperty]
-	//private ObservableCollection<UserHistory> _userHistories = new();
+	[ObservableProperty]
+	private User _user = new();
 
-	public UserHistoryViewModel(AdminService adminService)
+	public UserHistoryViewModel(UserService userService)
 	{
-		_adminService = adminService;
+		this.userService = userService;
 	}
 
 	[RelayCommand]
-	async Task Logout()
+	void Logout()
 	{
-		await _adminService.Logout();
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+    }
+
+	public async void LoadCurrentUser()
+	{
+		User = await userService.GetCurrentUser();
 	}
 }

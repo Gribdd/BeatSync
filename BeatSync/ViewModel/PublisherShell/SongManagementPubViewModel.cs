@@ -1,6 +1,5 @@
 ﻿namespace BeatSync.ViewModel.PublisherShell;
 
-[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class SongManagementPubViewModel : ObservableObject
 {
     private AdminService _adminService;
@@ -87,5 +86,10 @@ public partial class SongManagementPubViewModel : ObservableObject
     public async void GetSongsAsync()
     {
         Songs = await _songService.GetActiveSongAsync();
+    }
+
+    public async void GetActivePublisher()
+    {
+        Publisher = await _publisherService.GetCurrentUser();
     }
 }

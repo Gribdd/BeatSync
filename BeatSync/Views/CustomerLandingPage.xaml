@@ -4,20 +4,53 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:BeatSync.Pages"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
     Title="CustomerLandingPage"
+    x:DataType="viewmodel:CustomerLandingPageViewModel"
+    FlyoutBackgroundImage="overlayprofilepicpressed.png"
+    FlyoutBackgroundImageAspect="AspectFill"
+    FlyoutIsPresented="False"
+    Shell.FlyoutBehavior="Flyout"
     Shell.TabBarBackgroundColor="#17122E"
     Shell.TabBarForegroundColor="#FFFFFF"
     Shell.TabBarTitleColor="#FFFFFF"
     Shell.TabBarUnselectedColor="#7EA6D9">
 
+    <Shell.FlyoutHeader>
+        <Grid
+            Margin="25"
+            ColumnDefinitions="auto,*"
+            ColumnSpacing="10">
+            <ImageButton
+                CornerRadius="20"
+                HeightRequest="50"
+                Source="{Binding User.ImageFilePath}"
+                WidthRequest="50" />
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label FontSize="15" Text="{Binding User.FullName}" />
+                <Label
+                    FontSize="12"
+                    Text="View Profile"
+                    TextColor="#a39797" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <Button
+            Margin="20"
+            BackgroundColor="#9747FF"
+            Command="{Binding ProfileIconClickedCommand}"
+            CornerRadius="25"
+            Text="Logout"
+            TextColor="White" />
+    </Shell.FlyoutFooter>
+
     <TabBar>
         <Tab Title="Search" Icon="search.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SearchPage}" Route="search" />
         </Tab>
-        <Tab
-            Title="Library"
-            Icon="library.png"
-            Route="library">
+        <Tab Title="Library" Icon="library.png">
             <ShellContent ContentTemplate="{DataTemplate pages:CustomerLibraryPage}" Route="library" />
         </Tab>
         <Tab Title="Home" Icon="home.png">
@@ -27,6 +60,4 @@
             <ShellContent ContentTemplate="{DataTemplate pages:UserHistory}" Route="history" />
         </Tab>
     </TabBar>
-
-
 </Shell>

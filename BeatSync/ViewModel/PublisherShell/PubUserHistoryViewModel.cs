@@ -1,7 +1,6 @@
 
 namespace BeatSync.ViewModel.PublisherShell;
 
-[QueryProperty(nameof(Publisher), nameof(Publisher))]
 public partial class PubUserHistoryViewModel : ObservableObject
 {
 	private PublisherService _publisherService;
@@ -35,6 +34,10 @@ public partial class PubUserHistoryViewModel : ObservableObject
         FilteredHistories = new ObservableCollection<History>(UserHistories.Where(history => history.UserId == currentUser.Id));
     }
 
+    public async void GetActivePublisher()
+    {
+        Publisher = await _publisherService.GetCurrentUser();
+    }
 
 }
 

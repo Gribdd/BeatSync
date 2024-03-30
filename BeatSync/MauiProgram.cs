@@ -84,6 +84,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<AddPlaylistCustomerViewModel>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsCustomerViewModel>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsSearchViewModel>();
+            mauiAppBuilder.Services.AddTransient<CustomerLandingPageViewModel>();
 
             return mauiAppBuilder;
         }

@@ -16,5 +16,6 @@ public partial class PubUserHistory : ContentPage
     {
         base.OnAppearing();
         await _viewModel.GetUserHistories();
+        _viewModel.GetActivePublisher();
     }
 }

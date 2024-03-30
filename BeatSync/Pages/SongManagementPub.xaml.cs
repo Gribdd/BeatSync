@@ -13,6 +13,7 @@ public partial class SongManagementPub : ContentPage
     {
         base.OnAppearing();
         _vm.GetSongsAsync();
+        _vm.GetActivePublisher();
     }
 
 }
