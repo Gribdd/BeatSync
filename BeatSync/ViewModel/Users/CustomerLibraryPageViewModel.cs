@@ -12,7 +12,6 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Playlist> _playlists = new();
 
-
     public CustomerLibraryPageViewModel(AdminService adminService, UserService userService, PlaylistService playlistService)
     {
         this.adminService = adminService;

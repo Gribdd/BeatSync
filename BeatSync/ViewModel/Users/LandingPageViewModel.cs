@@ -2,20 +2,24 @@ namespace BeatSync.ViewModel.Users;
 
 public partial class LandingPageViewModel : ObservableObject
 {
-	private AdminService _adminService;
+    private readonly UserService userService;
 	
 	[ObservableProperty]
-	public ObservableCollection<Song> _newSongs = new();
-	public LandingPageViewModel(AdminService adminService)
+	private ObservableCollection<Song> _newSongs = new();
+
+	[ObservableProperty]
+	private User _user = new();
+
+    public LandingPageViewModel(UserService userService)
 	{
-		_adminService = adminService;
 		LoadSongsAsync();
-	}
+        this.userService = userService;
+    }
 
 	[RelayCommand]
-	async Task Logout()
+	void Logout()
 	{
-        await _adminService.Logout();
+		Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     public async Task LoadSongsAsync()
@@ -25,4 +29,8 @@ public partial class LandingPageViewModel : ObservableObject
         NewSongs = songs;
     }
 
+    public async void LoadCurrentUser()
+    {
+        User = await userService.GetCurrentUser();
+    }
 }

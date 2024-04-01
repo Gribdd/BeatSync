@@ -26,14 +26,21 @@ public class AlbumService
     {
         var albums = await GetAlbumsAsync();
         var albumToBeUpdated = albums.FirstOrDefault(a => a.Name == albumName);
+
+        var activeAlbums = await GetActiveAlbumsAsync();
         if (albumToBeUpdated == null)
         {
             await Shell.Current.DisplayAlert("Error", "Album not found", "OK");
-            return albums;
+            return activeAlbums;
         }
 
         string[] editOptions = { "Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
+
+        if(string.IsNullOrEmpty(selectedOption) || selectedOption == "Cancel")
+        {
+            return activeAlbums;
+        }
 
         var newValue = string.Empty;
         for (int index = 0; index < editOptions.Length; index++)
@@ -66,16 +73,18 @@ public class AlbumService
     {
         var albums = await GetAlbumsAsync();
         var albumToBeDeleted = albums.FirstOrDefault(a => a.Name == albumName);
+
+        var activeAlbums = await GetActiveAlbumsAsync();
         if (albumToBeDeleted == null)
         {
             await Shell.Current.DisplayAlert("Error", "Album not found", "OK");
-            return albums;
+            return activeAlbums;
         }
 
         if (albumToBeDeleted.IsDeleted)
         {
             await Shell.Current.DisplayAlert("Error", "Album already deleted", "OK");
-            return albums;
+            return activeAlbums;
         }
 
         albumToBeDeleted.IsDeleted = true;

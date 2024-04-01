@@ -31,23 +31,24 @@ public partial class LibraryPageViewModel : ObservableObject
     async Task UpdateAlbum()
     {
         string albumName = await Shell.Current.DisplayPromptAsync("Update Album", "Enter Album Name to update:");
-        if (!string.IsNullOrEmpty(albumName))
+        if (string.IsNullOrEmpty(albumName))
         {
-
-            Albums = await albumService.UpdateAlbumAsync(albumName);
+            return;
         }
+        Albums = await albumService.UpdateAlbumAsync(albumName);
     }
 
     [RelayCommand]
     async Task DeleteAlbum()
     {
         string albumName = await Shell.Current.DisplayPromptAsync("Delete Album", "Enter Album Name to delete:");
-        if (!string.IsNullOrEmpty(albumName))
+        if (string.IsNullOrEmpty(albumName))
         {
-            Albums = await albumService.DeleteAlbumAsync(albumName);
+            return;
         }
+        Albums = await albumService.DeleteAlbumAsync(albumName);
     }
-    
+
 
     [RelayCommand]
     async Task NavigateToAddAlbumSongs(Album album)
@@ -56,7 +57,7 @@ public partial class LibraryPageViewModel : ObservableObject
         {
             {nameof(Album), album }
         };
-        await Shell.Current.GoToAsync($"{nameof(AddAlbumSongs)}",navigationParameter);
+        await Shell.Current.GoToAsync($"{nameof(AddAlbumSongs)}", navigationParameter);
     }
 
     [RelayCommand]
@@ -67,7 +68,7 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public async void GetAlbums()
     {
-        Albums = await albumService.GetAlbumsAsync();
+        Albums = await albumService.GetActiveAlbumsAsync();
     }
 
     public async void GetActivePublisher()

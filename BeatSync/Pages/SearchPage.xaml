@@ -35,6 +35,7 @@
                 SearchCommandParameter="{Binding SearchQuery}"
                 Text="{Binding SearchQuery, Mode=TwoWay}"
                 TextChanged="SearchBar_TextChanged"
+                TextColor="{StaticResource Gray900}"
                 WidthRequest="310"
                 ZIndex="1" />
 

@@ -43,6 +43,10 @@ public partial class PlaylistService
     public async Task<ObservableCollection<Playlist>> GetPlaylistsByUserAsync(int userId)
     {
         var activePlaylist = await GetActivePlaylistAsync();
+        if(activePlaylist.Count == 0)
+        {
+            return new ObservableCollection<Playlist>();
+        }
         return new ObservableCollection<Playlist>(activePlaylist.Where(m => m.UserId == userId));
     }
 
