@@ -1,18 +1,20 @@
 ﻿
+using BeatSync.Repositories;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class UserManagementViewModel : ObservableObject
 {
-    private AdminService adminService;
     private UserService userService;
+    private readonly IRepository<User> _userRepository;
 
     [ObservableProperty]
     private ObservableCollection<User> _users = new();
 
-    public UserManagementViewModel(AdminService adminService, UserService userService)
+    public UserManagementViewModel(UserService userService, IRepository<User> userRepository)
     {
-        this.adminService = adminService;
         this.userService = userService;
+        _userRepository = userRepository;
     }
 
     [RelayCommand]
@@ -46,11 +48,11 @@ public partial class UserManagementViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await adminService.Logout();
+
     }
 
     public async void GetUsers()
     {
-        Users = await userService.GetActiveUserAsync();
+        Users = await _userRepository.GetActive();
     }
 }

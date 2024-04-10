@@ -1,9 +1,14 @@
 ﻿namespace BeatSync.Models;
 
-public partial class User : ObservableObject
+public partial class User : ObservableObject, IBaseModel
 {
+    #region inherited properties
     [ObservableProperty]
     private int _id;
+
+    [ObservableProperty]
+    private bool _isDeleted;
+    #endregion
 
     [ObservableProperty]
     private string? _email;
@@ -30,9 +35,8 @@ public partial class User : ObservableObject
     private int _accounType;
 
     [ObservableProperty]
-    private bool _isDeleted;
-
-    [ObservableProperty]
     private string? _imageFilePath;
-    public string? FullName { get { return $"{FirstName} {LastName}"; } }
+
+    public string? FullName => $"{FirstName} {LastName}";
+
 }

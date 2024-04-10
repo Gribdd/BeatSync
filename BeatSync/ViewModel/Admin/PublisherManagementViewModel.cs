@@ -3,15 +3,13 @@ namespace BeatSync.ViewModel.Admin
 {
     public partial class PublisherManagementViewModel : ObservableObject
     {
-        private AdminService adminService;
         private PublisherService publisherService;
 
         [ObservableProperty]
         private ObservableCollection<Publisher> _publishers = new();
 
-        public PublisherManagementViewModel(AdminService adminService, PublisherService publisherService)
+        public PublisherManagementViewModel( PublisherService publisherService)
         {
-            this.adminService = adminService;
             this.publisherService = publisherService;
         }
 
@@ -44,7 +42,6 @@ namespace BeatSync.ViewModel.Admin
         [RelayCommand]
         async Task Logout()
         {
-            await adminService.Logout();
         }
 
         public async void GetPublishers()

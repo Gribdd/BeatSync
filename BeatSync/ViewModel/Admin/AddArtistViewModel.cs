@@ -4,7 +4,6 @@ namespace BeatSync.ViewModel.Admin;
 public partial class AddArtistViewModel : ObservableObject
 {
     private const string Directory = "Artists";
-    private AdminService adminService;
     private ArtistService artistService;
     private FileUploadService fileUploadService;
     private UserValidationService userValidationService;
@@ -13,9 +12,8 @@ public partial class AddArtistViewModel : ObservableObject
     [ObservableProperty]
     private Artist _artist = new();
 
-    public AddArtistViewModel(AdminService adminService, UserValidationService userValidationService, ArtistService artistService, FileUploadService fileUploadService)
+    public AddArtistViewModel(UserValidationService userValidationService, ArtistService artistService, FileUploadService fileUploadService)
     {
-        this.adminService = adminService;
         this.userValidationService = userValidationService;
         this.artistService = artistService;
         this.fileUploadService = fileUploadService;

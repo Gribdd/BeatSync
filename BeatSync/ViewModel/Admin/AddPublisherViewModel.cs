@@ -4,7 +4,6 @@ namespace BeatSync.ViewModel.Admin;
 public partial class AddPublisherViewModel : ObservableObject
 {
     const string Directory = "Publishers";
-    private AdminService adminService;
     private PublisherService publisherService;
     private FileUploadService fileUploadService;
     private UserValidationService userValidationService;
@@ -13,9 +12,8 @@ public partial class AddPublisherViewModel : ObservableObject
     [ObservableProperty]
     private Publisher _publisher = new();
 
-    public AddPublisherViewModel(AdminService adminService, UserValidationService userValidationService, PublisherService publisherService, FileUploadService fileUploadService)
+    public AddPublisherViewModel(UserValidationService userValidationService, PublisherService publisherService, FileUploadService fileUploadService)
     {
-        this.adminService = adminService;
         this.userValidationService = userValidationService;
         this.publisherService = publisherService;
         this.fileUploadService = fileUploadService;

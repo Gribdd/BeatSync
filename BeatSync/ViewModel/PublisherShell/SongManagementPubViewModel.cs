@@ -2,7 +2,6 @@
 
 public partial class SongManagementPubViewModel : ObservableObject
 {
-    private AdminService _adminService;
     private SongService _songService;
     private PublisherService _publisherService;
 
@@ -25,9 +24,8 @@ public partial class SongManagementPubViewModel : ObservableObject
     private Publisher _publisher = new();
 
 
-    public SongManagementPubViewModel(AdminService adminService, SongService songService, PublisherService publisherService)
+    public SongManagementPubViewModel(SongService songService, PublisherService publisherService)
     {
-        _adminService = adminService;
         _songService = songService;
         _publisherService = publisherService;
     }

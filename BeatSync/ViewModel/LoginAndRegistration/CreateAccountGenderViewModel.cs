@@ -3,13 +3,11 @@
 [QueryProperty(nameof(User), nameof(User))]
 public partial class CreateAccountGenderViewModel : ObservableObject
 {
-    private AdminService _adminService;
     [ObservableProperty]
     private User _user = new();
 
-    public CreateAccountGenderViewModel(AdminService adminService)
+    public CreateAccountGenderViewModel()
     {
-        _adminService = adminService;
     }
 
     [RelayCommand]

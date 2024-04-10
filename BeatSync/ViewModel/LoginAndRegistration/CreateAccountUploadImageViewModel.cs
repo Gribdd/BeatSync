@@ -3,7 +3,6 @@ namespace BeatSync.ViewModel.LoginAndRegistration;
 [QueryProperty(nameof(User), nameof(User))]
 public partial class CreateAccountUploadImageViewModel : ObservableObject
 {
-    private AdminService adminService;
     private ArtistService artistService;
     private PublisherService publisherService;
     private UserService userService;
@@ -17,7 +16,6 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
     private User _user = new();
 
     public CreateAccountUploadImageViewModel(
-        AdminService adminService, 
         ArtistService artistService, 
         PublisherService publisherService, 
         UserService userService, 
@@ -25,7 +23,6 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
         PublisherLandingPageViewModel publisherLandingPageViewModel,
         CustomerLandingPageViewModel customerLandingPageViewModel)
     {
-        this.adminService = adminService;
         this.artistService = artistService;
         this.publisherService = publisherService;
         this.userService = userService;

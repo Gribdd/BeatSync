@@ -4,7 +4,6 @@ namespace BeatSync.ViewModel.Admin;
 public partial class AddSongViewModel : ObservableObject
 {
     private const string Directory = "Songs";
-    private AdminService adminService;
     private ArtistService artistService;
     private SongService songService;
     private FileUploadService fileUploadService;
@@ -25,9 +24,8 @@ public partial class AddSongViewModel : ObservableObject
 
     public string[] Genres { get; set; } = { "Rap", "Pop", "Indie", "OPM", "Punk Rock" };
 
-    public AddSongViewModel(AdminService adminService, ArtistService artistService, SongService songService, FileUploadService fileUploadService)
+    public AddSongViewModel( ArtistService artistService, SongService songService, FileUploadService fileUploadService)
     {
-        this.adminService = adminService;
         this.artistService = artistService;
         this.songService = songService;
         this.fileUploadService = fileUploadService;

@@ -21,7 +21,6 @@ public partial class MyCollection : ObservableObject
     private ObservableCollection<object> _filteredCollection;
 
 
-    private AdminService _adminService = new();
     private AlbumService _albumService = new();
     private PublisherService _publisherService = new();
     private ArtistService _artistService = new();

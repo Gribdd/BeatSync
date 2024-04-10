@@ -3,15 +3,13 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class ArtistManagementViewModel : ObservableObject
 {
-    private AdminService adminService;
     private ArtistService artistService;
 
     [ObservableProperty]
     private ObservableCollection<Artist> _artists = new();
 
-    public ArtistManagementViewModel(AdminService adminService, ArtistService artistService)
+    public ArtistManagementViewModel( ArtistService artistService)
     {
-        this.adminService = adminService;
         this.artistService = artistService;
     }
 
@@ -46,7 +44,7 @@ public partial class ArtistManagementViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await adminService.Logout();
+
     }
 
     public async void GetArtists()

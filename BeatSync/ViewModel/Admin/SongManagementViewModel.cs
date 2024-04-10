@@ -3,7 +3,6 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class SongManagementViewModel : ObservableObject
 {
-    private AdminService adminService;
     private SongService songService;
 
     [ObservableProperty]
@@ -12,9 +11,8 @@ public partial class SongManagementViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<String> _artistName = new();
 
-    public SongManagementViewModel(AdminService adminService, SongService songService)
+    public SongManagementViewModel(SongService songService)
     {
-        this.adminService = adminService;
         this.songService = songService;
     }
 
@@ -48,7 +46,6 @@ public partial class SongManagementViewModel : ObservableObject
     [RelayCommand]
     async Task Logout()
     {
-        await adminService.Logout();
     }
 
     public async void GetSongs()

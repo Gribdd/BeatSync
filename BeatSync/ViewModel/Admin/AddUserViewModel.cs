@@ -1,24 +1,27 @@
 ﻿
+using BeatSync.Repositories;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddUserViewModel : ObservableObject
 {
     private const string Directory = "Users";
-    private AdminService adminService;
     private UserService userService;
     private FileUploadService fileUploadService;
+    private readonly IRepository<User> _userRepository;
     private UserValidationService userValidationService;
     private FileResult? fileResult;
 
     [ObservableProperty]
     private User _user = new();
 
-    public AddUserViewModel(AdminService adminService, UserValidationService userValidationService, UserService userService, FileUploadService fileUploadService)
+    public AddUserViewModel(UserValidationService userValidationService, UserService userService, FileUploadService fileUploadService,
+        IRepository<User> userRepository)
     {
-        this.adminService = adminService;
         this.userValidationService = userValidationService;
         this.userService = userService;
         this.fileUploadService = fileUploadService;
+        _userRepository = userRepository;
     }
 
     [RelayCommand]
@@ -30,16 +33,20 @@ public partial class AddUserViewModel : ObservableObject
             return;
         }
 
-        if (await userService.AddUserAsync(User))
-        {
-            File.Copy(fileResult!.FullPath, User.ImageFilePath!);
-            await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-            await Shell.Current.GoToAsync("..");
-        }
-        else
-        {
-            await Shell.Current.DisplayAlert("Add User", "Please enter all fields", "OK");
-        }
+        await _userRepository.Add(User);
+        File.Copy(fileResult!.FullPath, User.ImageFilePath!);
+        await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
+
+        //if (await userService.AddUserAsync(User))
+        //{
+        //    File.Copy(fileResult!.FullPath, User.ImageFilePath!);
+        //    await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
+        //    await Shell.Current.GoToAsync("..");
+        //}
+        //else
+        //{
+        //    await Shell.Current.DisplayAlert("Add User", "Please enter all fields", "OK");
+        //}
     }
 
     [RelayCommand]
