@@ -1,4 +1,4 @@
-﻿namespace BeatSync.Repositories;
+﻿namespace BeatSync.Repositories.IRepository;
 /// <summary>
 /// Generic = Can handle any type of object
 /// Example: IRepository<Song>, IRepository<Artist>
@@ -6,10 +6,11 @@
 /// Example of reference type: class of song, artist, publisher
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IRepository<T> where T : class
+public interface IGenericRepository<T> where T : class
 {
     Task<ObservableCollection<T>> GetActive();
     Task<ObservableCollection<T>> GetAll();
+    Task<T> Get(int id);
     Task Add(T entity);
     Task Update(T entity);
     Task Delete(int id);

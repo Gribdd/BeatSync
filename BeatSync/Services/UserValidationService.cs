@@ -3,8 +3,8 @@
 public class UserValidationService
 {
     private readonly ArtistService artistService;
-    private readonly PublisherService publisherService;
-    private readonly UserService userService;
+    private readonly PublisherService _publisherService;
+    private readonly UserService _userService;
 
     private ObservableCollection<Artist> artists = new();
     private ObservableCollection<Publisher> publishers = new();
@@ -13,15 +13,15 @@ public class UserValidationService
     public UserValidationService(ArtistService artistService, PublisherService publisherService, UserService userService)
     {
         this.artistService = artistService;
-        this.publisherService = publisherService;
-        this.userService = userService;
+        _publisherService = publisherService;
+        _userService = userService;
         LoadData();
     }
 
     //will be consumed by userAuthService
-    public async Task<ObservableCollection<Artist>> GetArtists() => await artistService.GetArtistsAsync();
-    public async Task<ObservableCollection<Publisher>> GetPublishers() => await publisherService.GetPublishersAsync();
-    public async Task<ObservableCollection<User>> GetUsers() => await userService.GetUsersAsync();
+    public async Task<ObservableCollection<Artist>> GetArtists() => await artistService.GetAllAsync();
+    public async Task<ObservableCollection<Publisher>> GetPublishers() => await _publisherService.GetAllAsync();
+    public async Task<ObservableCollection<User>> GetUsers() => await _userService.GetAllAsync();
 
     private async void LoadData()
     {

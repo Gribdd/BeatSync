@@ -10,7 +10,7 @@ public partial class SearchPageViewModel : ObservableObject
     private string? _searchQuery;
 
     [ObservableProperty]
-    private MyCollection _myCollection = new();
+    private MyCollection _myCollection;
 
     [ObservableProperty]
     private User _user = new();
@@ -25,6 +25,7 @@ public partial class SearchPageViewModel : ObservableObject
     public SearchPageViewModel(UserService userService)
     {
         _userService = userService;
+
     }
 
 

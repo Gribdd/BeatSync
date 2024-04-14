@@ -1,17 +1,19 @@
-﻿namespace BeatSync.Repositories;
+﻿using BeatSync.Repositories.IRepository;
 
-public class Repository<T> : IRepository<T> where T : class, IBaseModel
+namespace BeatSync.Repositories.Repository;
+
+public class GenericRepository<T> : IGenericRepository<T> where T : class, IBaseModel
 {
     private readonly string _filePath;
-    private ObservableCollection<T> _entities;
+    protected ObservableCollection<T> _entities;
 
-    public Repository(string filePath)
+    public GenericRepository(string filePath)
     {
         _filePath = Path.Combine(FileSystem.Current.AppDataDirectory, filePath);
         _entities = new ObservableCollection<T>();
     }
 
-    private async Task<ObservableCollection<T>> LoadEntities()
+    protected async Task<ObservableCollection<T>> LoadEntities()
     {
         if (File.Exists(_filePath))
         {
@@ -25,7 +27,7 @@ public class Repository<T> : IRepository<T> where T : class, IBaseModel
         return new ObservableCollection<T>();
     }
 
-    private async Task SaveAsync()
+    protected async Task SaveAsync()
     {
         var json = JsonSerializer.Serialize(_entities);
         await File.WriteAllTextAsync(_filePath, json);
@@ -33,19 +35,19 @@ public class Repository<T> : IRepository<T> where T : class, IBaseModel
 
     public async Task Add(T entity)
     {
+        _entities = await LoadEntities();
         entity.Id = _entities.Count + 1;
-        entity.IsDeleted = false;
-
         _entities.Add(entity);
         await SaveAsync();
     }
 
     public async Task Update(T entity)
     {
-        var existingEntity = _entities.FirstOrDefault(e => e.Id == entity.Id);
-        if (existingEntity != null)
+        _entities = await LoadEntities();
+        var oldEntity = _entities.FirstOrDefault(e => e.Id == entity.Id);
+        if (entity != null)
         {
-            var index = _entities.IndexOf(existingEntity);
+            var index = _entities.IndexOf(oldEntity!);
             _entities[index] = entity;
         }
         await SaveAsync();
@@ -53,6 +55,7 @@ public class Repository<T> : IRepository<T> where T : class, IBaseModel
 
     public async Task Delete(int id)
     {
+        _entities = await LoadEntities();
         var entity = _entities.FirstOrDefault(e => e.Id == id);
         if (entity != null)
             entity.IsDeleted = true;
@@ -69,5 +72,11 @@ public class Repository<T> : IRepository<T> where T : class, IBaseModel
     {
         _entities = await LoadEntities();
         return new ObservableCollection<T>(_entities.Where(e => e.IsDeleted == false));
+    }
+
+    public async Task<T> Get(int id)
+    {
+        _entities = await LoadEntities();
+        return _entities.FirstOrDefault(e => e.Id == id)!;
     }
 }

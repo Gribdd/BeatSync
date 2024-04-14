@@ -62,6 +62,6 @@ public partial class AddAlbumSongsViewModel : ObservableObject
         Album.Songs = await albumService.AddAlbumSongAsync(Album);
 
         selectedSong.AlbumId = Album.Id;
-        await songService.UpdateSongAsync(selectedSong);
+        await songService.UpdateAsync(selectedSong);
     }
 }

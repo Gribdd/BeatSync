@@ -83,7 +83,7 @@ public partial class SongManagementPubViewModel : ObservableObject
 
     public async void GetSongsAsync()
     {
-        Songs = await _songService.GetActiveSongAsync();
+        Songs = await _songService.GetAllAsync();
     }
 
     public async void GetActivePublisher()

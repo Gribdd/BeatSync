@@ -3,14 +3,14 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class ArtistManagementViewModel : ObservableObject
 {
-    private ArtistService artistService;
+    private readonly ArtistService _artistService;
 
     [ObservableProperty]
     private ObservableCollection<Artist> _artists = new();
 
     public ArtistManagementViewModel( ArtistService artistService)
     {
-        this.artistService = artistService;
+        _artistService = artistService;
     }
 
     [RelayCommand]
@@ -25,8 +25,9 @@ public partial class ArtistManagementViewModel : ObservableObject
         string inputId = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Artist ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            Artists = await artistService.DeleteArtistAsync(id);
+            await _artistService.DeleteAsync(id);
         }
+        Artists = await _artistService.GetActiveAsync();
 
     }
 
@@ -37,8 +38,9 @@ public partial class ArtistManagementViewModel : ObservableObject
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
 
-            Artists = await artistService.UpdateArtistAsync(id);
+            await _artistService.UpdateAsync(id);
         }
+        Artists = await _artistService.GetActiveAsync();
     }
 
     [RelayCommand]
@@ -49,6 +51,6 @@ public partial class ArtistManagementViewModel : ObservableObject
 
     public async void GetArtists()
     {
-        Artists = await artistService.GetActiveArtistAsync();
+        Artists = await _artistService.GetActiveAsync();
     }
 }

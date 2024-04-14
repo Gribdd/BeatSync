@@ -3,14 +3,14 @@ namespace BeatSync.ViewModel.Admin
 {
     public partial class PublisherManagementViewModel : ObservableObject
     {
-        private PublisherService publisherService;
+        private readonly PublisherService _publisherService;
 
         [ObservableProperty]
         private ObservableCollection<Publisher> _publishers = new();
 
         public PublisherManagementViewModel( PublisherService publisherService)
         {
-            this.publisherService = publisherService;
+            _publisherService = publisherService;
         }
 
         [RelayCommand]
@@ -25,18 +25,20 @@ namespace BeatSync.ViewModel.Admin
             string inputId = await Shell.Current.DisplayPromptAsync("Delete Publisher", "Enter Publisher ID to delete:");
             if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
             {
-                Publishers = await publisherService.DeletePublisherAsync(id);
+                await _publisherService.DeleteAsync(id);
             }
+            Publishers = await _publisherService.GetActiveAsync();
         }
 
         [RelayCommand]
         async Task UpdatePublisher()
         {
-            string inputId = await Shell.Current.DisplayPromptAsync("Update Publisher", "Enter Publisher ID to delete:");
+            string inputId = await Shell.Current.DisplayPromptAsync("Update Publisher", "Enter Publisher ID to update:");
             if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
             {
-                Publishers = await publisherService.UpdatePublisherAsync(id);
+                await _publisherService.UpdateAsync(id);
             }
+            Publishers = await _publisherService.GetActiveAsync();
         }
 
         [RelayCommand]
@@ -46,7 +48,7 @@ namespace BeatSync.ViewModel.Admin
 
         public async void GetPublishers()
         {
-            Publishers = await publisherService.GetActivePublisherAsync();
+            Publishers = await _publisherService.GetActiveAsync();
         }
     }
 }

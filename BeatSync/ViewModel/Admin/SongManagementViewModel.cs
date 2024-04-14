@@ -3,7 +3,7 @@ namespace BeatSync.ViewModel.Admin;
 
 public partial class SongManagementViewModel : ObservableObject
 {
-    private SongService songService;
+    private readonly SongService _songService;
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
@@ -13,7 +13,7 @@ public partial class SongManagementViewModel : ObservableObject
 
     public SongManagementViewModel(SongService songService)
     {
-        this.songService = songService;
+        _songService = songService;
     }
 
     [RelayCommand]
@@ -28,19 +28,20 @@ public partial class SongManagementViewModel : ObservableObject
         string inputId = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            Songs = await songService.DeleteSongAsync(id);
+            await _songService.DeleteAsync(id);
         }
+        Songs = await _songService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task UpdateSong()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update Song", "Enter Song ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string songName = await Shell.Current.DisplayPromptAsync("Update Song", "Enter Song name to update:");
+        if (!string.IsNullOrEmpty(songName))
         {
-
-            Songs = await songService.UpdateSongAsync(id);
+            await _songService.UpdateAsync(songName);
         }
+        Songs = await _songService.GetActiveAsync();
     }
 
     [RelayCommand]
@@ -50,6 +51,6 @@ public partial class SongManagementViewModel : ObservableObject
 
     public async void GetSongs()
     {
-        Songs = await songService.GetActiveSongAsync();
+        Songs = await _songService.GetActiveAsync();
     }
 }

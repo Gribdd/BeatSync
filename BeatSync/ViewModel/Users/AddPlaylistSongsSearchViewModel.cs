@@ -4,8 +4,8 @@ namespace BeatSync.ViewModel.Users;
 [QueryProperty(nameof(PlaylistId), nameof(PlaylistId))]
 public partial class AddPlaylistSongsSearchViewModel : ObservableObject
 {
-    private readonly SongService songService;  
-    private readonly PlaylistService playlistService;
+    private readonly SongService _songService;  
+    private readonly PlaylistService _playlistService;
 
     [ObservableProperty]
     private int _playlistId;
@@ -21,8 +21,8 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
 
     public AddPlaylistSongsSearchViewModel(SongService songService, PlaylistService playlistService)
     {
-        this.songService = songService;
-        this.playlistService = playlistService;
+        _songService = songService;
+        _playlistService = playlistService;
     }
 
     [RelayCommand]
@@ -34,7 +34,7 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
     [RelayCommand]
     async Task AddToPlaylistSongs(Song song)
     {
-        if (await playlistService.AddPlaylistSong(PlaylistId, song.Id))
+        if (await _playlistService.AddPlaylistSong(PlaylistId, song.Id))
         {
             await Shell.Current.DisplayAlert("Add Song to Playlist", "Song successfully added.", "OK");
             await Shell.Current.GoToAsync("..");
@@ -48,11 +48,11 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
     [RelayCommand]
     async Task SearchSong()
     {
-        Songs = await songService.GetSongsBySearchQuery(SearchQuery);
+        Songs = await _songService.GetSongsBySearchQuery(SearchQuery);
     }
 
     public async void GetSongs()
     {
-        Songs = await songService.GetActiveSongAsync();
+        Songs = await _songService.GetActiveAsync();
     }
 }

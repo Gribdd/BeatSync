@@ -79,6 +79,6 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
 
     public async void GetArtists()
     {
-        Artists = await artistService.GetActiveArtistAsync();
+        Artists = await artistService.GetActiveAsync();
     }
 }

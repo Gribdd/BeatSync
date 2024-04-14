@@ -1,52 +1,48 @@
 ﻿
-using BeatSync.Repositories;
 
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddUserViewModel : ObservableObject
 {
     private const string Directory = "Users";
-    private UserService userService;
-    private FileUploadService fileUploadService;
-    private readonly IRepository<User> _userRepository;
-    private UserValidationService userValidationService;
     private FileResult? fileResult;
+
+    private readonly FileUploadService _fileUploadService;
+    private readonly UserService _userService;
+    private readonly UserValidationService _userValidationService;
 
     [ObservableProperty]
     private User _user = new();
 
-    public AddUserViewModel(UserValidationService userValidationService, UserService userService, FileUploadService fileUploadService,
-        IRepository<User> userRepository)
+    public AddUserViewModel(
+        UserValidationService userValidationService, 
+        FileUploadService fileUploadService,
+        UserService userService)
     {
-        this.userValidationService = userValidationService;
-        this.userService = userService;
-        this.fileUploadService = fileUploadService;
-        _userRepository = userRepository;
+        _userValidationService = userValidationService;
+        _fileUploadService = fileUploadService;
+        _userService = userService;
     }
 
     [RelayCommand]
     async Task AddUser()
     {
-        bool isValidUser = await ValidateFields();
-        if (!isValidUser)
+        var (isValid, message) = User.IsValid();
+        if (!isValid)
+        {
+            await Shell.Current.DisplayAlert("Error!", message, "Ok");
+            return;
+        }
+
+        if (!await IsNonExistingAccount())
         {
             return;
         }
 
-        await _userRepository.Add(User);
+        await _userService.AddAsync(User);
         File.Copy(fileResult!.FullPath, User.ImageFilePath!);
         await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-
-        //if (await userService.AddUserAsync(User))
-        //{
-        //    File.Copy(fileResult!.FullPath, User.ImageFilePath!);
-        //    await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-        //    await Shell.Current.GoToAsync("..");
-        //}
-        //else
-        //{
-        //    await Shell.Current.DisplayAlert("Add User", "Please enter all fields", "OK");
-        //}
+        await Shell.Current.GoToAsync("..");
     }
 
     [RelayCommand]
@@ -58,65 +54,22 @@ public partial class AddUserViewModel : ObservableObject
     [RelayCommand]
     async Task UploadImage()
     {
-        if (string.IsNullOrEmpty(User.FirstName) || string.IsNullOrEmpty(User.FirstName))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please enter user firsta and last name first", "OK");
-            return;
-        }
-
-        (fileResult, User.ImageFilePath) = await fileUploadService.UploadImage(User.Username, Directory);
+        (fileResult, User.ImageFilePath) = await _fileUploadService.UploadImage(User.Username, Directory);
     }
 
-    private async Task<bool> ValidateFields()
+    private async Task<bool> IsNonExistingAccount()
     {
-        if (string.IsNullOrEmpty(User.Email) || string.IsNullOrEmpty(User.Username) || string.IsNullOrEmpty(User.Password) || string.IsNullOrEmpty(User.FirstName) || string.IsNullOrEmpty(User.LastName) || string.IsNullOrEmpty(User.Gender))
-        {
-            await Shell.Current.DisplayAlert("Oops!", "Please enter all fields", "Ok");
-            return false;
-        }
-
-        if (!IsEmailValid(User.Email))
-        {
-            await Shell.Current.DisplayAlert("Oops!", "You must enter a valid email address.", "Ok");
-            return false;
-        }
-
-        if (userValidationService.DoesEmailAddressExist(User.Email))
+        if (_userValidationService.DoesEmailAddressExist(User.Email!))
         {
             await Shell.Current.DisplayAlert("Oops!", "This email already exists. Please try using another one.", "Ok");
             return false;
         }
 
-        if (userValidationService.DoesUsernameExist(User.Username))
+        if (_userValidationService.DoesUsernameExist(User.Username!))
         {
             await Shell.Current.DisplayAlert("Oops!", "This username already exists. Please try using another one.", "Ok");
             return false;
         }
-
-        if (User.DateOfBirth >= DateTime.Now.Date)
-        {
-            await Shell.Current.DisplayAlert("Error!", "You cannot set your date of birth to today's date.", "Ok");
-            return false;
-        }
-
-        if (string.IsNullOrEmpty(User.ImageFilePath))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please upload user picture first", "OK");
-            return false;
-        }
         return true;
-    }
-
-    private bool IsEmailValid(string email)
-    {
-        if (email != null)
-        {
-            string pattern = @"^[\w\.-]+@[\w\.-]+\.\w+$";
-            return Regex.IsMatch(email, pattern);
-        }
-        else
-        {
-            return false;
-        }
     }
 }

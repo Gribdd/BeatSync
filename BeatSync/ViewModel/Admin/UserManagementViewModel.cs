@@ -1,20 +1,16 @@
 ﻿
-using BeatSync.Repositories;
-
 namespace BeatSync.ViewModel.Admin;
 
 public partial class UserManagementViewModel : ObservableObject
 {
-    private UserService userService;
-    private readonly IRepository<User> _userRepository;
+    private UserService _userService;
 
     [ObservableProperty]
     private ObservableCollection<User> _users = new();
 
-    public UserManagementViewModel(UserService userService, IRepository<User> userRepository)
+    public UserManagementViewModel(UserService userService)
     {
-        this.userService = userService;
-        _userRepository = userRepository;
+        _userService = userService;
     }
 
     [RelayCommand]
@@ -29,30 +25,32 @@ public partial class UserManagementViewModel : ObservableObject
         string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-            Users = await userService.DeleteUserAsync(id);
+            await _userService.DeleteAsync(id);
         }
+        Users = await _userService.GetActiveAsync();
 
     }
 
     [RelayCommand]
     async Task UpdateUser()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to delete:");
+        string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to update:");
         if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
         {
-
-            Users = await userService.UpdateUserAsync(id);
+            await _userService.UpdateAsync(id);
         }
+        Users = await _userService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task Logout()
     {
-
+        Preferences.Default.Set("currentUserId", -1);
+        Application.Current!.MainPage = new AppShell();
     }
 
     public async void GetUsers()
     {
-        Users = await _userRepository.GetActive();
+        Users = await _userService.GetActiveAsync();
     }
 }

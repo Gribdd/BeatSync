@@ -1,90 +1,29 @@
 ﻿
+using BeatSync.Services.IService;
+using BeatSync.Services.Service;
+
 namespace BeatSync.Services;
 
-public class SongService
+public class SongService : GenericService<Song>, ISongService
 {
-    private readonly string songFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Songs.json");
-    public async Task<bool> AddSongAsync(Song song)
+    private IUnitofWork _unitofWork;
+    public SongService(IUnitofWork unitofWork) : base(unitofWork)
     {
-        if (song == null)
-        {
-            return false;
-        }
-
-        ObservableCollection<Song> songs = await GetSongsAsync();
-
-        song.AlbumId = null;
-        song.Id = songs.Count + 1;
-
-        songs.Add(song);
-
-        var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
-        await File.WriteAllTextAsync(songFilePath, json);
-        return true;
-    }
-
-    public async Task<ObservableCollection<Song>> GetSongsAsync()
-    {
-
-        if (!File.Exists(songFilePath))
-        {
-            return new ObservableCollection<Song>();
-        }
-
-        var json = await File.ReadAllTextAsync(songFilePath);
-        var songs = JsonSerializer.Deserialize<ObservableCollection<Song>>(json);
-        return songs!;
-    }
-
-    public async Task<ObservableCollection<Song>> GetActiveSongAsync()
-    {
-        var songs = await GetSongsAsync();
-        return new ObservableCollection<Song>(songs.Where(m => !m.IsDeleted));
+        _unitofWork = unitofWork;
     }
 
     public async Task<ObservableCollection<Song>> GetSongsByArtistIdAsync(int? artistId)
     {
         if (artistId == null) return new ObservableCollection<Song>();
 
-        var songs = await GetSongsAsync();
+        var songs = await GetAllAsync();
 
         return new ObservableCollection<Song>(songs.Where(song => song.ArtistID == artistId));
     }
 
-    public async Task<ObservableCollection<Song>> DeleteSongAsync(int id)
+    public async Task UpdateAsync(string name)
     {
-        var songs = await GetSongsAsync();
-        var songToBeDeleted = songs.FirstOrDefault(m => m.Id == id);
-        if (songToBeDeleted == null)
-        {
-            await Shell.Current.DisplayAlert("Error", "Song not found", "OK");
-            return songs;
-        }
-
-        if (songToBeDeleted.IsDeleted)
-        {
-            await Shell.Current.DisplayAlert("Error", "Song already deleted", "OK");
-            return songs;
-        }
-
-        songToBeDeleted.IsDeleted = true;
-        var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
-        await File.WriteAllTextAsync(songFilePath, json);
-
-        songs.Remove(songToBeDeleted);
-        await Shell.Current.DisplayAlert("Delete Song", "Successfully deleted song", "OK");
-        return await GetActiveSongAsync();
-    }
-
-    public async Task<ObservableCollection<Song>> UpdateSongAsync(int? id)
-    {
-        var songs = await GetSongsAsync();
-        var songToBeUpdated = songs.FirstOrDefault(m => m.Id == id);
-        if (songToBeUpdated == null)
-        {
-            await Shell.Current.DisplayAlert("Error", "Song not found", "OK");
-            return songs;
-        }
+        var songToBeUpdated = await _unitofWork.SongRepository.GetSongByName(name);
 
         string[] editOptions = { "Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
@@ -96,7 +35,7 @@ public class SongService
             {
                 switch (index)
                 {
-                    case 0: // Email
+                    case 0: //Name
                         newValue = await Shell.Current.DisplayPromptAsync($"Edit Artist {selectedOption}", $"Enter new {selectedOption}:", initialValue: songToBeUpdated.Name);
                         songToBeUpdated.Name = newValue;
                         break;
@@ -106,26 +45,19 @@ public class SongService
                 break;
             }
         }
-
-        int count = songs.ToList().FindIndex(m => m.Id == id);
-        songs[count] = songToBeUpdated;
-        var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
-        await File.WriteAllTextAsync(songFilePath, json);
-
-        await Shell.Current.DisplayAlert("Update song", "Successfully updated song", "OK");
-        return await GetActiveSongAsync();
+        await base.UpdateAsync(songToBeUpdated);
     }
 
     //method overloading for updating album id of song 
-    public async Task UpdateSongAsync(Song song)
+    public override async Task UpdateAsync(Song song)
     {
-        var songs = await GetSongsAsync();
+        var songs = await GetAllAsync();
 
         var indexOfSongInTheCollection = songs.ToList().FindIndex(s => s.Id == song.Id);
         songs[indexOfSongInTheCollection] = song;
 
         var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
-        await File.WriteAllTextAsync(songFilePath, json);
+        //await File.WriteAllTextAsync(songFilePath, json);
     }
 
     public async Task<ObservableCollection<Song>> GetSongsBySearchQuery(string? query)
@@ -135,7 +67,7 @@ public class SongService
             return new ObservableCollection<Song>();
         }
 
-        var songs = await GetActiveSongAsync();
+        var songs = await GetActiveAsync();
         return new ObservableCollection<Song>(songs.Where(s => s.Name!.Contains(query)));
     }
 
@@ -157,7 +89,7 @@ public class SongService
             return songs;
         }
 
-        var allSongs = await GetActiveSongAsync();
+        var allSongs = await GetAllAsync();
         foreach (var songId in songIds)
         {
             var song = await GetSongBySongId(songId, allSongs);
@@ -170,4 +102,8 @@ public class SongService
         return songs;
     }
 
+    public async Task<Song> GetByNameAsync(string name)
+    {
+        return await GetAsync(1);
+    }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using BeatSync.Repositories;
+using BeatSync.Repositories.IRepository;
+using BeatSync.Services.IService;
+using BeatSync.Services.Service;
 
 namespace BeatSync
 {
@@ -17,7 +19,7 @@ namespace BeatSync
                     fonts.AddFont("Jua-Regular.ttf", "JuaRegular");
                 })
                 .RegisterServices()
-                 .RegisterRepositories()
+                .RegisterRepositories()
                 .RegisterViewModels()
                 .RegisterViews();
 #if DEBUG
@@ -29,9 +31,9 @@ namespace BeatSync
 
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
+            mauiAppBuilder.Services.AddTransient<UserService>();
             mauiAppBuilder.Services.AddTransient<UserAuthService>();
             mauiAppBuilder.Services.AddTransient<UserValidationService>();
-            mauiAppBuilder.Services.AddTransient<UserService>();
             mauiAppBuilder.Services.AddTransient<SongService>();
             mauiAppBuilder.Services.AddTransient<AlbumService>();
             mauiAppBuilder.Services.AddTransient<PublisherService>();
@@ -43,7 +45,7 @@ namespace BeatSync
 
         public static MauiAppBuilder RegisterRepositories(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<IRepository<User>, UserRepository>();
+            mauiAppBuilder.Services.AddTransient<IUnitofWork, UnitOfWork>();
             return mauiAppBuilder;
         }
 

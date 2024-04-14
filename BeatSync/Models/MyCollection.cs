@@ -2,6 +2,9 @@ namespace BeatSync.Models;
 
 public partial class MyCollection : ObservableObject
 {
+    private readonly UserService _userService;
+    private readonly PublisherService _publisherService;
+    private readonly ArtistService _artistService;
     [ObservableProperty]
     private ObservableCollection<Album> _album;
 
@@ -22,13 +25,16 @@ public partial class MyCollection : ObservableObject
 
 
     private AlbumService _albumService = new();
-    private PublisherService _publisherService = new();
-    private ArtistService _artistService = new();
-    private SongService _songService = new();
-    private UserService _userService = new();
+    //private SongService _songService = new();
 
-    public MyCollection()
+    public MyCollection(
+        UserService userService,
+        PublisherService publisherService,
+        ArtistService artistService)
     {
+        _userService = userService;
+        _publisherService = publisherService;
+        _artistService = artistService;
         PopulateData();
     }
 
@@ -66,9 +72,9 @@ public partial class MyCollection : ObservableObject
     private async void PopulateData()
     {
         Album = await _albumService.GetActiveAlbumsAsync();
-        Artist = await _artistService.GetActiveArtistAsync();
-        Song = await _songService.GetActiveSongAsync();
-        Publisher = await _publisherService.GetActivePublisherAsync();
-        User = await _userService.GetActiveUserAsync();
+        Artist = await _artistService.GetActiveAsync();
+        //Song = await _songService.GetActiveSongAsync();
+        Publisher = await _publisherService.GetActiveAsync();
+        User = await _userService.GetActiveAsync();
     }
 }
