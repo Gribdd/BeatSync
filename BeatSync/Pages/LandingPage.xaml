@@ -84,7 +84,7 @@
                         Style="{StaticResource SubHeadline}"
                         Text="Top Hits"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="100" Loop="False">
+                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -94,13 +94,13 @@
                                         </HorizontalStackLayout>
                                     </Frame>
                                     <Label
-                                        Margin="5"
+                                        Margin="14,5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Fields}"
                                         Text="{Binding Name}"
                                         TextColor="White" />
                                     <Label
-                                        Margin="5,-5,5,5"
+                                        Margin="14,-5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Reminders}"
                                         Text="{Binding ArtistName}"
@@ -116,7 +116,7 @@
                         Style="{StaticResource SubHeadline}"
                         Text="Recently Played"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="100" Loop="False">
+                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -126,13 +126,13 @@
                                         </HorizontalStackLayout>
                                     </Frame>
                                     <Label
-                                        Margin="5"
+                                        Margin="14,5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Fields}"
                                         Text="{Binding Name}"
                                         TextColor="White" />
                                     <Label
-                                        Margin="5,-5,5,5"
+                                        Margin="14,-5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Reminders}"
                                         Text="{Binding ArtistName}"
@@ -148,7 +148,7 @@
                         Style="{StaticResource SubHeadline}"
                         Text="New Music"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="100" Loop="False">
+                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -158,13 +158,45 @@
                                         </HorizontalStackLayout>
                                     </Frame>
                                     <Label
-                                        Margin="5"
+                                        Margin="14,5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Fields}"
                                         Text="{Binding Name}"
                                         TextColor="White" />
                                     <Label
-                                        Margin="5,-5,5,5"
+                                        Margin="14,-5,5,5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Reminders}"
+                                        Text="{Binding ArtistName}"
+                                        TextColor="#A39797" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+
+                    <!--  Suggested Playlist  -->
+                    <Label
+                        HorizontalOptions="Start"
+                        Style="{StaticResource SubHeadline}"
+                        Text="What we think you love"
+                        TextColor="White" />
+                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Song">
+                                <VerticalStackLayout Margin="10">
+                                    <Frame HeightRequest="120" WidthRequest="120">
+                                        <HorizontalStackLayout HorizontalOptions="Center">
+                                            <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                    <Label
+                                        Margin="14,5,5,5"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource Fields}"
+                                        Text="{Binding Name}"
+                                        TextColor="White" />        
+                                    <Label
+                                        Margin="14,-5,5,5"
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Reminders}"
                                         Text="{Binding ArtistName}"
