@@ -22,10 +22,11 @@ namespace BeatSync.ViewModel.Admin
         [RelayCommand]
         async Task DeletePublisher()
         {
-            string inputId = await Shell.Current.DisplayPromptAsync("Delete Publisher", "Enter Publisher ID to delete:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+            string username = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Publisher username to delete:");
+            if (!string.IsNullOrEmpty(username))
             {
-                await _publisherService.DeleteAsync(id);
+                var publisher = await _publisherService.GetByUsernameAsync(username);
+                await _publisherService.DeleteAsync(publisher.Id);
             }
             Publishers = await _publisherService.GetActiveAsync();
         }
@@ -33,10 +34,11 @@ namespace BeatSync.ViewModel.Admin
         [RelayCommand]
         async Task UpdatePublisher()
         {
-            string inputId = await Shell.Current.DisplayPromptAsync("Update Publisher", "Enter Publisher ID to update:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+            string username = await Shell.Current.DisplayPromptAsync("Update Artist", "Enter Publisher username to update:");
+            if (!string.IsNullOrEmpty(username))
             {
-                await _publisherService.UpdateAsync(id);
+                var publisher = await _publisherService.GetByUsernameAsync(username);
+                await _publisherService.UpdateAsync(publisher.Id);
             }
             Publishers = await _publisherService.GetActiveAsync();
         }

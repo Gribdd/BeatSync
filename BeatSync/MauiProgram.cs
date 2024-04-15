@@ -32,12 +32,12 @@ namespace BeatSync
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
             mauiAppBuilder.Services.AddTransient<UserService>();
-            mauiAppBuilder.Services.AddTransient<UserAuthService>();
-            mauiAppBuilder.Services.AddTransient<UserValidationService>();
-            mauiAppBuilder.Services.AddTransient<SongService>();
-            mauiAppBuilder.Services.AddTransient<AlbumService>();
             mauiAppBuilder.Services.AddTransient<PublisherService>();
             mauiAppBuilder.Services.AddTransient<ArtistService>();
+            mauiAppBuilder.Services.AddTransient<SongService>();
+            mauiAppBuilder.Services.AddTransient<UserAuthService>();
+            mauiAppBuilder.Services.AddTransient<UserValidationService>();
+            mauiAppBuilder.Services.AddTransient<AlbumService>();
             mauiAppBuilder.Services.AddTransient<PlaylistService>();
             mauiAppBuilder.Services.AddTransient<FileUploadService>();
             return mauiAppBuilder;
@@ -75,7 +75,7 @@ namespace BeatSync
             //General
             mauiAppBuilder.Services.AddTransient<AddAlbumSongsViewModel>();
             mauiAppBuilder.Services.AddTransient<AddSongViewModel>();
-            
+
             //Publisher
             mauiAppBuilder.Services.AddTransient<SongManagementPubViewModel>();
             mauiAppBuilder.Services.AddTransient<LibraryPageViewModel>();
@@ -105,7 +105,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<SongManagement>();
             mauiAppBuilder.Services.AddTransient<PublisherManagement>();
             mauiAppBuilder.Services.AddTransient<AddPublisher>();
-            mauiAppBuilder.Services.AddTransient<PubUserHistory>(); 
+            mauiAppBuilder.Services.AddTransient<PubUserHistory>();
             mauiAppBuilder.Services.AddTransient<Admin_LandingPage>();
             mauiAppBuilder.Services.AddTransient<Admin_LoginPage>();
             mauiAppBuilder.Services.AddTransient<MainPage>();
@@ -124,11 +124,11 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<CreateAccountUploadImage>();
             mauiAppBuilder.Services.AddTransient<CustomerLandingPage>();
             mauiAppBuilder.Services.AddTransient<PublisherLandingPage>();
-            
+
             //General, meaning can be used more than once
             mauiAppBuilder.Services.AddTransient<AddAlbumSongs>();
             mauiAppBuilder.Services.AddTransient<AddSong>();
-            
+
 
             //Publisher
             mauiAppBuilder.Services.AddTransient<LibraryPage>();

@@ -10,12 +10,7 @@ public class UserService : GenericService<User>, IUserService
         _unitofWork = unitofWork;
     }
 
-    public async Task<User> GetByNameAsync(string name)
-    {
-        return await _unitofWork.UserRepository.GetByName(name);
-    }
-
-    public async Task<User> GetByUserNameAsync(string userName)
+    public async Task<User> GetByUsernameAsync(string userName)
     {
         return await _unitofWork.UserRepository.GetByUserName(userName);
     }
@@ -24,7 +19,7 @@ public class UserService : GenericService<User>, IUserService
     {
         int userId = Preferences.Default.Get("currentUserId", -1);
         var users = await GetActiveAsync();
-        var user = GetAsync(userId).Result;
+        var user = await GetAsync(userId);
 
         return user!;
     }

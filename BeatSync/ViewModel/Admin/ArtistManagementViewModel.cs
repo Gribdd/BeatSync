@@ -24,10 +24,11 @@ public partial class ArtistManagementViewModel : ObservableObject
     [RelayCommand]
     async Task DeleteArtist()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Artist ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Artist username to delete:");
+        if (!string.IsNullOrEmpty(username))
         {
-            await _artistService.DeleteAsync(id);
+            var artist = await _artistService.GetByUsernameAsync(username);
+            await _artistService.DeleteAsync(artist.Id);
         }
         Artists = await _artistService.GetActiveAsync();
 
@@ -36,11 +37,11 @@ public partial class ArtistManagementViewModel : ObservableObject
     [RelayCommand]
     async Task UpdateArtist()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update Artist", "Enter Artist ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Update Artist", "Enter Artist username to update:");
+        if (!string.IsNullOrEmpty(username))
         {
-
-            await _artistService.UpdateAsync(id);
+            var artist = await _artistService.GetByUsernameAsync(username);
+            await _artistService.UpdateAsync(artist.Id);
         }
         Artists = await _artistService.GetActiveAsync();
     }

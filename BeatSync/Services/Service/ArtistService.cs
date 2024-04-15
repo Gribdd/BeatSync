@@ -1,9 +1,27 @@
-﻿namespace BeatSync.Services.Service;
+﻿using BeatSync.Services.IService;
 
-public class ArtistService : GenericService<Artist>
+namespace BeatSync.Services.Service;
+
+public class ArtistService : GenericService<Artist>, IArtistService
 {
+    private readonly IUnitofWork _unitofWork;
     public ArtistService(IUnitofWork unitofWork) : base(unitofWork)
     {
+        _unitofWork = unitofWork;
+    }
+
+    public Task<Artist> GetByUsernameAsync(string username)
+    {
+        return _unitofWork.ArtistRepository.GetByUserName(username);
+    }
+
+    public async Task<Artist> GetCurrentUser()
+    {
+        int artistId = Preferences.Default.Get("currentUserId", -1);
+        var artists = await GetActiveAsync();
+        var artist = await GetAsync(artistId);
+
+        return artist!;
     }
 
     public override async Task UpdateAsync(int id)

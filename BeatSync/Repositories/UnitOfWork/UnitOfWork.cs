@@ -9,15 +9,15 @@ namespace BeatSync.Repositories.UnitOfWork;
 public class UnitOfWork : IUnitofWork
 {
     public IUserRepository UserRepository { get; }
-    public IGenericRepository<Publisher> PublisherRepository { get; }
-    public IGenericRepository<Artist> ArtistRepository { get; }
+    public IPublisherRepository PublisherRepository { get; }
+    public IArtistRepository ArtistRepository { get; }
     public ISongRepository SongRepository { get; }
 
     public UnitOfWork()
     {
         UserRepository = new UserRepository();
-        PublisherRepository = new GenericRepository<Publisher>("Publishers.json");
-        ArtistRepository = new GenericRepository<Artist>("Artists.json");
+        PublisherRepository = new PublisherRepository();
+        ArtistRepository = new ArtistRepository();
         SongRepository = new SongRepository();
     }
     

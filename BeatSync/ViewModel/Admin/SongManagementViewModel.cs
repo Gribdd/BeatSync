@@ -27,10 +27,11 @@ public partial class SongManagementViewModel : ObservableObject
     [RelayCommand]
     async Task DeleteSong()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string songName = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song name to delete:");
+        if (!string.IsNullOrEmpty(songName))
         {
-            await _songService.DeleteAsync(id);
+            var song = await _songService.GetByNameAsync(songName);
+            await _songService.DeleteAsync(song.Id);
         }
         Songs = await _songService.GetActiveAsync();
     }
@@ -41,7 +42,8 @@ public partial class SongManagementViewModel : ObservableObject
         string songName = await Shell.Current.DisplayPromptAsync("Update Song", "Enter Song name to update:");
         if (!string.IsNullOrEmpty(songName))
         {
-            await _songService.UpdateAsync(songName);
+            var song = await _songService.GetByNameAsync(songName);
+            await _songService.UpdateAsync(song.Id);
         }
         Songs = await _songService.GetActiveAsync();
     }

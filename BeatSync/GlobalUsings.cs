@@ -12,6 +12,8 @@ global using BeatSync.Services;
 global using BeatSync.Repositories.Repository;
 global using BeatSync.Repositories.IRepository;
 global using BeatSync.Repositories.UnitOfWork;
+global using BeatSync.Services.IService;
+global using BeatSync.Services.Service;
 global using CommunityToolkit.Maui.Core.Primitives;
 global using CommunityToolkit.Maui.Views;
 global using CommunityToolkit.Mvvm.ComponentModel;

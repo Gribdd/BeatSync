@@ -1,10 +1,11 @@
-﻿using BeatSync.Services.Service;
+﻿using BeatSync.Services.IService;
+using BeatSync.Services.Service;
 
 namespace BeatSync.Services;
 
 public class UserValidationService
 {
-    private readonly ArtistService artistService;
+    private readonly ArtistService _artistService;
     private readonly PublisherService _publisherService;
     private readonly UserService _userService;
 
@@ -12,16 +13,19 @@ public class UserValidationService
     private ObservableCollection<Publisher> publishers = new();
     private ObservableCollection<User> users = new();
 
-    public UserValidationService(ArtistService artistService, PublisherService publisherService, UserService userService)
+    public UserValidationService(
+        ArtistService artistService,
+        PublisherService publisherService,
+        UserService userService)
     {
-        this.artistService = artistService;
+        _artistService = artistService;
         _publisherService = publisherService;
         _userService = userService;
         LoadData();
     }
 
     //will be consumed by userAuthService
-    public async Task<ObservableCollection<Artist>> GetArtists() => await artistService.GetAllAsync();
+    public async Task<ObservableCollection<Artist>> GetArtists() => await _artistService.GetAllAsync();
     public async Task<ObservableCollection<Publisher>> GetPublishers() => await _publisherService.GetAllAsync();
     public async Task<ObservableCollection<User>> GetUsers() => await _userService.GetAllAsync();
 

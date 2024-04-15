@@ -19,9 +19,9 @@ public class SongService : GenericService<Song>, ISongService
         return new ObservableCollection<Song>(songs.Where(song => song.ArtistID == artistId));
     }
 
-    public async Task UpdateAsync(string name)
+    public override async Task UpdateAsync(int id)
     {
-        var songToBeUpdated = await _unitofWork.SongRepository.GetSongByName(name);
+        var songToBeUpdated = await GetAsync(id);
 
         string[] editOptions = { "Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
@@ -49,13 +49,8 @@ public class SongService : GenericService<Song>, ISongService
     //method overloading for updating album id of song 
     public override async Task UpdateAsync(Song song)
     {
-        var songs = await GetAllAsync();
-
-        var indexOfSongInTheCollection = songs.ToList().FindIndex(s => s.Id == song.Id);
-        songs[indexOfSongInTheCollection] = song;
-
-        var json = JsonSerializer.Serialize(songs);
-        //await File.WriteAllTextAsync(songFilePath, json);
+        var songToBeUpdated = await GetAsync(song.Id);
+        await base.UpdateAsync(songToBeUpdated);
     }
 
     public async Task<ObservableCollection<Song>> GetSongsBySearchQuery(string? query)

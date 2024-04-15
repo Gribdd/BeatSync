@@ -1,15 +1,17 @@
+using BeatSync.Services.IService;
 using BeatSync.Services.Service;
 
 namespace BeatSync.Services;
 
-public class PublisherService : GenericService<Publisher>
+public class PublisherService : GenericService<Publisher>, IPublisherService
 {
-    private readonly string _historyFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "PubUserHistory.json");
 
+    private readonly string _historyFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "PubUserHistory.json");
+    private readonly IUnitofWork _unitofWork;
     public PublisherService(IUnitofWork unitofWork) : base(unitofWork)
     {
+        _unitofWork = unitofWork;
     }
-
 
     public override async Task UpdateAsync(int id)
     {
@@ -81,5 +83,10 @@ public class PublisherService : GenericService<Publisher>
         var json = await File.ReadAllTextAsync(_historyFilePath);
         var userHistories = JsonSerializer.Deserialize<ObservableCollection<History>>(json);
         return userHistories!;
+    }
+
+    public Task<Publisher> GetByUsernameAsync(string username)
+    {
+        return _unitofWork.PublisherRepository.GetByUsername(username);
     }
 }

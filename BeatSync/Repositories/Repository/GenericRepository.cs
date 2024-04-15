@@ -79,10 +79,4 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IBase
         _entities = await LoadEntities();
         return _entities.FirstOrDefault(e => e.Id == id)!;
     }
-
-    //public async Task<T> GetByName(string name)
-    //{
-    //    _entities = await LoadEntities();
-    //    return _entities.FirstOrDefault(e => e.Name == name)!;
-    //}
 }

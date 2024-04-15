@@ -24,10 +24,11 @@ public partial class UserManagementViewModel : ObservableObject
     [RelayCommand]
     async Task DeleteUser()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User username to delete:");
+        if (!string.IsNullOrEmpty(username))
         {
-            await _userService.DeleteAsync(id);
+            var user = await _userService.GetByUsernameAsync(username);
+            await _userService.DeleteAsync(user.Id);
         }
         Users = await _userService.GetActiveAsync();
 
@@ -36,10 +37,11 @@ public partial class UserManagementViewModel : ObservableObject
     [RelayCommand]
     async Task UpdateUser()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to update:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Update User", "Enter User username to update:");
+        if (!string.IsNullOrEmpty(username))
         {
-            await _userService.UpdateAsync(id);
+            var user = await _userService.GetByUsernameAsync(username);
+            await _userService.UpdateAsync(user.Id);
         }
         Users = await _userService.GetActiveAsync();
     }
