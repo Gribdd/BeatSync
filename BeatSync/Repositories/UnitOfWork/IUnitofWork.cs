@@ -2,7 +2,7 @@
 
 public interface IUnitofWork
 {
-    IGenericRepository<User> UserRepository { get; }
+    IUserRepository UserRepository { get; }
     IGenericRepository<Publisher> PublisherRepository { get; }
     IGenericRepository<Artist> ArtistRepository { get; }
     ISongRepository SongRepository { get; }

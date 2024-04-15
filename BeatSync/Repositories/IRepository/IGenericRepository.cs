@@ -10,7 +10,6 @@ public interface IGenericRepository<T> where T : class
 {
     Task<ObservableCollection<T>> GetActive();
     Task<ObservableCollection<T>> GetAll();
-    //Task<T> GetByName(string name);
     Task<T> Get(int id);
     Task Add(T entity);
     Task Update(T entity);

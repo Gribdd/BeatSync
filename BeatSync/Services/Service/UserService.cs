@@ -4,16 +4,20 @@ namespace BeatSync.Services.Service;
 
 public class UserService : GenericService<User>, IUserService
 {
-    private IUnitofWork _unitofWork;
-
+    private readonly IUnitofWork _unitofWork;
     public UserService(IUnitofWork unitofWork) : base(unitofWork)
     {
         _unitofWork = unitofWork;
     }
 
-    public async Task<User> GetByName(string name)
+    public async Task<User> GetByNameAsync(string name)
     {
-        _entities = LoadEntities().Result;
+        return await _unitofWork.UserRepository.GetByName(name);
+    }
+
+    public async Task<User> GetByUserNameAsync(string userName)
+    {
+        return await _unitofWork.UserRepository.GetByUserName(userName);
     }
 
     public async Task<User> GetCurrentUser()
