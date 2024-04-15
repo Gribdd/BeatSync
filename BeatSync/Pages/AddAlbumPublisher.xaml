@@ -24,14 +24,14 @@
 
     <VerticalStackLayout Padding="10">
         <ImageButton
-            Margin="-60,30,30,30"
+            Margin="-210,30,30,30"
             Command="{Binding ReturnCommand}"
             HeightRequest="30"
             HorizontalOptions="Start"
             Source="returnbtn.png" />
-        <Label Text="Give your playlist a name" />
+        <Label Text="Give your playlist a name" Style="{StaticResource Fields}" Margin="30,0,10,5"/>
         <Border>
-            <Entry Text="{Binding Album.Name}" />
+            <Entry Text="{Binding Album.Name}"  Placeholder="Enter album name" FontFamily="JuaRegular" TextColor="White" ClearButtonVisibility="WhileEditing"/>
         </Border>
         <Border>
             <Picker

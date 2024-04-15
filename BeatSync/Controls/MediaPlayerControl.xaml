@@ -17,6 +17,7 @@
                 <Label
                     HorizontalOptions="Start"
                     Style="{StaticResource SubHeadline}"
+                    TextColor="White"
                     Text="{Binding Source={x:Reference thisMediaPlayerControl}, Path=SongName}"/>
                 <Label
                     Style="{StaticResource Fields}"
