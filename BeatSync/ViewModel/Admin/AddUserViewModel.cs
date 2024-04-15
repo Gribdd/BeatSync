@@ -1,5 +1,7 @@
 ﻿
 
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddUserViewModel : ObservableObject

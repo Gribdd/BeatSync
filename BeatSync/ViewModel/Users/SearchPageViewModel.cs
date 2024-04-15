@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using BeatSync.Services.Service;
 
 namespace BeatSync.ViewModel.Users;
 

@@ -1,8 +1,6 @@
-﻿
-using BeatSync.Services.IService;
-using BeatSync.Services.Service;
+﻿using BeatSync.Services.IService;
 
-namespace BeatSync.Services;
+namespace BeatSync.Services.Service;
 
 public class SongService : GenericService<Song>, ISongService
 {
@@ -56,7 +54,7 @@ public class SongService : GenericService<Song>, ISongService
         var indexOfSongInTheCollection = songs.ToList().FindIndex(s => s.Id == song.Id);
         songs[indexOfSongInTheCollection] = song;
 
-        var json = JsonSerializer.Serialize<ObservableCollection<Song>>(songs);
+        var json = JsonSerializer.Serialize(songs);
         //await File.WriteAllTextAsync(songFilePath, json);
     }
 
@@ -100,10 +98,5 @@ public class SongService : GenericService<Song>, ISongService
         }
 
         return songs;
-    }
-
-    public async Task<Song> GetByNameAsync(string name)
-    {
-        return await GetAsync(1);
     }
 }

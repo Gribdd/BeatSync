@@ -1,3 +1,5 @@
+using BeatSync.Services.Service;
+
 namespace BeatSync.Models;
 
 public partial class MyCollection : ObservableObject

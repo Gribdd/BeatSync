@@ -1,4 +1,6 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.General;
 
 //first parameter receives the data

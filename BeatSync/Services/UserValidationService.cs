@@ -1,4 +1,6 @@
-﻿namespace BeatSync.Services;
+﻿using BeatSync.Services.Service;
+
+namespace BeatSync.Services;
 
 public class UserValidationService
 {

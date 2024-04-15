@@ -12,5 +12,8 @@ public partial class PlaylistSongs : ObservableObject
     private int _playlistId;
 
     [ObservableProperty]
-    private int _songId;    
+    private int _songId;
+
+    [ObservableProperty]
+    private int _isDeleted;
 }

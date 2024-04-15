@@ -1,6 +1,4 @@
-﻿using BeatSync.Services.Service;
-
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services.Service;
 
 public class ArtistService : GenericService<Artist>
 {

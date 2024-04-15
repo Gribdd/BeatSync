@@ -1,3 +1,5 @@
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Users;
 
 public partial class LandingPageViewModel : ObservableObject

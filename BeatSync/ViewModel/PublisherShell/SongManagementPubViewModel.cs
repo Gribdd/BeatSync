@@ -1,4 +1,6 @@
-﻿namespace BeatSync.ViewModel.PublisherShell;
+﻿using BeatSync.Services.Service;
+
+namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class SongManagementPubViewModel : ObservableObject
 {

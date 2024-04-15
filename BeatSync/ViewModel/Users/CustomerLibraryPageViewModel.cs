@@ -1,4 +1,6 @@
-﻿namespace BeatSync.ViewModel.Users;
+﻿using BeatSync.Services.Service;
+
+namespace BeatSync.ViewModel.Users;
 
 public partial class CustomerLibraryPageViewModel : ObservableObject
 {

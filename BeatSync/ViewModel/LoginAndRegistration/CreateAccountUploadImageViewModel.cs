@@ -1,3 +1,5 @@
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]

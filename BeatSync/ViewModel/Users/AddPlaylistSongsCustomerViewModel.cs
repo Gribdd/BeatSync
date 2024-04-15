@@ -1,4 +1,6 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Users;
 
 [QueryProperty(nameof(Playlist), nameof(Playlist))]

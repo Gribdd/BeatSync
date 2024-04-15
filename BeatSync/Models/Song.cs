@@ -13,9 +13,6 @@ public partial class Song : BaseModel
 
     [ObservableProperty]
     private string? _artistName;
-
-    [ObservableProperty]
-    private string? _name;
     
     [ObservableProperty]
     private string? _genre;
@@ -25,6 +22,9 @@ public partial class Song : BaseModel
 
     [ObservableProperty]
     private string? _imageFilePath;
+
+    [ObservableProperty]
+    private string? _name;
 
     public (bool, string) IsValid()
     {

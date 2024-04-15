@@ -1,11 +1,19 @@
-﻿using BeatSync.Services.Service;
+﻿using BeatSync.Services.IService;
 
-namespace BeatSync.Services;
+namespace BeatSync.Services.Service;
 
-public class UserService : GenericService<User>
+public class UserService : GenericService<User>, IUserService
 {
+    private IUnitofWork _unitofWork;
+
     public UserService(IUnitofWork unitofWork) : base(unitofWork)
     {
+        _unitofWork = unitofWork;
+    }
+
+    public async Task<User> GetByName(string name)
+    {
+        _entities = LoadEntities().Result;
     }
 
     public async Task<User> GetCurrentUser()
@@ -23,7 +31,7 @@ public class UserService : GenericService<User>
         string[] editOptions = { "Email", "Username", "Password", "First Name", "Last Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
 
-        if(string.IsNullOrEmpty(selectedOption))
+        if (string.IsNullOrEmpty(selectedOption))
             return;
 
         var newValue = string.Empty;
