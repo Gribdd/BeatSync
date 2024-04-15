@@ -3,14 +3,14 @@ namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class PublisherLandingPageViewModel : ObservableObject
 {
-    private readonly PublisherService publisherService;
+    private readonly PublisherService _publisherService;
 
     [ObservableProperty]
     private Publisher _publisher = new();
 
     public PublisherLandingPageViewModel(PublisherService publisherService)
     {
-        this.publisherService = publisherService;
+        _publisherService = publisherService;
     }
 
     [RelayCommand]
@@ -26,6 +26,6 @@ public partial class PublisherLandingPageViewModel : ObservableObject
 
     public async Task GetActivePublisher()
     {
-        Publisher = await publisherService.GetCurrentUser();
+        Publisher = await _publisherService.GetCurrentUser();
     }
 }

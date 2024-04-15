@@ -1,4 +1,6 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.General;
 
 //first parameter receives the data
@@ -62,6 +64,6 @@ public partial class AddAlbumSongsViewModel : ObservableObject
         Album.Songs = await albumService.AddAlbumSongAsync(Album);
 
         selectedSong.AlbumId = Album.Id;
-        await songService.UpdateSongAsync(selectedSong);
+        await songService.UpdateAsync(selectedSong);
     }
 }

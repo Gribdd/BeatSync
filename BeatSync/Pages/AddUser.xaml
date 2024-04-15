@@ -103,6 +103,7 @@
                 HorizontalOptions="Fill"
                 Text="Submit Details"
                 WidthRequest="300" />
+
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

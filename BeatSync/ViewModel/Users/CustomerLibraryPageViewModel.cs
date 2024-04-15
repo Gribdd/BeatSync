@@ -1,8 +1,9 @@
-﻿namespace BeatSync.ViewModel.Users;
+﻿using BeatSync.Services.Service;
+
+namespace BeatSync.ViewModel.Users;
 
 public partial class CustomerLibraryPageViewModel : ObservableObject
 {
-    private readonly AdminService adminService;
     private readonly UserService userService;
     private readonly PlaylistService playlistService;
 
@@ -12,9 +13,10 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Playlist> _playlists = new();
 
-    public CustomerLibraryPageViewModel(AdminService adminService, UserService userService, PlaylistService playlistService)
+    public CustomerLibraryPageViewModel(
+        UserService userService, 
+        PlaylistService playlistService)
     {
-        this.adminService = adminService;
         this.userService = userService;
         this.playlistService = playlistService;
     }

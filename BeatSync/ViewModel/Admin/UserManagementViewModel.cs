@@ -1,18 +1,18 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class UserManagementViewModel : ObservableObject
 {
-    private AdminService adminService;
-    private UserService userService;
+    private UserService _userService;
 
     [ObservableProperty]
     private ObservableCollection<User> _users = new();
 
-    public UserManagementViewModel(AdminService adminService, UserService userService)
+    public UserManagementViewModel(UserService userService)
     {
-        this.adminService = adminService;
-        this.userService = userService;
+        _userService = userService;
     }
 
     [RelayCommand]
@@ -24,33 +24,37 @@ public partial class UserManagementViewModel : ObservableObject
     [RelayCommand]
     async Task DeleteUser()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Delete User", "Enter User username to delete:");
+        if (!string.IsNullOrEmpty(username))
         {
-            Users = await userService.DeleteUserAsync(id);
+            var user = await _userService.GetByUsernameAsync(username);
+            await _userService.DeleteAsync(user.Id);
         }
+        Users = await _userService.GetActiveAsync();
 
     }
 
     [RelayCommand]
     async Task UpdateUser()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update User", "Enter User ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string username = await Shell.Current.DisplayPromptAsync("Update User", "Enter User username to update:");
+        if (!string.IsNullOrEmpty(username))
         {
-
-            Users = await userService.UpdateUserAsync(id);
+            var user = await _userService.GetByUsernameAsync(username);
+            await _userService.UpdateAsync(user.Id);
         }
+        Users = await _userService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task Logout()
     {
-        await adminService.Logout();
+        Preferences.Default.Set("currentUserId", -1);
+        Application.Current!.MainPage = new AppShell();
     }
 
     public async void GetUsers()
     {
-        Users = await userService.GetActiveUserAsync();
+        Users = await _userService.GetActiveAsync();
     }
 }

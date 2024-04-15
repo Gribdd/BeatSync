@@ -3,16 +3,14 @@ namespace BeatSync.ViewModel.Admin
 {
     public partial class PublisherManagementViewModel : ObservableObject
     {
-        private AdminService adminService;
-        private PublisherService publisherService;
+        private readonly PublisherService _publisherService;
 
         [ObservableProperty]
         private ObservableCollection<Publisher> _publishers = new();
 
-        public PublisherManagementViewModel(AdminService adminService, PublisherService publisherService)
+        public PublisherManagementViewModel( PublisherService publisherService)
         {
-            this.adminService = adminService;
-            this.publisherService = publisherService;
+            _publisherService = publisherService;
         }
 
         [RelayCommand]
@@ -24,32 +22,35 @@ namespace BeatSync.ViewModel.Admin
         [RelayCommand]
         async Task DeletePublisher()
         {
-            string inputId = await Shell.Current.DisplayPromptAsync("Delete Publisher", "Enter Publisher ID to delete:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+            string username = await Shell.Current.DisplayPromptAsync("Delete Artist", "Enter Publisher username to delete:");
+            if (!string.IsNullOrEmpty(username))
             {
-                Publishers = await publisherService.DeletePublisherAsync(id);
+                var publisher = await _publisherService.GetByUsernameAsync(username);
+                await _publisherService.DeleteAsync(publisher.Id);
             }
+            Publishers = await _publisherService.GetActiveAsync();
         }
 
         [RelayCommand]
         async Task UpdatePublisher()
         {
-            string inputId = await Shell.Current.DisplayPromptAsync("Update Publisher", "Enter Publisher ID to delete:");
-            if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+            string username = await Shell.Current.DisplayPromptAsync("Update Artist", "Enter Publisher username to update:");
+            if (!string.IsNullOrEmpty(username))
             {
-                Publishers = await publisherService.UpdatePublisherAsync(id);
+                var publisher = await _publisherService.GetByUsernameAsync(username);
+                await _publisherService.UpdateAsync(publisher.Id);
             }
+            Publishers = await _publisherService.GetActiveAsync();
         }
 
         [RelayCommand]
         async Task Logout()
         {
-            await adminService.Logout();
         }
 
         public async void GetPublishers()
         {
-            Publishers = await publisherService.GetActivePublisherAsync();
+            Publishers = await _publisherService.GetActiveAsync();
         }
     }
 }

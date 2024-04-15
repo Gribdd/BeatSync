@@ -1,12 +1,13 @@
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.LoginAndRegistration;
 
 [QueryProperty(nameof(User), nameof(User))]
 public partial class CreateAccountUploadImageViewModel : ObservableObject
 {
-    private AdminService adminService;
-    private ArtistService artistService;
-    private PublisherService publisherService;
-    private UserService userService;
+    private ArtistService _artistService;
+    private PublisherService _publisherService;
+    private UserService _userService;
     private FileUploadService fileUploadService;
     private FileResult? fileResult;
 
@@ -17,7 +18,6 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
     private User _user = new();
 
     public CreateAccountUploadImageViewModel(
-        AdminService adminService, 
         ArtistService artistService, 
         PublisherService publisherService, 
         UserService userService, 
@@ -25,10 +25,9 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
         PublisherLandingPageViewModel publisherLandingPageViewModel,
         CustomerLandingPageViewModel customerLandingPageViewModel)
     {
-        this.adminService = adminService;
-        this.artistService = artistService;
-        this.publisherService = publisherService;
-        this.userService = userService;
+        _artistService = artistService;
+        _publisherService = publisherService;
+        _userService = userService;
         this.fileUploadService = fileUploadService;
         this.publisherLandingPageViewModel = publisherLandingPageViewModel;
         this.customerLandingPageViewModel = customerLandingPageViewModel;
@@ -45,13 +44,13 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
     {
         int activeUserId = -1;
         User.IsDeleted = false;
-        switch (User.AccounType)
+        switch (User.AccountType)
         {
             //artist
             case 1:
                 Artist artist = new()
                 {
-                    AccounType = User.AccounType,
+                    AccountType = User.AccountType,
                     Username = User.Username,
                     Email = User.Email,
                     Password = User.Password,
@@ -62,20 +61,19 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     ImageFilePath = User.ImageFilePath
                 };
 
-                if (await artistService.AddArtistAsync(artist))
-                {
-                    File.Copy(fileResult!.FullPath, artist.ImageFilePath!);
-                    await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
-                    //await Shell.Current.GoToAsync("mainpage");
-                    Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
-                }
+                await _artistService.AddAsync(artist);
+                File.Copy(fileResult!.FullPath, artist.ImageFilePath!);
+                await Shell.Current.DisplayAlert("Add Artist", "Artist successfully added", "OK");
+                //await Shell.Current.GoToAsync("mainpage");
+                Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
+                
 
                 break;
             //publisher
             case 2:
                 Publisher publisher = new()
                 {
-                    AccounType = User.AccounType,
+                    AccountType = User.AccountType,
                     Username = User.Username,
                     Email = User.Email,
                     Password = User.Password,
@@ -86,21 +84,18 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
                     ImageFilePath = User.ImageFilePath
                 };
 
-                if (await publisherService.AddPublisherAsync(publisher))
-                {
-                    File.Copy(fileResult!.FullPath, publisher.ImageFilePath!);
-                    await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
-                    Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
-                }
+                await _publisherService.AddAsync(publisher);
+                File.Copy(fileResult!.FullPath, publisher.ImageFilePath!);
+                await Shell.Current.DisplayAlert("Add Publisher", "Publisher successfully added", "OK");
+                Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
+                
                 break;
             //customer
             case 3:
-                if (await userService.AddUserAsync(User))
-                {
-                    File.Copy(fileResult!.FullPath, User.ImageFilePath!);
-                    await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
-                    Application.Current!.MainPage = new CustomerLandingPage(customerLandingPageViewModel);
-                }
+                await _userService.AddAsync(User);
+                File.Copy(fileResult!.FullPath, User.ImageFilePath!);
+                await Shell.Current.DisplayAlert("Add User", "User successfully added", "OK");
+                Application.Current!.MainPage = new CustomerLandingPage(customerLandingPageViewModel);
                 break;
             default:
                 break;
@@ -117,7 +112,7 @@ public partial class CreateAccountUploadImageViewModel : ObservableObject
             return;
         }
 
-        string directory = User.AccounType == 1 ? "Artists" : User.AccounType == 2 ? "Publishers" : "Users";
+        string directory = User.AccountType == 1 ? "Artists" : User.AccountType == 2 ? "Publishers" : "Users";
         (fileResult, User.ImageFilePath) = await fileUploadService.UploadImage(User.Username, directory);
     }
 }

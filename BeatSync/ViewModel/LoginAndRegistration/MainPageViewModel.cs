@@ -8,7 +8,7 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     async Task SignUpCustomer()
     {
-        User.AccounType = 3;
+        User.AccountType = 3;
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
@@ -19,7 +19,7 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     async Task SignUpPublisher()
     {
-        User.AccounType = 2;
+        User.AccountType = 2;
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }
@@ -30,7 +30,7 @@ public partial class MainPageViewModel : ObservableObject
     [RelayCommand]
     async Task SignUpArtist()
     {
-        User.AccounType = 1;
+        User.AccountType = 1;
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(User), User }

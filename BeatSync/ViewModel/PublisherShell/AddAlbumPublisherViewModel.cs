@@ -1,4 +1,6 @@
-﻿namespace BeatSync.ViewModel.PublisherShell;
+﻿using BeatSync.Services.Service;
+
+namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class AddAlbumPublisherViewModel : ObservableObject
 {
@@ -79,6 +81,6 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
 
     public async void GetArtists()
     {
-        Artists = await artistService.GetActiveArtistAsync();
+        Artists = await artistService.GetActiveAsync();
     }
 }

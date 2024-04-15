@@ -11,7 +11,7 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout>
+    <Grid RowDefinitions="auto,auto,auto,*">
         <HorizontalStackLayout>
             <ImageButton
                 Margin="30"
@@ -39,11 +39,15 @@
                 Source="add.png" />
         </HorizontalStackLayout>
         <BoxView
+            Grid.Row="1"
             Margin="0,-10,0,0"
             HeightRequest="2"
             WidthRequest="310"
             Color="White" />
-        <HorizontalStackLayout Margin="40,10,10,10" Spacing="10">
+        <HorizontalStackLayout
+            Grid.Row="2"
+            Margin="40,10,10,10"
+            Spacing="10">
             <Button
                 Padding="20"
                 BackgroundColor="#9747FF"
@@ -63,7 +67,7 @@
                 CornerRadius="25"
                 Text="Update" />
         </HorizontalStackLayout>
-        <CollectionView ItemsSource="{Binding Publishers}">
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Publishers}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Publisher">
                     <controls:CardView
@@ -74,5 +78,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

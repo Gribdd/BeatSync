@@ -1,13 +1,14 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class AddSongViewModel : ObservableObject
 {
     private const string Directory = "Songs";
-    private AdminService adminService;
-    private ArtistService artistService;
-    private SongService songService;
-    private FileUploadService fileUploadService;
+    private readonly ArtistService _artistService;
+    private readonly SongService _songService;
+    private readonly FileUploadService _fileUploadService;
     private FileResult? fileResultSongImage;
     private FileResult? fileResultSong;
 
@@ -25,42 +26,36 @@ public partial class AddSongViewModel : ObservableObject
 
     public string[] Genres { get; set; } = { "Rap", "Pop", "Indie", "OPM", "Punk Rock" };
 
-    public AddSongViewModel(AdminService adminService, ArtistService artistService, SongService songService, FileUploadService fileUploadService)
+    public AddSongViewModel( 
+        ArtistService artistService, 
+        SongService songService, 
+        FileUploadService fileUploadService)
     {
-        this.adminService = adminService;
-        this.artistService = artistService;
-        this.songService = songService;
-        this.fileUploadService = fileUploadService;
+        _artistService = artistService;
+        _songService = songService;
+        _fileUploadService = fileUploadService;
     }
 
     [RelayCommand]
     async Task AddSong()
     {
-        if(SelectedArtist == null)
-        {
-            await Shell.Current.DisplayAlert("Add Song", "Please select an artist first", "OK");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(Song.ImageFilePath))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please upload song picture first", "OK");
-            return;
-        }
-
         Song.ArtistID = SelectedArtist.Id;
         Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
-        if (await songService.AddSongAsync(Song))
+
+        var (isValid, message) = Song.IsValid();
+        if (!isValid)
         {
-            File.Copy(fileResultSongImage!.FullPath, Song.ImageFilePath);
-            File.Copy(fileResultSong!.FullPath, Song.FilePath!);
-            await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.DisplayAlert("Error!", message, "Ok");
+            return;
         }
-        else
-        {
-            await Shell.Current.DisplayAlert("Add Song", "Please enter all fields", "OK");
-        }
+
+        await _songService.AddAsync(Song);
+        
+        File.Copy(fileResultSongImage!.FullPath, Song.ImageFilePath!);
+        File.Copy(fileResultSong!.FullPath, Song.FilePath!);
+        await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
+        await Shell.Current.GoToAsync("..");
+        
     }
 
     [RelayCommand]
@@ -72,7 +67,7 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        (fileResultSongImage, Song.ImageFilePath) = await fileUploadService.UploadImage(Song.Name, Directory);
+        (fileResultSongImage, Song.ImageFilePath) = await _fileUploadService.UploadImage(Song.Name, Directory);
     }
 
     [RelayCommand]
@@ -84,7 +79,7 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        (fileResultSong, Song.FilePath) = await fileUploadService.UploadSong(Song.Name);
+        (fileResultSong, Song.FilePath) = await _fileUploadService.UploadSong(Song.Name);
     }
 
     [RelayCommand]
@@ -95,6 +90,6 @@ public partial class AddSongViewModel : ObservableObject
 
     public async Task PopulateArtist()
     {
-        Artists = await artistService.GetActiveArtistAsync();
+        Artists = await _artistService.GetAllAsync();
     }
 }

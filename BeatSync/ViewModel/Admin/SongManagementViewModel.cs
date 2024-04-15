@@ -1,10 +1,11 @@
 ﻿
+using BeatSync.Services.Service;
+
 namespace BeatSync.ViewModel.Admin;
 
 public partial class SongManagementViewModel : ObservableObject
 {
-    private AdminService adminService;
-    private SongService songService;
+    private readonly SongService _songService;
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();
@@ -12,10 +13,9 @@ public partial class SongManagementViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<String> _artistName = new();
 
-    public SongManagementViewModel(AdminService adminService, SongService songService)
+    public SongManagementViewModel(SongService songService)
     {
-        this.adminService = adminService;
-        this.songService = songService;
+        _songService = songService;
     }
 
     [RelayCommand]
@@ -27,32 +27,34 @@ public partial class SongManagementViewModel : ObservableObject
     [RelayCommand]
     async Task DeleteSong()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string songName = await Shell.Current.DisplayPromptAsync("Delete Song", "Enter Song name to delete:");
+        if (!string.IsNullOrEmpty(songName))
         {
-            Songs = await songService.DeleteSongAsync(id);
+            var song = await _songService.GetByNameAsync(songName);
+            await _songService.DeleteAsync(song.Id);
         }
+        Songs = await _songService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task UpdateSong()
     {
-        string inputId = await Shell.Current.DisplayPromptAsync("Update Song", "Enter Song ID to delete:");
-        if (!string.IsNullOrEmpty(inputId) && int.TryParse(inputId, out int id))
+        string songName = await Shell.Current.DisplayPromptAsync("Update Song", "Enter Song name to update:");
+        if (!string.IsNullOrEmpty(songName))
         {
-
-            Songs = await songService.UpdateSongAsync(id);
+            var song = await _songService.GetByNameAsync(songName);
+            await _songService.UpdateAsync(song.Id);
         }
+        Songs = await _songService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task Logout()
     {
-        await adminService.Logout();
     }
 
     public async void GetSongs()
     {
-        Songs = await songService.GetActiveSongAsync();
+        Songs = await _songService.GetActiveAsync();
     }
 }
