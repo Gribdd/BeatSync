@@ -80,8 +80,8 @@
                     Style="{StaticResource Fields}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Man</x:String>
-                            <x:String>Woman</x:String>
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
