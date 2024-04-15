@@ -35,6 +35,7 @@
             <Border>
                 <Entry
                     Margin="5"
+                    PlaceholderColor="{StaticResource Gray100}"
                     ClearButtonVisibility="WhileEditing"
                     Keyboard="Email"
                     Placeholder="Enter Email"
@@ -44,12 +45,14 @@
             <Border>
                 <Entry
                     Placeholder="Enter Username"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Publisher.Username}" />
             </Border>
             <Border>
                 <Entry
                     Placeholder="Enter Password"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Publisher.Password}" />
             </Border>
@@ -59,12 +62,14 @@
             <Border>
                 <Entry
                     Placeholder="Enter First Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Publisher.FirstName}" />
             </Border>
             <Border>
                 <Entry
                     Placeholder="Enter Last Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Publisher.LastName}" />
             </Border>

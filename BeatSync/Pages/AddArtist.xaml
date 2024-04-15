@@ -37,6 +37,7 @@
             <Border>
                 <Entry
                     Margin="5"
+                    PlaceholderColor="{StaticResource Gray100}"
                     ClearButtonVisibility="WhileEditing"
                     Keyboard="Email"
                     Placeholder="Enter Email"
@@ -45,12 +46,14 @@
             </Border>
             <Border>
                 <Entry
+                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Username"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.Username}" />
             </Border>
             <Border>
                 <Entry
+                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Password"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.Password}" />
@@ -61,24 +64,26 @@
             <Border>
                 <Entry
                     Placeholder="Enter First Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.FirstName}" />
             </Border>
             <Border>
                 <Entry
+                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Last Name"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.LastName}" />
             </Border>
-            <Border>
+            <Border Padding="5">
                 <Picker
                     Title="Select a Gender"
                     SelectedItem="{Binding Artist.Gender}"
                     Style="{StaticResource Fields}">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
-                            <x:String>Man</x:String>
-                            <x:String>Woman</x:String>
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>

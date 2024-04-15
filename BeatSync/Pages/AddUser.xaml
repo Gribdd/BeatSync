@@ -39,18 +39,21 @@
                     ClearButtonVisibility="WhileEditing"
                     Keyboard="Email"
                     Placeholder="Enter Email"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding User.Email}" />
             </Border>
             <Border>
                 <Entry
                     Placeholder="Enter Username"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding User.Username}" />
             </Border>
             <Border>
                 <Entry
                     Placeholder="Enter Password"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding User.Password}" />
             </Border>
@@ -60,12 +63,14 @@
             <Border>
                 <Entry
                     Placeholder="Enter First Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding User.FirstName}" />
             </Border>
             <Border>
                 <Entry
                     Placeholder="Enter Last Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding User.LastName}" />
             </Border>

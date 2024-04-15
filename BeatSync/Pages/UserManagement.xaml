@@ -18,6 +18,7 @@
                 Command="{Binding LogoutCommand}"
                 HeightRequest="35"
                 HorizontalOptions="Start"
+                BackgroundColor="Transparent"
                 Source="profileicon.png" />
             <Label
                 Margin="-25,35,0,0"
@@ -27,11 +28,13 @@
             <ImageButton
                 Margin="35,0,0,0"
                 HeightRequest="35"
+                BackgroundColor="Transparent"
                 HorizontalOptions="Start"
                 Source="search.png" />
             <ImageButton
                 Margin="-5,0,0,0"
                 HeightRequest="30"
+                BackgroundColor="Transparent"
                 HorizontalOptions="Start"
                 Source="add.png" />
         </HorizontalStackLayout>
