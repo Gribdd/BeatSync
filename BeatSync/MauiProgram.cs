@@ -3,6 +3,7 @@ using CommunityToolkit.Maui;
 using BeatSync.Repositories.IRepository;
 using BeatSync.Services.IService;
 using BeatSync.Services.Service;
+using BeatSync.ViewModel.ArtistShell;
 
 namespace BeatSync
 {
@@ -94,6 +95,9 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsCustomerViewModel>();
             mauiAppBuilder.Services.AddTransient<AddPlaylistSongsSearchViewModel>();
             mauiAppBuilder.Services.AddTransient<CustomerLandingPageViewModel>();
+
+            //Artist
+            mauiAppBuilder.Services.AddTransient<ArtistLandingPageViewModel>();
 
             return mauiAppBuilder;
         }

@@ -32,6 +32,20 @@ public partial class PublisherLandingPageViewModel : ObservableObject
         Publisher = await publisherService.GetCurrentUser();
     }
 
+    [RelayCommand]
+    async Task ViewProfile()
+    {
+        await GetActivePublisher();
+        //await Shell.Current.Navigation.PushAsync(new ViewProfile(this));
+    }
+
+    [RelayCommand]  
+    async Task Return()
+    {
+        // Navigate back
+        await Shell.Current.GoToAsync("..");
+    }
+
 }
 
 

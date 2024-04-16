@@ -1,19 +1,25 @@
-﻿namespace BeatSync.Services;
+﻿using BeatSync.ViewModel.ArtistShell;
+
+namespace BeatSync.Services;
 
 public class UserAuthService : ObservableObject
 {
     private readonly UserValidationService userValidationService;
     private readonly PublisherLandingPageViewModel publisherLandingPageViewModel;
     private readonly CustomerLandingPageViewModel customerLandingPageViewModel;
+    private readonly ArtistLandingPageViewModel artistLandingPageViewModel;
 
     public UserAuthService(
         UserValidationService userValidationService,
         PublisherLandingPageViewModel publisherLandingPageViewModel,
-        CustomerLandingPageViewModel customerLandingPageViewModel)
+        CustomerLandingPageViewModel customerLandingPageViewModel,
+        ArtistLandingPageViewModel artistLandingPageViewModel)
     {
         this.userValidationService = userValidationService;
         this.publisherLandingPageViewModel = publisherLandingPageViewModel;
         this.customerLandingPageViewModel = customerLandingPageViewModel;
+        this.artistLandingPageViewModel = artistLandingPageViewModel;
+
     }
 
 
@@ -43,7 +49,7 @@ public class UserAuthService : ObservableObject
             //artist
             case Artist artist:
                 activeUserId = artist.Id;
-                Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
+                Application.Current!.MainPage = new ArtistLandingPage(artistLandingPageViewModel);
                 break;
             //publisher
             case Publisher publisher:
