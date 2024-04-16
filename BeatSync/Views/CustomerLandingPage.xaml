@@ -27,11 +27,20 @@
                 Source="{Binding User.ImageFilePath}"
                 WidthRequest="50" />
             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                <Label FontSize="15" Text="{Binding User.FullName}" />
+                <Label
+                    FontSize="15"
+                    Text="{Binding User.FullName}"
+                    TextColor="White" />
                 <Label
                     FontSize="12"
                     Text="View Profile"
-                    TextColor="#a39797" />
+                    TextColor="#a39797">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ViewProfileCommand}" />
+                        <!--  Change this to Command="{Binding ViewProfile}"  -->
+                    </Label.GestureRecognizers>
+                </Label>
+
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
@@ -61,3 +70,4 @@
         </Tab>
     </TabBar>
 </Shell>
+
