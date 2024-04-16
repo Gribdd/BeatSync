@@ -4,10 +4,11 @@ namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class AddAlbumPublisherViewModel : ObservableObject
 {
+    //directory for storing images
     private const string Directory = "Albums";
-    private AlbumService albumService;
-    private ArtistService artistService;
-    private FileUploadService fileUploadService;
+    private readonly AlbumService _albumService;
+    private readonly ArtistService _artistService;
+    private readonly FileUploadService _fileUploadService;
     private FileResult? fileResultAlbumCoverImage;
 
     [ObservableProperty]
@@ -19,11 +20,14 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
     [ObservableProperty]
     private Artist _selectedArtist = new();
 
-    public AddAlbumPublisherViewModel(AlbumService albumService, ArtistService artistService, FileUploadService fileUploadService)
+    public AddAlbumPublisherViewModel(
+        AlbumService albumService, 
+        ArtistService artistService, 
+        FileUploadService fileUploadService)
     {
-        this.albumService = albumService;
-        this.artistService = artistService;
-        this.fileUploadService = fileUploadService;
+        _albumService = albumService;
+        _artistService = artistService;
+        _fileUploadService = fileUploadService;
     }
 
     [RelayCommand]
@@ -35,52 +39,43 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
     [RelayCommand]
     async Task UploadImage()
     {
-        if (string.IsNullOrEmpty(Album.Name))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please enter an album name first", "OK");
-            return;
-        }
-
-        (fileResultAlbumCoverImage, Album.ImageFilePath) = await fileUploadService.UploadImage(Album.Name, Directory);
+        (fileResultAlbumCoverImage, Album.ImageFilePath) = await _fileUploadService.UploadImage(Album.Name, Directory);
     }
 
     [RelayCommand]
     async Task AddAlbum()
     {
-        ValidateFields();
-
         Album.ArtistId = SelectedArtist.Id;
         Album.ArtistName = SelectedArtist.FullName;
 
-        if (await albumService.AddAlbumAsync(Album))
+        var (isValid, message) = Album.IsValid();
+        if (!isValid)
         {
-            File.Copy(fileResultAlbumCoverImage!.FullPath, Album.ImageFilePath!);
-            await Shell.Current.DisplayAlert("Add Album", "Album successfully added", "OK");
-            await Shell.Current.GoToAsync("..");
-        }
-        else
-        {
-            await Shell.Current.DisplayAlert("Add Album", "Please enter all fields", "OK");
-        }
-    }
-    
-    private async void ValidateFields()
-    {
-        if (SelectedArtist == null)
-        {
-            await Shell.Current.DisplayAlert("Oops.", "Please select an artist first.", "OK");
+            await Shell.Current.DisplayAlert("Error!", message, "Ok");
             return;
         }
 
-        if (string.IsNullOrEmpty(Album.Name))
+        if (!await IsAlbumNameUnique(Album.Name!))
         {
-            await Shell.Current.DisplayAlert("Oops.", "Please enter a name for the album.", "OK");
-
+            await Shell.Current.DisplayAlert("Error!", "Album name already exists", "Ok");
+            return;
         }
-    }
 
+        await _albumService.AddAsync(Album);
+        File.Copy(fileResultAlbumCoverImage!.FullPath, Album.ImageFilePath!);
+        await Shell.Current.DisplayAlert("Add Album", "Album successfully added", "OK");
+        await Shell.Current.GoToAsync("..");
+    }
     public async void GetArtists()
     {
-        Artists = await artistService.GetActiveAsync();
+        Artists = await _artistService.GetActiveAsync();
+    }
+
+    //validation to check if the album name is unique
+    //checks by getting album by name and if it is null then the album name is unique
+    private async Task<bool> IsAlbumNameUnique(string albumName)
+    {
+        var album = await _albumService.GetByNameAsync(albumName);
+        return album == null;
     }
 }

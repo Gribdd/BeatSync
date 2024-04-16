@@ -61,12 +61,6 @@ public partial class AddSongViewModel : ObservableObject
     [RelayCommand]
     async Task UploadImage()
     {
-        if (string.IsNullOrEmpty(Song.Name))
-        {
-            await Shell.Current.DisplayAlert("Upload picture", "Please enter song name first", "OK");
-            return;
-        }
-
         (fileResultSongImage, Song.ImageFilePath) = await _fileUploadService.UploadImage(Song.Name, Directory);
     }
 
