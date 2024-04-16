@@ -45,25 +45,35 @@ public partial class AddAlbumSongsViewModel : ObservableObject
         {
             return;
         }
-        
-        Song? selectedSong = Songs.FirstOrDefault(song => string.Equals(selectedSongName, song.Name));
+
+        var selectedSong = await songService.GetByNameAsync(selectedSongName);
         if(selectedSong == null)
         {
             return;
         }
 
-        if(selectedSong!.AlbumId != null)
+        if (selectedSong!.AlbumId != null)
         {
             await Shell.Current.DisplayAlert("Add Album Song Error", "Song is already in an album", "OK");
             return;
         }
-        // Initialize the album's songs collection if it's null
+
+        //Initialize the album's songs collection if it's null
         Album.Songs ??= new();
 
         Album.Songs!.Add(selectedSong!);
-        Album.Songs = await albumService.AddAlbumSongAsync(Album);
 
         selectedSong.AlbumId = Album.Id;
+        await albumService.UpdateAlbumSongs(Album);
         await songService.UpdateAsync(selectedSong);
+    }
+
+    [RelayCommand]
+    async Task RemoveSongFromAlbum(Song song)
+    {
+        Album.Songs!.Remove(song);
+        song.AlbumId = null;
+        await albumService.UpdateAlbumSongs(Album);
+        await songService.UpdateAsync(song);
     }
 }

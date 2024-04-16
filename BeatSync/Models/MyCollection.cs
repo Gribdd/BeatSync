@@ -7,6 +7,8 @@ public partial class MyCollection : ObservableObject
     private readonly UserService _userService;
     private readonly PublisherService _publisherService;
     private readonly ArtistService _artistService;
+    private readonly AlbumService _albumService;
+    private readonly SongService _songService;
     [ObservableProperty]
     private ObservableCollection<Album> _album;
 
@@ -26,17 +28,20 @@ public partial class MyCollection : ObservableObject
     private ObservableCollection<object> _filteredCollection;
 
 
-    private AlbumService _albumService = new();
     //private SongService _songService = new();
 
     public MyCollection(
         UserService userService,
         PublisherService publisherService,
-        ArtistService artistService)
+        ArtistService artistService,
+        AlbumService albumService,
+        SongService songService)
     {
         _userService = userService;
         _publisherService = publisherService;
         _artistService = artistService;
+        _albumService = albumService;
+        _songService = songService;
         PopulateData();
     }
 
@@ -73,9 +78,9 @@ public partial class MyCollection : ObservableObject
 
     private async void PopulateData()
     {
-        Album = await _albumService.GetActiveAlbumsAsync();
+        Album = await _albumService.GetActiveAsync();
         Artist = await _artistService.GetActiveAsync();
-        //Song = await _songService.GetActiveSongAsync();
+        Song = await _songService.GetActiveAsync();
         Publisher = await _publisherService.GetActiveAsync();
         User = await _userService.GetActiveAsync();
     }

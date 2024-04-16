@@ -2,8 +2,8 @@
 
 public partial class LibraryPageViewModel : ObservableObject
 {
-    private readonly AlbumService albumService;
-    private readonly PublisherService publisherService;
+    private readonly AlbumService _albumService;
+    private readonly PublisherService _publisherService;
 
     [ObservableProperty]
     private ObservableCollection<Album> _albums = new();
@@ -16,8 +16,8 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public LibraryPageViewModel(AlbumService albumService, PublisherService publisherService)
     {
-        this.albumService = albumService;
-        this.publisherService = publisherService;
+        _albumService = albumService;
+        _publisherService = publisherService;
     }
 
 
@@ -31,22 +31,24 @@ public partial class LibraryPageViewModel : ObservableObject
     async Task UpdateAlbum()
     {
         string albumName = await Shell.Current.DisplayPromptAsync("Update Album", "Enter Album Name to update:");
-        if (string.IsNullOrEmpty(albumName))
+        if (!string.IsNullOrEmpty(albumName))
         {
-            return;
+            var album = await _albumService.GetByNameAsync(albumName);
+            await _albumService.UpdateAsync(album.Id);
         }
-        Albums = await albumService.UpdateAlbumAsync(albumName);
+        Albums = await _albumService.GetActiveAsync();
     }
 
     [RelayCommand]
     async Task DeleteAlbum()
     {
         string albumName = await Shell.Current.DisplayPromptAsync("Delete Album", "Enter Album Name to delete:");
-        if (string.IsNullOrEmpty(albumName))
+        if (!string.IsNullOrEmpty(albumName))
         {
-            return;
+            var album = await _albumService.GetByNameAsync(albumName);
+            await _albumService.DeleteAsync(album.Id);
         }
-        Albums = await albumService.DeleteAlbumAsync(albumName);
+        Albums = await _albumService.GetActiveAsync();
     }
 
 
@@ -68,11 +70,11 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public async void GetAlbums()
     {
-        Albums = await albumService.GetActiveAlbumsAsync();
+        Albums = await _albumService.GetActiveAsync();
     }
 
     public async void GetActivePublisher()
     {
-        Publisher = await publisherService.GetCurrentUser();
+        Publisher = await _publisherService.GetCurrentUser();
     }
 }

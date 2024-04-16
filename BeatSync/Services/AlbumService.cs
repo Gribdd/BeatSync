@@ -1,46 +1,19 @@
-﻿namespace BeatSync.Services;
+﻿
+namespace BeatSync.Services;
 
-public class AlbumService
+public class AlbumService : GenericService<Album>, IAlbumService
 {
-    private readonly string albumFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Albums.json");
-    public async Task<bool> AddAlbumAsync(Album album)
+    private readonly IUnitofWork _unitofWork;
+    public AlbumService(IUnitofWork unitofWork) : base(unitofWork)
     {
-        if (album == null)
-        {
-            return false;
-        }
-
-        ObservableCollection<Album> albums = await GetAlbumsAsync();
-
-        album.Id = albums.Count + 1;
-        album.IsDeleted = false;
-
-        albums.Add(album);
-
-        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
-        await File.WriteAllTextAsync(albumFilePath, json);
-        return true;
+        _unitofWork = unitofWork;
     }
-
-    public async Task<ObservableCollection<Album>> UpdateAlbumAsync(string? albumName)
+    
+    public override async Task UpdateAsync(int id)
     {
-        var albums = await GetAlbumsAsync();
-        var albumToBeUpdated = albums.FirstOrDefault(a => a.Name == albumName);
-
-        var activeAlbums = await GetActiveAlbumsAsync();
-        if (albumToBeUpdated == null)
-        {
-            await Shell.Current.DisplayAlert("Error", "Album not found", "OK");
-            return activeAlbums;
-        }
-
+        var albumToBeUpdated = await GetAsync(id);
         string[] editOptions = { "Name" };
         string selectedOption = await Shell.Current.DisplayActionSheet("Select Property to Edit", "Cancel", null, editOptions);
-
-        if(string.IsNullOrEmpty(selectedOption) || selectedOption == "Cancel")
-        {
-            return activeAlbums;
-        }
 
         var newValue = string.Empty;
         for (int index = 0; index < editOptions.Length; index++)
@@ -49,7 +22,7 @@ public class AlbumService
             {
                 switch (index)
                 {
-                    case 0: // Email
+                    case 0: //Name
                         newValue = await Shell.Current.DisplayPromptAsync($"Edit Album {selectedOption}", $"Enter new {selectedOption}:", initialValue: albumToBeUpdated.Name);
                         albumToBeUpdated.Name = newValue;
                         break;
@@ -60,71 +33,19 @@ public class AlbumService
             }
         }
 
-        int count = albums.ToList().FindIndex(a => a.Name == albumName);
-        albums[count] = albumToBeUpdated;
-        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
-        await File.WriteAllTextAsync(albumFilePath, json);
-
-        await Shell.Current.DisplayAlert("Update album", "Successfully updated album", "OK");
-        return await GetActiveAlbumsAsync();
+        await base.UpdateAsync(albumToBeUpdated);
     }
 
-    public async Task<ObservableCollection<Album>> DeleteAlbumAsync(string? albumName)
+    //we are just updating the album songs
+    //used for adding and removing songs from an album
+    public async Task UpdateAlbumSongs(Album album)
     {
-        var albums = await GetAlbumsAsync();
-        var albumToBeDeleted = albums.FirstOrDefault(a => a.Name == albumName);
-
-        var activeAlbums = await GetActiveAlbumsAsync();
-        if (albumToBeDeleted == null)
-        {
-            await Shell.Current.DisplayAlert("Error", "Album not found", "OK");
-            return activeAlbums;
-        }
-
-        if (albumToBeDeleted.IsDeleted)
-        {
-            await Shell.Current.DisplayAlert("Error", "Album already deleted", "OK");
-            return activeAlbums;
-        }
-
-        albumToBeDeleted.IsDeleted = true;
-        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
-        await File.WriteAllTextAsync(albumFilePath, json);
-
-        albums.Remove(albumToBeDeleted);
-        await Shell.Current.DisplayAlert("Delete Song", "Successfully deleted song", "OK");
-        return await GetActiveAlbumsAsync();
+        await base.UpdateAsync(album);
     }
 
-    public async Task<ObservableCollection<Album>> GetAlbumsAsync()
+    public Task<Album> GetByNameAsync(string albumName)
     {
-        if (!File.Exists(albumFilePath))
-        {
-            return new ObservableCollection<Album>();
-        }
-
-        var json = await File.ReadAllTextAsync(albumFilePath);
-        var albums = JsonSerializer.Deserialize<ObservableCollection<Album>>(json);
-        return albums!;
+        return _unitofWork.AlbumRepository.GetByName(albumName);
     }
-
-    public async Task<ObservableCollection<Album>> GetActiveAlbumsAsync()
-    {
-        var albums = await GetAlbumsAsync();
-        return new ObservableCollection<Album>(albums.Where(a => !a.IsDeleted));
-    }
-
-    public async Task<ObservableCollection<Song>> AddAlbumSongAsync(Album album)
-    {
-        var albums = await GetAlbumsAsync();
-
-        var indexOfAlbumInTheCollection = albums.ToList().FindIndex(a => a.Id == album.Id);
-        albums[indexOfAlbumInTheCollection] = album;
-
-        var json = JsonSerializer.Serialize<ObservableCollection<Album>>(albums);
-        await File.WriteAllTextAsync(albumFilePath, json);
-
-        await Shell.Current.DisplayAlert("Add Album song", "Successfully added song to album", "OK");
-        return album.Songs!;
-    }
+    
 }

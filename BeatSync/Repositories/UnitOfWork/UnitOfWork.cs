@@ -12,6 +12,7 @@ public class UnitOfWork : IUnitofWork
     public IPublisherRepository PublisherRepository { get; }
     public IArtistRepository ArtistRepository { get; }
     public ISongRepository SongRepository { get; }
+    public IAlbumRepository AlbumRepository { get; }
 
     public UnitOfWork()
     {
@@ -19,6 +20,7 @@ public class UnitOfWork : IUnitofWork
         PublisherRepository = new PublisherRepository();
         ArtistRepository = new ArtistRepository();
         SongRepository = new SongRepository();
+        AlbumRepository = new AlbumRepository();
     }
     
     //needed so that we can accessed Generic Repositories
@@ -33,6 +35,8 @@ public class UnitOfWork : IUnitofWork
             return ArtistRepository as IGenericRepository<T>;
         if (typeof(T) == typeof(Song))
             return SongRepository as IGenericRepository<T>;
+        if (typeof(T) == typeof(Album))
+            return AlbumRepository as IGenericRepository<T>;
 
         return null;
     }
