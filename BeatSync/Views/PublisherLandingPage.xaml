@@ -28,11 +28,19 @@
                 Source="{Binding Publisher.ImageFilePath}"
                 WidthRequest="50" />
             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                <Label FontSize="15" Text="{Binding Publisher.FullName}" />
+                <Label
+                    FontSize="15"
+                    Text="{Binding Publisher.FullName}"
+                    TextColor="White" />
                 <Label
                     FontSize="12"
                     Text="View Profile"
-                    TextColor="#a39797" />
+                    TextColor="#a39797">
+                    <Label.GestureRecognizers>
+                        <!--<TapGestureRecognizer Command="{Binding ViewProfileCommand}"  uncommment to use/>-->
+                        <!--  Change this to Command="{Binding ViewProfile}"  -->
+                    </Label.GestureRecognizers>
+                </Label>
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
@@ -49,7 +57,7 @@
 
     <TabBar>
         <Tab Title="Library" Icon="library.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library"/>
+            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
         </Tab>
         <Tab Title="Songs" Icon="songs.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SongManagementPub}" Route="songs" />
@@ -62,3 +70,4 @@
         </Tab>
     </TabBar>
 </Shell>
+
