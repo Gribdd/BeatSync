@@ -10,6 +10,12 @@ public class UserService : GenericService<User>, IUserService
         _unitofWork = unitofWork;
     }
 
+    public async override Task AddAsync(User entity)
+    {
+        entity.FavoriteSongsId = new();
+        await base.AddAsync(entity);
+    }
+
     public async Task<User> GetByUsernameAsync(string userName)
     {
         return await _unitofWork.UserRepository.GetByUserName(userName);

@@ -12,7 +12,7 @@ public class GenericService<T> : IGenericService<T> where T : class
         _unitofWork = unitofWork;
     }
 
-    public async Task AddAsync(T entity)
+    public virtual async Task AddAsync(T entity)
     {
         await _repository.Add(entity);
     }

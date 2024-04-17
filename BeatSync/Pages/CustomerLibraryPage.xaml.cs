@@ -14,6 +14,7 @@ public partial class CustomerLibraryPage : ContentPage
     {
         base.OnAppearing();
         await _vm.LoadCurrentUser();
+        _vm.LoadFavoriteSongs();
         _vm.LoadPlaylists();
     }
 }

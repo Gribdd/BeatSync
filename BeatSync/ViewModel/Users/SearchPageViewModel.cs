@@ -46,10 +46,11 @@ public partial class SearchPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    Task Search()
+    void Search()
     {
+        MyList.Clear();
+        MyCollection.FilteredCollection.Clear();
         MyCollection.Filter(SearchQuery!);
-        MyList.Clear(); 
         IsResultsVisible = true;
 
         bool found = false; 
@@ -58,38 +59,37 @@ public partial class SearchPageViewModel : ObservableObject
             switch (item)
             {
                 case BeatSync.Models.Song song when song.Name.Contains(SearchQuery):
-                    MyList.Add(String.Concat(song.Name, " - Song"));
-                    
+                    //MyList.Add(String.Concat(song.Name, " - Song"));
+                    MyList.Add(song);
                     found = true;
                     break;
                 case BeatSync.Models.Album album when album.Name.Contains(SearchQuery):
-                    MyList.Add(String.Concat(album.Name, " - Album"));
+                    //MyList.Add(String.Concat(album.Name, " - Album"));
+                    MyList.Add(album);
                     found = true;
                     break;
-                case BeatSync.Models.Artist artist when artist.FullName.Contains(SearchQuery) || artist.FirstName.Contains(SearchQuery) || artist.LastName.Contains(SearchQuery):
-                    MyList.Add(artist.FullName + " - Artist");
+                case BeatSync.Models.Artist artist when artist.FullName.Contains(SearchQuery) || artist.Username.Contains(SearchQuery) || artist.FirstName.Contains(SearchQuery) || artist.LastName.Contains(SearchQuery):
+                    //MyList.Add(artist.FullName + " - Artist");
+                    MyList.Add(artist);
                     found = true;
                     break;
-                case BeatSync.Models.Artist artist when artist.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(artist.Username, " - Artist"));
-                    found = true;
-                    break;
-                case BeatSync.Models.Publisher publisher when publisher.FullName.Contains(SearchQuery) || publisher.FirstName.Contains(SearchQuery) || publisher.LastName.Contains(SearchQuery):
-                    MyList.Add(String.Concat(publisher.FullName, " - Publisher"));
-                    found = true;
-                    break;
-                case BeatSync.Models.Publisher publisher when publisher.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(publisher.Username, " - Publisher"));
-                    found = true;
-                    break;
-                case BeatSync.Models.User user when user.FullName.Contains(SearchQuery) || user.FirstName.Contains(SearchQuery) || user.LastName.Contains(SearchQuery):
-                    MyList.Add(String.Concat(user.FullName, " - User"));
-                    found = true;
-                    break;
-                case BeatSync.Models.User user when user.Username.Contains(SearchQuery):
-                    MyList.Add(String.Concat(user.Username, " - User"));
-                    found = true;
-                    break;
+
+                //case BeatSync.Models.Publisher publisher when publisher.FullName.Contains(SearchQuery) || publisher.FirstName.Contains(SearchQuery) || publisher.LastName.Contains(SearchQuery):
+                //    MyList.Add(String.Concat(publisher.FullName, " - Publisher"));
+                //    found = true;
+                //    break;
+                //case BeatSync.Models.Publisher publisher when publisher.Username.Contains(SearchQuery):
+                //    MyList.Add(String.Concat(publisher.Username, " - Publisher"));
+                //    found = true;
+                //    break;
+                //case BeatSync.Models.User user when user.FullName.Contains(SearchQuery) || user.FirstName.Contains(SearchQuery) || user.LastName.Contains(SearchQuery):
+                //    MyList.Add(String.Concat(user.FullName, " - User"));
+                //    found = true;
+                //    break;
+                //case BeatSync.Models.User user when user.Username.Contains(SearchQuery):
+                //    MyList.Add(String.Concat(user.Username, " - User"));
+                //    found = true;
+                //    break;
             }
         }
 
@@ -99,8 +99,6 @@ public partial class SearchPageViewModel : ObservableObject
             string foundNothing = "No search result found.";
             MyList.Add(foundNothing);
         }
-
-        return Task.CompletedTask;
     }
 
     public async void LoadCurrentUser()

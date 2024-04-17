@@ -4,6 +4,7 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
 {
     private readonly UserService _userService;
     private readonly PlaylistService _playlistService;
+    private readonly SongService _songService;
 
     [ObservableProperty]
     private User _user = new();
@@ -11,12 +12,17 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Playlist> _playlists = new();
 
+    [ObservableProperty]
+    private ObservableCollection<Song> _favoriteSongs = new();
+
     public CustomerLibraryPageViewModel(
         UserService userService, 
-        PlaylistService playlistService)
+        PlaylistService playlistService,
+        SongService songService)
     {
         _userService = userService;
         _playlistService = playlistService;
+        _songService = songService;
     }
 
 
@@ -75,5 +81,10 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     public async void LoadPlaylists()
     {
         Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
+    }
+
+    public async void LoadFavoriteSongs()
+    {
+        FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
     }
 }

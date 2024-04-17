@@ -64,16 +64,13 @@ public class SongService : GenericService<Song>, ISongService
         return new ObservableCollection<Song>(songs.Where(s => s.Name!.Contains(query)));
     }
 
-    public async Task<Song> GetSongBySongId(int songId, ObservableCollection<Song> songs)
+    private Song GetSongBySongId(int songId, ObservableCollection<Song> songs)
     {
-        var song = new Song();
-        if (songId <= 0)
-        {
-            return song;
-        }
-
-        return songs.FirstOrDefault(s => s.Id == songId)!;
+        //return empty song if songId is less than or equal to 0
+        //return song with the given songId
+        return songId <= 0 ? new Song() : songs.FirstOrDefault(s => s.Id == songId)!;
     }
+
     public async Task<ObservableCollection<Song>> GetSongsBySongIds(List<int> songIds)
     {
         var songs = new ObservableCollection<Song>();
@@ -85,7 +82,7 @@ public class SongService : GenericService<Song>, ISongService
         var allSongs = await GetAllAsync();
         foreach (var songId in songIds)
         {
-            var song = await GetSongBySongId(songId, allSongs);
+            var song = GetSongBySongId(songId, allSongs);
             if (song != null)
             {
                 songs.Add(song);

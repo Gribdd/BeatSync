@@ -33,7 +33,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IBase
         await File.WriteAllTextAsync(_filePath, json);
     }
 
-    public async Task Add(T entity)
+    public virtual async Task Add(T entity)
     {
         _entities = await LoadEntities();
         entity.Id = _entities.Count + 1;

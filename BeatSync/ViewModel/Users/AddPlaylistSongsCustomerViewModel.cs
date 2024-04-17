@@ -7,6 +7,7 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
     private readonly PlaylistService _playlistService;
     private readonly PlaylistSongService _playlistSongService;
     private readonly SongService _songService;
+    private readonly UserService _userService;
 
     [ObservableProperty]
     private Playlist _playlist = new();
@@ -23,11 +24,13 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
     public AddPlaylistSongsCustomerViewModel(
         PlaylistService playlistService,
         PlaylistSongService playlistSongService,
-        SongService songService)
+        SongService songService,
+        UserService userService)
     {
         _playlistService = playlistService;
         _playlistSongService = playlistSongService;
         _songService = songService;
+        _userService = userService;
     }
 
     [RelayCommand]
@@ -46,6 +49,20 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
 
         await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsSearch)}", navigationParameter);
     }
+
+
+    [RelayCommand]
+    async Task AddSongToFavorites(Song song)
+    {
+        User.FavoriteSongsId.Add(song.Id);
+        await _userService.UpdateAsync(User);
+    }
+
+    public bool IsFavorite(Song song)
+    {
+        return User.FavoriteSongsId.Contains(song.Id);
+    }
+
 
     [RelayCommand]
     async Task RemoveSongFromPlaylist(Song song)
