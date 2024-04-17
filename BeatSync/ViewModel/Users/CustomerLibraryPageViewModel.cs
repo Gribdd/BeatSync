@@ -1,11 +1,9 @@
-﻿using BeatSync.Services.Service;
-
-namespace BeatSync.ViewModel.Users;
+﻿namespace BeatSync.ViewModel.Users;
 
 public partial class CustomerLibraryPageViewModel : ObservableObject
 {
-    private readonly UserService userService;
-    private readonly PlaylistService playlistService;
+    private readonly UserService _userService;
+    private readonly PlaylistService _playlistService;
 
     [ObservableProperty]
     private User _user = new();
@@ -17,8 +15,8 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         UserService userService, 
         PlaylistService playlistService)
     {
-        this.userService = userService;
-        this.playlistService = playlistService;
+        _userService = userService;
+        _playlistService = playlistService;
     }
 
 
@@ -26,6 +24,30 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     void Logout()
     {
         Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+    }
+
+    [RelayCommand]
+    async Task UpdatePlaylist()
+    {
+        string playlistName = await Shell.Current.DisplayPromptAsync("Update Playlist", "Enter Playlist Name to update:");
+        if (!string.IsNullOrEmpty(playlistName))
+        {
+            var playlist = await _playlistService.GetByNameAsync(playlistName, User.Id);
+            await _playlistService.UpdateAsync(playlist.Id);
+        }
+        Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
+    }
+
+    [RelayCommand]
+    async Task DeletePlaylist()
+    {
+        string playlistName = await Shell.Current.DisplayPromptAsync("Delete Playlist", "Enter Playlist Name to delete:");
+        if (!string.IsNullOrEmpty(playlistName))
+        {
+            var playlist = await _playlistService.GetByNameAsync(playlistName, User.Id);
+            await _playlistService.DeleteAsync(playlist.Id);
+        }
+        Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
     }
 
     [RelayCommand]
@@ -47,12 +69,11 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
 
     public async Task LoadCurrentUser()
     {
-        User = await userService.GetCurrentUser();
+        User = await _userService.GetCurrentUser();
     }
 
     public async void LoadPlaylists()
     {
-        Playlists = await playlistService.GetPlaylistsByUserAsync(User.Id);
+        Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
     }
-
 }

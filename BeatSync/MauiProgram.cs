@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui;
 using BeatSync.Repositories.IRepository;
 using BeatSync.Services.IService;
-using BeatSync.Services.Service;
 using BeatSync.ViewModel.ArtistShell;
 
 namespace BeatSync
@@ -40,6 +39,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<UserValidationService>();
             mauiAppBuilder.Services.AddTransient<AlbumService>();
             mauiAppBuilder.Services.AddTransient<PlaylistService>();
+            mauiAppBuilder.Services.AddTransient<PlaylistSongService>();
             mauiAppBuilder.Services.AddTransient<FileUploadService>();
             return mauiAppBuilder;
         }

@@ -1,12 +1,10 @@
-﻿
-using BeatSync.Services.Service;
-
-namespace BeatSync.ViewModel.Users;
+﻿namespace BeatSync.ViewModel.Users;
 
 [QueryProperty(nameof(PlaylistId), nameof(PlaylistId))]
 public partial class AddPlaylistSongsSearchViewModel : ObservableObject
 {
-    private readonly SongService _songService;  
+    private readonly SongService _songService;
+    private readonly PlaylistSongService _playlistSongService;
     private readonly PlaylistService _playlistService;
 
     [ObservableProperty]
@@ -18,12 +16,25 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
     [ObservableProperty]
     private Song _selectedSong = new();
 
-    [ObservableProperty]
-    private string? _searchQuery;
+    private string? _searchQuery = string.Empty;
+    public string? SearchQuery
+    {
+        get => _searchQuery;
+        set
+        {
+            SetProperty(ref _searchQuery, value);
+            //call the search method
+            SearchSong();
+        }
+    }
 
-    public AddPlaylistSongsSearchViewModel(SongService songService, PlaylistService playlistService)
+    public AddPlaylistSongsSearchViewModel(
+        SongService songService,
+        PlaylistSongService playlistSongService,
+        PlaylistService playlistService)
     {
         _songService = songService;
+        _playlistSongService = playlistSongService;
         _playlistService = playlistService;
     }
 
@@ -36,15 +47,18 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
     [RelayCommand]
     async Task AddToPlaylistSongs(Song song)
     {
-        if (await _playlistService.AddPlaylistSong(PlaylistId, song.Id))
-        {
-            await Shell.Current.DisplayAlert("Add Song to Playlist", "Song successfully added.", "OK");
-            await Shell.Current.GoToAsync("..");
-        }
-        else
-        {
-            await Shell.Current.DisplayAlert("Error", "Something went wrong.", "OK");
-        }
+        await _playlistSongService.AddAsync(
+            new PlaylistSongs 
+            { 
+                PlaylistId = PlaylistId, 
+                SongId = song.Id
+            });
+        var playlist = await _playlistService.GetAsync(PlaylistId);
+        playlist.SongCount++;
+        await _playlistService.UpdateAsync(playlist);
+        await Shell.Current.DisplayAlert("Add Song to Playlist", "Song successfully added.", "OK");
+        await Shell.Current.GoToAsync("..");
+
     }
 
     [RelayCommand]
@@ -56,5 +70,14 @@ public partial class AddPlaylistSongsSearchViewModel : ObservableObject
     public async void GetSongs()
     {
         Songs = await _songService.GetActiveAsync();
+        var playlistSongs = await _playlistSongService.GetPlaylistSongsByPlaylistIdAsync(PlaylistId);
+
+        foreach (var playlistSong in playlistSongs)
+        {
+            var song = Songs.FirstOrDefault(s => s.Id == playlistSong.SongId);
+            if (song != null)
+                Songs.Remove(song);
+        }
+
     }
 }

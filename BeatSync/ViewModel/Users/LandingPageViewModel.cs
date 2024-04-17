@@ -26,6 +26,7 @@ public partial class LandingPageViewModel : ObservableObject
 		Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
+
     public async Task LoadSongsAsync()
     {
         NewSongs = await _songService.GetActiveAsync(); ;

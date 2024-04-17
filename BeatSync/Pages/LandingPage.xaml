@@ -24,7 +24,7 @@
                 <Label
                     Margin="-25,35,0,0"
                     Style="{StaticResource SubHeadline}"
-                    Text="{Binding User.FullName,StringFormat='Hi {0)!'}"
+                    Text="{Binding User.FullName, StringFormat='Hi {0)!'}"
                     TextColor="White" />
                 <ImageButton
                     Margin="55,0,0,0"
@@ -84,7 +84,10 @@
                         Style="{StaticResource SubHeadline}"
                         Text="Top Hits"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
+                    <CarouselView
+                        ItemsSource="{Binding NewSongs}"
+                        Loop="False"
+                        PeekAreaInsets="80">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -105,6 +108,10 @@
                                         Style="{StaticResource Reminders}"
                                         Text="{Binding ArtistName}"
                                         TextColor="#A39797" />
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding .}" />
+                                    </VerticalStackLayout.GestureRecognizers>
+
                                 </VerticalStackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
@@ -116,7 +123,10 @@
                         Style="{StaticResource SubHeadline}"
                         Text="Recently Played"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
+                    <CarouselView
+                        ItemsSource="{Binding NewSongs}"
+                        Loop="False"
+                        PeekAreaInsets="80">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -148,7 +158,10 @@
                         Style="{StaticResource SubHeadline}"
                         Text="New Music"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
+                    <CarouselView
+                        ItemsSource="{Binding NewSongs}"
+                        Loop="False"
+                        PeekAreaInsets="80">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -180,7 +193,10 @@
                         Style="{StaticResource SubHeadline}"
                         Text="What we think you love"
                         TextColor="White" />
-                    <CarouselView ItemsSource="{Binding NewSongs}" PeekAreaInsets="80" Loop="False">
+                    <CarouselView
+                        ItemsSource="{Binding NewSongs}"
+                        Loop="False"
+                        PeekAreaInsets="80">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="model:Song">
                                 <VerticalStackLayout Margin="10">
@@ -194,7 +210,7 @@
                                         HorizontalTextAlignment="Start"
                                         Style="{StaticResource Fields}"
                                         Text="{Binding Name}"
-                                        TextColor="White" />        
+                                        TextColor="White" />
                                     <Label
                                         Margin="14,-5,5,5"
                                         HorizontalTextAlignment="Start"

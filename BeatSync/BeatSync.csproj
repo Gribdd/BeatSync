@@ -62,6 +62,7 @@
 	  <None Remove="Resources\Images\addalbumsong.png" />
 	  <None Remove="Resources\Images\addperson.png" />
 	  <None Remove="Resources\Images\artists.png" />
+	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Resources\Images\deleteperson.png" />
 	  <None Remove="Resources\Images\heartoutline.png" />
 	  <None Remove="Resources\Images\heartoutlinefill.png" />

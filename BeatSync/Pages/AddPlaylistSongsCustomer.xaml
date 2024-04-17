@@ -3,9 +3,9 @@
     x:Class="BeatSync.Pages.AddPlaylistSongsCustomer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
     Title="AddPlaylistSongsCustomer"
-    xmlns:model="clr-namespace:BeatSync.Models"
     x:DataType="viewmodel:AddPlaylistSongsCustomerViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
@@ -63,10 +63,14 @@
                 Text="Add Songs"
                 VerticalTextAlignment="Center" />
             <HorizontalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToAddPlaylistSongsSearchCommand}"/>
+                <TapGestureRecognizer Command="{Binding NavigateToAddPlaylistSongsSearchCommand}" />
             </HorizontalStackLayout.GestureRecognizers>
         </HorizontalStackLayout>
-        <CollectionView Grid.Row="5" Margin="0,38,0,0" ItemsSource="{Binding Songs}">
+        <CollectionView
+            Grid.Row="5"
+            Margin="0,38,0,0"
+            x:Name="collectionView"
+            ItemsSource="{Binding Songs}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
             </CollectionView.ItemsLayout>
@@ -101,8 +105,10 @@
                                 Source="heartoutline.png"
                                 WidthRequest="25" />
                             <ImageButton
+                                Command="{Binding BindingContext.RemoveSongFromPlaylistCommand, Source={x:Reference collectionView}}"
+                                CommandParameter="{Binding .}"
                                 HeightRequest="25"
-                                Source="options.png"
+                                Source="delete.png"
                                 WidthRequest="25" />
                         </HorizontalStackLayout>
                     </FlexLayout>

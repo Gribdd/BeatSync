@@ -7,5 +7,7 @@ public interface IUnitofWork
     IArtistRepository ArtistRepository { get; }
     IAlbumRepository AlbumRepository { get; }
     ISongRepository SongRepository { get; }
+    IPlaylistRepository PlaylistRepository { get; }
+    IPlaylistSongRepository PlaylistSongRepository { get; }
     IGenericRepository<T>? GetRepository<T>() where T : class;
 }

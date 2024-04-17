@@ -3,13 +3,15 @@
     x:Class="BeatSync.Pages.CustomerLibraryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
     Title="CustomerLibraryPage"
     x:DataType="viewmodel:CustomerLibraryPageViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
-    <Grid Padding="22" RowDefinitions="auto, *">
+
+    <Grid Padding="22" RowDefinitions="auto,auto,*">
         <FlexLayout JustifyContent="SpaceBetween">
             <HorizontalStackLayout Spacing="14">
                 <Border
@@ -40,10 +42,26 @@
                     WidthRequest="34" />
             </HorizontalStackLayout>
         </FlexLayout>
-
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Margin="40,10,10,10"
+            Spacing="10">
+            <Button
+                Padding="20"
+                BackgroundColor="#9747FF"
+                Command="{Binding UpdatePlaylistCommand}"
+                CornerRadius="25"
+                Text="Update" />
+            <Button
+                Padding="20"
+                BackgroundColor="#9747FF"
+                Command="{Binding DeletePlaylistCommand}"
+                CornerRadius="25"
+                Text="Delete" />
+        </HorizontalStackLayout>
         <CollectionView
             x:Name="collectionView"
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="0,45,0,0"
             ItemsSource="{Binding Playlists}">
             <CollectionView.ItemsLayout>
@@ -52,31 +70,15 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Playlist">
-                    <Grid
-                        ColumnDefinitions="auto,auto"
-                        ColumnSpacing="10"
-                        RowDefinitions="auto,auto">
-                        <Image
-                            Grid.RowSpan="2"
-                            HeightRequest="60"
-                            Source="{Binding ImageFilePath}"
-                            WidthRequest="60" />
-                        <Label
-                            Grid.Column="1"
-                            FontSize="20"
-                            Text="{Binding Name}"
-                            VerticalTextAlignment="Center" />
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            FontSize="15"
-                            Text="Playlist | 0 song"
-                            TextColor="#A39797"
-                            VerticalTextAlignment="Center" />
-                        <Grid.GestureRecognizers>
+                    <controls:CardView
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="Playlist"
+                        CardSubtitleRight="{Binding SongCount, FallbackValue='0 song', StringFormat='{0} songs'}"
+                        CardTitle="{Binding Name}">
+                        <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
-                        </Grid.GestureRecognizers>
-                    </Grid>
+                        </Frame.GestureRecognizers>
+                    </controls:CardView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

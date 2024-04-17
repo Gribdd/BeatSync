@@ -1,14 +1,12 @@
-﻿
-using BeatSync.Services.Service;
-
-namespace BeatSync.ViewModel.Users;
+﻿namespace BeatSync.ViewModel.Users;
 
 [QueryProperty(nameof(Playlist), nameof(Playlist))]
 [QueryProperty(nameof(User), nameof(User))]
 public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
 {
-    private readonly PlaylistService playlistService;
-    private readonly SongService songService;
+    private readonly PlaylistService _playlistService;
+    private readonly PlaylistSongService _playlistSongService;
+    private readonly SongService _songService;
 
     [ObservableProperty]
     private Playlist _playlist = new();
@@ -22,10 +20,14 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<PlaylistSongs> _playlistSongs = new();
 
-    public AddPlaylistSongsCustomerViewModel(PlaylistService playlistService, SongService songService)
+    public AddPlaylistSongsCustomerViewModel(
+        PlaylistService playlistService,
+        PlaylistSongService playlistSongService,
+        SongService songService)
     {
-        this.playlistService = playlistService;
-        this.songService = songService;
+        _playlistService = playlistService;
+        _playlistSongService = playlistSongService;
+        _songService = songService;
     }
 
     [RelayCommand]
@@ -45,15 +47,31 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
         await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsSearch)}", navigationParameter);
     }
 
+    [RelayCommand]
+    async Task RemoveSongFromPlaylist(Song song)
+    {
+        bool canDelete = await Shell.Current.DisplayAlert("Remove Song", "Are you sure you want to remove this song from the playlist?", "Yes", "No");
+        var playlistSong = PlaylistSongs.FirstOrDefault(playlistSong => playlistSong.SongId == song.Id);
+        if (playlistSong != null && canDelete)
+        {
+            await _playlistSongService.DeleteAsync(playlistSong.Id);
+            Playlist.SongCount -= 1;
+            await _playlistService.UpdateAsync(Playlist);
+            PlaylistSongs.Remove(playlistSong);
+            Songs.Remove(song);
+
+        }
+    }
+
     public async Task GetSongsByPlaylistId()
     {
         var songIds = PlaylistSongs.Select(playlistSong => playlistSong.SongId).ToList();
-        Songs = await songService.GetSongsBySongIds(songIds);
+        Songs = await _songService.GetSongsBySongIds(songIds);
     }
 
     public async Task GetPlaylistSongsPlaylistId()
     {
-        PlaylistSongs = await playlistService.GetPlaylistSongsByPlaylistId(Playlist.Id);
+        PlaylistSongs = await _playlistSongService.GetPlaylistSongsByPlaylistIdAsync(Playlist.Id);
     }
     
 }
