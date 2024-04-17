@@ -9,26 +9,25 @@ public partial class MyCollection : ObservableObject
     private readonly ArtistService _artistService;
     private readonly AlbumService _albumService;
     private readonly SongService _songService;
-    [ObservableProperty]
-    private ObservableCollection<Album> _album;
 
     [ObservableProperty]
-    private ObservableCollection<Artist> _artist;
+    private ObservableCollection<Album> _album = new();
 
     [ObservableProperty]
-    private ObservableCollection<Song> _song;
+    private ObservableCollection<Artist> _artist = new();
 
     [ObservableProperty]
-    private ObservableCollection<Publisher> _publisher;
+    private ObservableCollection<Song> _song = new();
 
     [ObservableProperty]
-    private ObservableCollection<User> _user;
+    private ObservableCollection<Publisher> _publisher = new();
 
     [ObservableProperty]
-    private ObservableCollection<object> _filteredCollection;
+    private ObservableCollection<User> _user = new();
 
+    [ObservableProperty]
+    private ObservableCollection<object> _filteredCollection = new();
 
-    //private SongService _songService = new();
 
     public MyCollection(
         UserService userService,
@@ -47,34 +46,23 @@ public partial class MyCollection : ObservableObject
 
     public void Filter(string searchQuery)
     {
-        FilteredCollection = new ObservableCollection<object>();
-
         foreach (var album in Album.Where(album => album.Name.Contains(searchQuery)))
             FilteredCollection.Add(album);
 
-        foreach (var artist in Artist.Where(artist => artist.FullName.Contains(searchQuery)))
-            FilteredCollection.Add(artist);
-
-        foreach (var artist in Artist.Where(artist => artist.Username.Contains(searchQuery)))
+        foreach (var artist in Artist.Where(
+            artist => artist.FullName.Contains(searchQuery) ||
+            artist.Username.Contains(searchQuery)))
             FilteredCollection.Add(artist);
 
         foreach (var song in Song.Where(song => song.Name.Contains(searchQuery)))
             FilteredCollection.Add(song);
 
-        foreach (var publisher in Publisher.Where(publisher => publisher.FullName.Contains(searchQuery)))
+        foreach (var publisher in Publisher.Where(publisher => publisher.FullName.Contains(searchQuery) || publisher.Username.Contains(searchQuery)))
             FilteredCollection.Add(publisher);
 
-        foreach (var publisher in Publisher.Where(publisher => publisher.Username.Contains(searchQuery)))
-            FilteredCollection.Add(publisher);
-
-        foreach (var user in User.Where(user => user.FullName.Contains(searchQuery)))
-            FilteredCollection.Add(user);
-
-        foreach (var user in User.Where(user => user.Username.Contains(searchQuery)))
+        foreach (var user in User.Where(user => user.FullName.Contains(searchQuery) || user.Username.Contains(searchQuery)))
             FilteredCollection.Add(user);
     }
-
-
 
     private async void PopulateData()
     {

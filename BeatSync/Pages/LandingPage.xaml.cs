@@ -9,9 +9,10 @@ public partial class LandingPage : ContentPage
 		BindingContext = _vm = vm;
 	}
 
-	protected override void OnAppearing()
+	protected async override void OnAppearing()
 	{
         base.OnAppearing();
+		await _vm.LoadSongsAsync();
 		_vm.LoadCurrentUser();
     }	
 }

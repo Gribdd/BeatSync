@@ -7,8 +7,16 @@ public partial class SearchPageViewModel : ObservableObject
 {
     private UserService _userService;
 
-    [ObservableProperty]
     private string? _searchQuery;
+    public string? SearchQuery
+    {
+        get => _searchQuery;
+        set
+        {
+            SetProperty(ref _searchQuery, value);
+            Search();
+        }
+    }
 
     [ObservableProperty]
     private MyCollection _myCollection;
@@ -23,9 +31,10 @@ public partial class SearchPageViewModel : ObservableObject
     private ObservableCollection<object> _myList = new();
 
 
-    public SearchPageViewModel(UserService userService)
+    public SearchPageViewModel(UserService userService, MyCollection myCollection)
     {
         _userService = userService;
+        _myCollection = myCollection;
 
     }
 
@@ -37,7 +46,7 @@ public partial class SearchPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public Task SearchCommand()
+    Task Search()
     {
         MyCollection.Filter(SearchQuery!);
         MyList.Clear(); 

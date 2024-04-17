@@ -13,6 +13,15 @@ public partial class LandingPageViewModel : ObservableObject
 	[ObservableProperty]
 	private User _user = new();
 
+    [ObservableProperty]
+    private Song _selectedSong = new();
+
+    [ObservableProperty]
+    private MediaSource? _mediaSource;
+
+    [ObservableProperty]
+    private bool _isVisible;
+
     public LandingPageViewModel(
         UserService userService, SongService songService)
     {
@@ -26,6 +35,22 @@ public partial class LandingPageViewModel : ObservableObject
 		Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
+    [RelayCommand]
+    void PlaySong(Song song)
+    {
+        if (song.FilePath == null)
+        {
+            return;
+        }
+
+        SelectedSong = song;
+        if (!IsVisible)
+        {
+            IsVisible = true;
+        }
+
+        MediaSource = MediaSource.FromFile(song.FilePath);
+    }
 
     public async Task LoadSongsAsync()
     {

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
     Title="LandingPage"
     x:DataType="viewmodel:LandingPageViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
@@ -20,7 +21,7 @@
                     Command="{Binding LogoutCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
-                    Source="{Binding User.ImageFilePath}" />
+                    Source="{Binding User.ImageFilePath,FallbackValue='logo.png'}" />
                 <Label
                     Margin="-25,35,0,0"
                     Style="{StaticResource SubHeadline}"
@@ -41,10 +42,8 @@
                 Margin="0,-10,0,0"
                 HeightRequest="2"
                 WidthRequest="310"
-                Color="White" />
-            <ScrollView>
+                Color="White"/>
                 <VerticalStackLayout Margin="35,10,35,10">
-                    <!--  Genres Carousel View  -->
                     <CarouselView Loop="False" PeekAreaInsets="50">
                         <CarouselView.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -57,34 +56,33 @@
                         </CarouselView.ItemsSource>
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
-                                <VerticalStackLayout Margin="10">
-                                    <Frame HeightRequest="100" WidthRequest="200">
-                                        <HorizontalStackLayout HorizontalOptions="Center">
-                                            <Image
-                                                HeightRequest="40"
-                                                Source="logo.png"
-                                                WidthRequest="50" />
-                                            <Label
-                                                Margin="10,15,0,0"
-                                                FontAttributes="Bold"
-                                                HorizontalTextAlignment="Center"
-                                                Style="{StaticResource Headline}"
-                                                Text="{Binding .}"
-                                                TextColor="Black" />
-                                        </HorizontalStackLayout>
-                                    </Frame>
-                                </VerticalStackLayout>
+                                <Frame HeightRequest="100" WidthRequest="200">
+                                    <HorizontalStackLayout HorizontalOptions="Center">
+                                        <Image
+                                            HeightRequest="40"
+                                            Source="logo.png"
+                                            WidthRequest="50" />
+                                        <Label
+                                            Margin="10,15,0,0"
+                                            FontAttributes="Bold"
+                                            HorizontalTextAlignment="Center"
+                                            Style="{StaticResource Headline}"
+                                            Text="{Binding .}"
+                                            TextColor="Black" />
+                                    </HorizontalStackLayout>
+                                </Frame>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
-
                     <!--  Top Hits  -->
                     <Label
                         HorizontalOptions="Start"
+                        Margin="0,10,0,0"
                         Style="{StaticResource SubHeadline}"
                         Text="Top Hits"
                         TextColor="White" />
                     <CarouselView
+                        x:Name="topHitsCarousel"
                         ItemsSource="{Binding NewSongs}"
                         Loop="False"
                         PeekAreaInsets="80">
@@ -109,16 +107,16 @@
                                         Text="{Binding ArtistName}"
                                         TextColor="#A39797" />
                                     <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding .}" />
-                                    </VerticalStackLayout.GestureRecognizers>
-
+                                    <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference topHitsCarousel}}" 
+                                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
                                 </VerticalStackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
-
                     <!--  Recently Played  -->
                     <Label
+                        Margin="0,10,0,0"
                         HorizontalOptions="Start"
                         Style="{StaticResource SubHeadline}"
                         Text="Recently Played"
@@ -154,6 +152,7 @@
 
                     <!--  New Music  -->
                     <Label
+                        Margin="0,10,0,0"
                         HorizontalOptions="Start"
                         Style="{StaticResource SubHeadline}"
                         Text="New Music"
@@ -189,6 +188,7 @@
 
                     <!--  Suggested Playlist  -->
                     <Label
+                        Margin="0,10,0,0"
                         HorizontalOptions="Start"
                         Style="{StaticResource SubHeadline}"
                         Text="What we think you love"
@@ -222,7 +222,12 @@
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                 </VerticalStackLayout>
-            </ScrollView>
+            <controls:MediaPlayerControl 
+                ArtistName="{Binding SelectedSong.ArtistName}"
+                AudioSource="{Binding MediaSource}"
+ImageSource="{Binding SelectedSong.ImageFilePath}"
+IsVisible="{Binding IsVisible}"
+SongName="{Binding SelectedSong.Name}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -31,10 +31,8 @@
             <SearchBar
                 BackgroundColor="White"
                 Placeholder="What do you want to listen to?"
-                SearchCommand="{Binding SearchCommandCommand}"
-                SearchCommandParameter="{Binding SearchQuery}"
+                SearchCommand="{Binding SearchCommand}"
                 Text="{Binding SearchQuery, Mode=TwoWay}"
-                TextChanged="SearchBar_TextChanged"
                 TextColor="{StaticResource Gray900}"
                 WidthRequest="310"
                 ZIndex="1" />
