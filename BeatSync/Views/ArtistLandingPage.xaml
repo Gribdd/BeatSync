@@ -66,10 +66,7 @@
         <Tab Title="Home" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
         </Tab>
-        <Tab Title="History" Icon="history.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:PubUserHistory}" Route="history" />
-            <!--  change to artistHistory  -->
-        </Tab>
+
     </TabBar>
 
 </Shell>
