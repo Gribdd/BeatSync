@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.PubRecentlyPlayed"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
+    Title="PubRecentlyPlayed"
+    x:DataType="viewmodel:PubRecentlyPlayedViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <StackLayout>
+        <ImageButton
+            Margin="-200,30,30,30"
+            Command="{Binding ReturnCommand}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="returnbtn.png" />
+
+        <CollectionView ItemsSource="{Binding RecentlyPlayedSongs}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Song">
+                    <controls:CardView
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="{Binding ArtistName}"
+                        CardSubtitleRight="{Binding Genre}"
+                        CardTitle="{Binding Name}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+
+
+</ContentPage>

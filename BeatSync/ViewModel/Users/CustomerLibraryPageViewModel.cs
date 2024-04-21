@@ -15,8 +15,11 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _favoriteSongs = new();
 
+    [ObservableProperty]
+    private ObservableCollection<Song> _recentlyPlayedSongs = new();
+
     public CustomerLibraryPageViewModel(
-        UserService userService, 
+        UserService userService,
         PlaylistService playlistService,
         SongService songService)
     {
@@ -85,6 +88,13 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
 
     public async void LoadFavoriteSongs()
     {
-        FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
+        //FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
     }
+
+    [RelayCommand]
+    public async Task NavigateRecentlyPlayedCommand()
+    {
+        await Shell.Current.GoToAsync(nameof(CustomerRecentlyPlayed));
+    }
+
 }

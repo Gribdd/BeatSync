@@ -29,10 +29,10 @@
                 WidthRequest="25" />
         </DataTemplate>
 
-        <selector:HeartIconTemplateSelector
+        <!--<selector:HeartIconTemplateSelector
             x:Key="HeartIconTemplateSelector"
             FavoriteTemplate="{StaticResource FavoriteTemplate}"
-            NotFavoriteTemplate="{StaticResource NotFavoriteTemplate}" />
+            NotFavoriteTemplate="{StaticResource NotFavoriteTemplate}" />-->
     </ContentPage.Resources>
 
 

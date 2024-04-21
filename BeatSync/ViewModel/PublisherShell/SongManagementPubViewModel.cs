@@ -6,6 +6,7 @@ public partial class SongManagementPubViewModel : ObservableObject
 {
     private SongService _songService;
     private PublisherService _publisherService;
+    private readonly PubRecentlyPlayedViewModel _pubRecentlyPlayedViewModel;
 
     [ObservableProperty]
     private MediaSource? _mediaSource;
@@ -26,10 +27,11 @@ public partial class SongManagementPubViewModel : ObservableObject
     private Publisher _publisher = new();
 
 
-    public SongManagementPubViewModel(SongService songService, PublisherService publisherService)
+    public SongManagementPubViewModel(SongService songService, PublisherService publisherService, PubRecentlyPlayedViewModel pubRecentlyPlayedViewModel)
     {
         _songService = songService;
         _publisherService = publisherService;
+        _pubRecentlyPlayedViewModel = pubRecentlyPlayedViewModel;
     }
 
 
@@ -63,6 +65,7 @@ public partial class SongManagementPubViewModel : ObservableObject
         await SaveUserHistoryAsync(song);
 
         MediaSource = MediaSource.FromFile(song.FilePath);
+        _pubRecentlyPlayedViewModel.AddRecentlyPlayedSong(song);
     }
 
     [RelayCommand]

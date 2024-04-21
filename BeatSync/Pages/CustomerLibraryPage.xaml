@@ -11,7 +11,7 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
 
-    <Grid Padding="22" RowDefinitions="auto,auto,auto,*">
+    <Grid Padding="22" RowDefinitions="auto,auto,auto,auto,*">
         <FlexLayout JustifyContent="SpaceBetween">
             <HorizontalStackLayout Spacing="14">
                 <Border
@@ -28,6 +28,7 @@
                 <Label
                     FontSize="25"
                     Text="Your Library"
+                    TextColor="White"
                     VerticalTextAlignment="Center" />
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="5">
@@ -60,9 +61,10 @@
                 Text="Delete" />
         </HorizontalStackLayout>
 
-        
+        <!--  Favorite Songs  -->
         <controls:CardView
             Grid.Row="2"
+            Margin="0,10,0,0"
             CardImage="logo.png"
             CardSubtitleLeft="Playlist"
             CardSubtitleRight="{Binding FavoriteSongs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
@@ -71,12 +73,26 @@
                 <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
             </Frame.GestureRecognizers>-->
         </controls:CardView>
-        
+
+        <!--  Recently Played Songs  -->
+        <controls:CardView
+            Grid.Row="3"
+            Margin="0,10,0,0"
+            CardImage="logo.png"
+            CardSubtitleLeft="Playlist"
+            CardSubtitleRight="{Binding FavoriteSongs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
+            CardTitle="Recently Played Songs">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateRecentlyPlayedCommandCommand}" />
+            </Frame.GestureRecognizers>
+        </controls:CardView>
+
+
 
         <CollectionView
             x:Name="collectionView"
-            Grid.Row="3"
-            Margin="0,45,0,0"
+            Grid.Row="4"
+            Margin="0,10,0,0"
             ItemsSource="{Binding Playlists}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
