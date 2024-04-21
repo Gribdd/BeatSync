@@ -19,7 +19,7 @@ public class FileUploadService
         string dir = Path.Combine(FileSystem.Current.AppDataDirectory, directory!);
         CreateDirectoryIfMissing(dir);
 
-        imageFilePath = Path.Combine(dir, $"{name}.jpg");
+        imageFilePath = Path.Combine(dir, $"{Guid.NewGuid()}.jpg");
         await Shell.Current.DisplayAlert("Upload picture", "Picture successfully uploaded ", "OK");
         
         return (fileResult,imageFilePath);
