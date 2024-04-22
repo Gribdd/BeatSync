@@ -87,7 +87,7 @@ public partial class LibraryPageViewModel : ObservableObject
     public async Task NavigateRecentlyPlayedCommand()
     {
         await Shell.Current.GoToAsync(nameof(PubRecentlyPlayed));
-    }
+    }   
 
     public async void LoadFavoriteSongs()
     {

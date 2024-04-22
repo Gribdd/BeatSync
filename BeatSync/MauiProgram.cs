@@ -41,6 +41,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<PlaylistService>();
             mauiAppBuilder.Services.AddTransient<PlaylistSongService>();
             mauiAppBuilder.Services.AddTransient<FileUploadService>();
+            mauiAppBuilder.Services.AddTransient<HistoryService>();
             mauiAppBuilder.Services.AddTransient<MyCollection>();
             return mauiAppBuilder;
         }
