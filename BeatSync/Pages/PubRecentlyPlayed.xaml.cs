@@ -2,15 +2,17 @@ namespace BeatSync.Pages;
 
 public partial class PubRecentlyPlayed : ContentPage
 {
-	public PubRecentlyPlayed(PubRecentlyPlayedViewModel vm)
-	{
-		InitializeComponent();
-        BindingContext = vm;
+    PubRecentlyPlayedViewModel _vm;
+    public PubRecentlyPlayed(PubRecentlyPlayedViewModel vm)
+    {
+        InitializeComponent();
+        BindingContext = _vm = vm;
 
     }
 
-    protected async override void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
+        _vm.LoadRecentlyPlayed();
     }
 }
