@@ -14,6 +14,11 @@ public partial class LibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private Publisher _publisher = new();
 
+    [ObservableProperty]
+    private ObservableCollection<Song> _favoriteSongs = new();
+    [ObservableProperty]
+    private ObservableCollection<Song> _recentlyPlayedSongs = new();
+
     public LibraryPageViewModel(AlbumService albumService, PublisherService publisherService)
     {
         _albumService = albumService;
@@ -77,4 +82,16 @@ public partial class LibraryPageViewModel : ObservableObject
     {
         Publisher = await _publisherService.GetCurrentUser();
     }
+
+    [RelayCommand]
+    public async Task NavigateRecentlyPlayedCommand()
+    {
+        await Shell.Current.GoToAsync(nameof(PubRecentlyPlayed));
+    }
+
+    public async void LoadFavoriteSongs()
+    {
+        //FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
+    }
+
 }

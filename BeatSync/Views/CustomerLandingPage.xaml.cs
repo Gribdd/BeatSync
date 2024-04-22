@@ -18,6 +18,7 @@ public partial class CustomerLandingPage : Shell
         Routing.RegisterRoute($"library/{nameof(AddPlaylistSongsCustomer)}", typeof(AddPlaylistSongsCustomer));
         Routing.RegisterRoute($"library/{nameof(AddPlaylistSongsCustomer)}/{nameof(AddPlaylistSongsSearch)}", typeof(AddPlaylistSongsSearch));
         Routing.RegisterRoute(nameof(ViewProfile), typeof(ViewProfile));
+        Routing.RegisterRoute(nameof(CustomerRecentlyPlayed), typeof(CustomerRecentlyPlayed));
     }
 
     protected async override void OnAppearing()
