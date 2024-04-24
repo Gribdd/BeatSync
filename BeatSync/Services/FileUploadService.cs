@@ -52,7 +52,7 @@ public class FileUploadService
         string dir = Path.Combine(FileSystem.Current.AppDataDirectory, "SongsPlayer");
         CreateDirectoryIfMissing(dir);
 
-        songFilePath = Path.Combine(dir, $"{name}.mp3");
+        songFilePath = Path.Combine(dir, $"{Guid.NewGuid()}.mp3");
         await Shell.Current.DisplayAlert("Upload song", "Song successfully uploaded ", "OK");
         return (fileResult, songFilePath);
     }

@@ -26,9 +26,9 @@ public partial class AddSongViewModel : ObservableObject
 
     public string[] Genres { get; set; } = { "Rap", "Pop", "Indie", "OPM", "Punk Rock" };
 
-    public AddSongViewModel( 
-        ArtistService artistService, 
-        SongService songService, 
+    public AddSongViewModel(
+        ArtistService artistService,
+        SongService songService,
         FileUploadService fileUploadService)
     {
         _artistService = artistService;
@@ -49,15 +49,21 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
+        if (await IsNotUniqueSong(Song))
+        {
+            await Shell.Current.DisplayAlert("Error!", "Song is already added with the same artist", "Ok");
+            return;
+        }
+
         await _songService.AddAsync(Song);
-        
+
         File.Copy(fileResultSongImage!.FullPath, Song.ImageFilePath!);
         File.Copy(fileResultSong!.FullPath, Song.FilePath!);
         await Shell.Current.DisplayAlert("Add Song", "Song successfully added", "OK");
         await Shell.Current.GoToAsync("..");
-        
-    }
 
+    }
+    
     [RelayCommand]
     async Task UploadImage()
     {
@@ -76,10 +82,19 @@ public partial class AddSongViewModel : ObservableObject
         (fileResultSong, Song.FilePath) = await _fileUploadService.UploadSong(Song.Name);
     }
 
+
     [RelayCommand]
     async Task Return()
     {
         await Shell.Current.GoToAsync("..");
+    }
+
+    private async Task<bool> IsNotUniqueSong(Song song)
+    {
+        //if 
+        var songToBeCheck = await _songService.GetByNameAsync(song.Name!) ?? new Song();
+
+        return songToBeCheck.Name == song.Name && songToBeCheck.ArtistID == song.ArtistID;
     }
 
     public async Task PopulateArtist()
