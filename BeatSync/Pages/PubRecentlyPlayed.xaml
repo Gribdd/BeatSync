@@ -13,12 +13,16 @@
     Shell.NavBarIsVisible="False">
 
     <StackLayout>
-        <ImageButton
-            Margin="-200,30,30,30"
-            Command="{Binding ReturnCommand}"
-            HeightRequest="30"
-            HorizontalOptions="Start"
-            Source="returnbtn.png" />
+        <HorizontalStackLayout>
+            <ImageButton
+                Margin="-200,30,30,30"
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png" />
+            <!--<Label  Text="Recently Played" TextColor="White"  />-->
+        </HorizontalStackLayout>
+
 
         <CollectionView ItemsSource="{Binding RecentlyPlayedSongs}">
             <CollectionView.ItemTemplate>

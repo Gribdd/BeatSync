@@ -48,41 +48,32 @@ public partial class SearchPageViewModel : ObservableObject
     [RelayCommand]
     void Search()
     {
-        MyList.Clear();
-        MyCollection.FilteredCollection.Clear();
-        MyCollection.Filter(SearchQuery!);
+        MyList?.Clear();
+        MyCollection?.FilteredCollection?.Clear();
+        MyCollection?.Filter(SearchQuery!);
         IsResultsVisible = true;
 
-        bool found = false; 
-        foreach (var item in MyCollection.FilteredCollection)
+        foreach (var item in MyCollection?.FilteredCollection ?? Enumerable.Empty<object>())
         {
             switch (item)
             {
-                case BeatSync.Models.Song song when song.Name.Contains(SearchQuery):
-                    //MyList.Add(String.Concat(song.Name, " - Song"));
-                    MyList.Add(song);
-                    found = true;
+                case BeatSync.Models.Song song when song.Name != null && song.Name.Contains(SearchQuery!):
+                    MyList?.Add(song);
                     break;
-                case BeatSync.Models.Album album when album.Name.Contains(SearchQuery):
-                    //MyList.Add(String.Concat(album.Name, " - Album"));
-                    MyList.Add(album);
-                    found = true;
+                case BeatSync.Models.Album album when album.Name != null && album.Name.Contains(SearchQuery!):
+                    MyList?.Add(album);
                     break;
-                case BeatSync.Models.Artist artist when artist.FullName.Contains(SearchQuery) || artist.Username.Contains(SearchQuery) || artist.FirstName.Contains(SearchQuery) || artist.LastName.Contains(SearchQuery):
-                    //MyList.Add(artist.FullName + " - Artist");
-                    MyList.Add(artist);
-                    found = true;
+                case BeatSync.Models.Artist artist when artist.FullName != null && (
+                    artist.FullName.Contains(SearchQuery!) ||
+                    artist.Username != null && artist.Username.Contains(SearchQuery!) ||
+                    artist.FirstName != null && artist.FirstName.Contains(SearchQuery!) ||
+                    artist.LastName != null && artist.LastName.Contains(SearchQuery!)):
+                    MyList?.Add(artist);
                     break;
             }
         }
-
-        // If no items were found, add default message
-        if (!found)
-        {
-            string foundNothing = "No search result found.";
-            MyList.Add(foundNothing);
-        }
     }
+
 
     public async void LoadCurrentUser()
     {

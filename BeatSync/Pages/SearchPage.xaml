@@ -22,6 +22,7 @@
                 CardTitle="{Binding FullName}" />
         </DataTemplate>
 
+
         <DataTemplate x:Key="albumTemplate" x:DataType="model:Album">
             <controls:CardView
                 CardImage="{Binding ImageFilePath}"
@@ -80,6 +81,7 @@
             IsVisible="{Binding IsResultsVisible}">
             <CollectionView
                 x:Name="viewResults"
+                EmptyView="No results found."
                 ItemTemplate="{StaticResource viewSelector}"
                 ItemsSource="{Binding MyList}">
                 <CollectionView.ItemsLayout>

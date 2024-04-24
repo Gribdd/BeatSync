@@ -86,7 +86,7 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
     }
 
-    public async void LoadFavoriteSongs()
+    public  void LoadFavoriteSongs() //removed async for now
     {
         //FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
     }

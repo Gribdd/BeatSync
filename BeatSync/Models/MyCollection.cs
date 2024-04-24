@@ -46,23 +46,43 @@ public partial class MyCollection : ObservableObject
 
     public void Filter(string searchQuery)
     {
-        foreach (var album in Album.Where(album => album.Name.Contains(searchQuery)))
-            FilteredCollection.Add(album);
+        if (Album != null)
+        {
+            foreach (var album in Album.Where(album => album.Name != null && album.Name.Contains(searchQuery)))
+                FilteredCollection.Add(album);
+        }
 
-        foreach (var artist in Artist.Where(
-            artist => artist.FullName.Contains(searchQuery) ||
-            artist.Username.Contains(searchQuery)))
-            FilteredCollection.Add(artist);
+        if (Artist != null)
+        {
+            foreach (var artist in Artist.Where(
+                artist => artist.FullName != null && artist.FullName.Contains(searchQuery) ||
+                          artist.Username != null && artist.Username.Contains(searchQuery)))
+                FilteredCollection.Add(artist);
+        }
 
-        foreach (var song in Song.Where(song => song.Name.Contains(searchQuery)))
-            FilteredCollection.Add(song);
+        if (Song != null)
+        {
+            foreach (var song in Song.Where(song => song.Name != null && song.Name.Contains(searchQuery)))
+                FilteredCollection.Add(song);
+        }
 
-        foreach (var publisher in Publisher.Where(publisher => publisher.FullName.Contains(searchQuery) || publisher.Username.Contains(searchQuery)))
-            FilteredCollection.Add(publisher);
+        if (Publisher != null)
+        {
+            foreach (var publisher in Publisher.Where(
+                publisher => publisher.FullName != null && publisher.FullName.Contains(searchQuery) ||
+                             publisher.Username != null && publisher.Username.Contains(searchQuery)))
+                FilteredCollection.Add(publisher);
+        }
 
-        foreach (var user in User.Where(user => user.FullName.Contains(searchQuery) || user.Username.Contains(searchQuery)))
-            FilteredCollection.Add(user);
+        if (User != null)
+        {
+            foreach (var user in User.Where(
+                user => user.FullName != null && user.FullName.Contains(searchQuery) ||
+                        user.Username != null && user.Username.Contains(searchQuery)))
+                FilteredCollection.Add(user);
+        }
     }
+
 
     private async void PopulateData()
     {
