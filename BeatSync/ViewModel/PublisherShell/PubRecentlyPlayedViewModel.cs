@@ -51,6 +51,15 @@ public partial class PubRecentlyPlayedViewModel : ObservableObject
             SongName = song.Name
         };
 
+        var histories = await historyService.GetAllAsync();
+        foreach(var historiesItem in histories)
+        {
+            if(historiesItem.AccountType == history.AccountType && historiesItem.UserId == history.UserId && historiesItem.SongId == history.SongId)
+            {
+                await historyService.DeleteAsync(historiesItem.Id);
+            }
+        }
+
         await historyService.AddAsync(history);
     }
 
@@ -58,12 +67,11 @@ public partial class PubRecentlyPlayedViewModel : ObservableObject
     {
         var publisher = await _publisherService.GetCurrentUser();
         var histories = await historyService.GetActiveAsync();
-        var filtedHistories = new ObservableCollection<History>(histories.Where(h => h.UserId == publisher.Id));
-        List<int> songIds = filtedHistories.Select(h => h.SongId).Distinct().ToList();
+        var filteredHistories = histories.Where(h => h.UserId == publisher.Id).OrderBy(h => h.TimeStamp);
+        List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
         var songs = await _songService.GetSongsBySongIds(songIds);
-
-        RecentlyPlayedSongs = songs;
-        
+        var sortedSongs = new ObservableCollection<BeatSync.Models.Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
+        RecentlyPlayedSongs = sortedSongs;
     }
 
 
