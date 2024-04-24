@@ -55,9 +55,9 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
             return;
         }
 
-        if (!await IsAlbumUnique(Album.Name!, Album.ArtistId))
+        if (await IsNotUniqueAlbum(Album.Name!, Album.ArtistId))
         {
-            await Shell.Current.DisplayAlert("Error!", "Album name already exists", "Ok");
+            await Shell.Current.DisplayAlert("Error!", "An album with this name already exists for the selected artist. Please choose a unique album name.", "Ok");
             return;
         }
 
@@ -73,10 +73,11 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
 
     //validation to check if the album name is unique
     //checks by getting album by name and if it is null then the album name is unique
-    private async Task<bool> IsAlbumUnique(string albumName, int artistId)
+    private async Task<bool> IsNotUniqueAlbum(string albumName, int artistId)
     {
-        var album = await _albumService.GetByNameAsync(albumName);
+        var album = await _albumService.GetByNameAndArtistIdAsync(albumName, artistId);
         //name can be duplicate if the artist is different
-        return album == null || album.ArtistId != artistId;
+        return album != null && album.ArtistId == artistId;
+
     }
 }

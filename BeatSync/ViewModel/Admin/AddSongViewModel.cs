@@ -49,7 +49,7 @@ public partial class AddSongViewModel : ObservableObject
             return;
         }
 
-        if (await IsNotUniqueSong(Song))
+        if (await IsNotUniqueSong(Song.Name!, Song.ArtistID))
         {
             await Shell.Current.DisplayAlert("Error!", "Song is already added with the same artist", "Ok");
             return;
@@ -89,12 +89,12 @@ public partial class AddSongViewModel : ObservableObject
         await Shell.Current.GoToAsync("..");
     }
 
-    private async Task<bool> IsNotUniqueSong(Song song)
+    private async Task<bool> IsNotUniqueSong(string songName, int artistId)
     {
         //if 
-        var songToBeCheck = await _songService.GetByNameAsync(song.Name!) ?? new Song();
+        var songToBeCheck = await _songService.GetByNameAndArtistIdAsync(songName, artistId);
 
-        return songToBeCheck.Name == song.Name && songToBeCheck.ArtistID == song.ArtistID;
+        return songToBeCheck != null && songToBeCheck.ArtistID == artistId;
     }
 
     public async Task PopulateArtist()

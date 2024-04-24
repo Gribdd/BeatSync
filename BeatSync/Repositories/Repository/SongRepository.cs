@@ -14,4 +14,10 @@ public class SongRepository : GenericRepository<Song>, ISongRepository
         _entities = await LoadEntities();
         return _entities.FirstOrDefault(s => s.Name == name)!;
     }
+
+    public async Task<Song> GetSongByNameAndArtistId(string name, int artistId)
+    {
+        _entities = await LoadEntities();
+        return _entities.FirstOrDefault(s => s.Name == name && s.ArtistID == artistId)!;
+    }
 }
