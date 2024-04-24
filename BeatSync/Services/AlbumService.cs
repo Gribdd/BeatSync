@@ -47,5 +47,10 @@ public class AlbumService : GenericService<Album>, IAlbumService
     {
         return _unitofWork.AlbumRepository.GetByName(albumName);
     }
+
+    public Task<Album> GetByNameAndArtistIdAsync(string albumName, int artistId)
+    {
+        return _unitofWork.AlbumRepository.GetByNameAndArtistId(albumName, artistId);
+    }
     
 }

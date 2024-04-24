@@ -29,9 +29,17 @@
             HeightRequest="30"
             HorizontalOptions="Start"
             Source="returnbtn.png" />
-        <Label Text="Give your playlist a name" Style="{StaticResource Fields}" Margin="30,0,10,5"/>
+        <Label
+            Margin="30,0,10,5"
+            Style="{StaticResource Fields}"
+            Text="Give your album a name" />
         <Border>
-            <Entry Text="{Binding Album.Name}"  Placeholder="Enter album name" FontFamily="JuaRegular" TextColor="White" ClearButtonVisibility="WhileEditing"/>
+            <Entry
+                ClearButtonVisibility="WhileEditing"
+                FontFamily="JuaRegular"
+                Placeholder="Enter album name"
+                Text="{Binding Album.Name}"
+                TextColor="White" />
         </Border>
         <Border>
             <Picker
