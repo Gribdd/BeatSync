@@ -73,23 +73,6 @@ public partial class SearchPageViewModel : ObservableObject
                     MyList.Add(artist);
                     found = true;
                     break;
-
-                //case BeatSync.Models.Publisher publisher when publisher.FullName.Contains(SearchQuery) || publisher.FirstName.Contains(SearchQuery) || publisher.LastName.Contains(SearchQuery):
-                //    MyList.Add(String.Concat(publisher.FullName, " - Publisher"));
-                //    found = true;
-                //    break;
-                //case BeatSync.Models.Publisher publisher when publisher.Username.Contains(SearchQuery):
-                //    MyList.Add(String.Concat(publisher.Username, " - Publisher"));
-                //    found = true;
-                //    break;
-                //case BeatSync.Models.User user when user.FullName.Contains(SearchQuery) || user.FirstName.Contains(SearchQuery) || user.LastName.Contains(SearchQuery):
-                //    MyList.Add(String.Concat(user.FullName, " - User"));
-                //    found = true;
-                //    break;
-                //case BeatSync.Models.User user when user.Username.Contains(SearchQuery):
-                //    MyList.Add(String.Concat(user.Username, " - User"));
-                //    found = true;
-                //    break;
             }
         }
 
