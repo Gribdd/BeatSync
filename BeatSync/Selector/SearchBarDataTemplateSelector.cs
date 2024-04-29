@@ -5,6 +5,7 @@
 public class SearchBarDataTemplateSelector : DataTemplateSelector
 {
     public DataTemplate? ArtistTemplate { get; set; }
+    public DataTemplate? PlaylistTemplate { get; set; } 
     public DataTemplate? AlbumTemplate { get; set; }
     public DataTemplate? SongTemplate { get; set; }
     protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
@@ -17,6 +18,8 @@ public class SearchBarDataTemplateSelector : DataTemplateSelector
                 return SongTemplate;
             case Album _:
                 return AlbumTemplate;
+            case Playlist _:
+                return PlaylistTemplate;
             default:
                 return null;
         }

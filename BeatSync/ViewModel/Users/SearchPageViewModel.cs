@@ -52,7 +52,7 @@ public partial class SearchPageViewModel : ObservableObject
         MyCollection?.FilteredCollection?.Clear();
         MyCollection?.Filter(SearchQuery!);
         IsResultsVisible = true;
-
+        //added playlists
         foreach (var item in MyCollection?.FilteredCollection ?? Enumerable.Empty<object>())
         {
             switch (item)
@@ -70,6 +70,10 @@ public partial class SearchPageViewModel : ObservableObject
                     artist.LastName != null && artist.LastName.Contains(SearchQuery!)):
                     MyList?.Add(artist);
                     break;
+                case BeatSync.Models.Playlist playlist when playlist.Name != null && playlist.Name.Contains(SearchQuery!):
+                    MyList?.Add(playlist);
+                    break;
+                    
             }
         }
     }

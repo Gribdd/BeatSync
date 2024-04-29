@@ -9,6 +9,7 @@ public partial class MyCollection : ObservableObject
     private readonly ArtistService _artistService;
     private readonly AlbumService _albumService;
     private readonly SongService _songService;
+    private readonly PlaylistService _playlistService;
 
     [ObservableProperty]
     private ObservableCollection<Album> _album = new();
@@ -26,6 +27,9 @@ public partial class MyCollection : ObservableObject
     private ObservableCollection<User> _user = new();
 
     [ObservableProperty]
+    private ObservableCollection<Playlist> _playlist = new();
+
+    [ObservableProperty]
     private ObservableCollection<object> _filteredCollection = new();
 
 
@@ -34,6 +38,7 @@ public partial class MyCollection : ObservableObject
         PublisherService publisherService,
         ArtistService artistService,
         AlbumService albumService,
+        PlaylistService playlistService,
         SongService songService)
     {
         _userService = userService;
@@ -41,6 +46,7 @@ public partial class MyCollection : ObservableObject
         _artistService = artistService;
         _albumService = albumService;
         _songService = songService;
+        _playlistService = playlistService;
         PopulateData();
     }
 
@@ -81,6 +87,12 @@ public partial class MyCollection : ObservableObject
                         user.Username != null && user.Username.Contains(searchQuery)))
                 FilteredCollection.Add(user);
         }
+
+        if (Playlist != null)
+        {
+            foreach (var playlist in Playlist.Where(playlist => playlist.Name != null && playlist.Name.Contains(searchQuery)))
+                FilteredCollection.Add(playlist);
+        }
     }
 
 
@@ -91,5 +103,6 @@ public partial class MyCollection : ObservableObject
         Song = await _songService.GetActiveAsync();
         Publisher = await _publisherService.GetActiveAsync();
         User = await _userService.GetActiveAsync();
+        Playlist = await _playlistService.GetActiveAsync();
     }
 }

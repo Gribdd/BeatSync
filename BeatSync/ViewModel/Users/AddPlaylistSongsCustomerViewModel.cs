@@ -65,20 +65,22 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
 
 
     [RelayCommand]
-    async Task RemoveSongFromPlaylist(Song song)
+async Task RemoveSongFromPlaylist(Song song)
+{
+    bool canDelete = await Shell.Current.DisplayAlert("Remove Song", "Are you sure you want to remove this song from the playlist?", "Yes", "No");
+    var playlistSong = PlaylistSongs.FirstOrDefault(playlistSong => playlistSong.SongId == song.Id);
+    if (playlistSong != null && canDelete)
     {
-        bool canDelete = await Shell.Current.DisplayAlert("Remove Song", "Are you sure you want to remove this song from the playlist?", "Yes", "No");
-        var playlistSong = PlaylistSongs.FirstOrDefault(playlistSong => playlistSong.SongId == song.Id);
-        if (playlistSong != null && canDelete)
-        {
-            await _playlistSongService.DeleteAsync(playlistSong.Id);
-            Playlist.SongCount -= 1;
-            await _playlistService.UpdateAsync(Playlist);
-            PlaylistSongs.Remove(playlistSong);
-            Songs.Remove(song);
-
-        }
+        await _playlistSongService.DeleteAsync(playlistSong.Id);
+        if (Playlist.SongCount > 0) 
+            Playlist.SongCount--;
+        await Task.Delay(1000);
+        await _playlistService.UpdateAsync(Playlist);
+        PlaylistSongs.Remove(playlistSong);
+        Songs.Remove(song);
     }
+}
+
 
     public async Task GetSongsByPlaylistId()
     {
