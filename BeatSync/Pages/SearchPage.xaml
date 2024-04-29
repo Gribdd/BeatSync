@@ -39,8 +39,17 @@
                 CardTitle="{Binding Name}" />
         </DataTemplate>
 
+        <DataTemplate x:Key="playlistTemplate" x:DataType="model:Playlist">
+            <controls:CardView
+        CardImage="{Binding ImageFilePath}"
+        CardSubtitleLeft="Song"
+        CardSubtitleRight="{Binding UserId}"
+        CardTitle="{Binding Name}" />
+        </DataTemplate>
+
         <selector:SearchBarDataTemplateSelector
             x:Key="viewSelector"
+            PlaylistTemplate="{StaticResource playlistTemplate}"
             AlbumTemplate="{StaticResource albumTemplate}"
             ArtistTemplate="{StaticResource artistTemplate}"
             SongTemplate="{StaticResource songTemplate}" />

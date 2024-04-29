@@ -2,9 +2,16 @@ namespace BeatSync.Pages;
 
 public partial class CustomerRecentlyPlayed : ContentPage
 {
-	public CustomerRecentlyPlayed(CustomerRecentlyPlayedViewModel vm)
+	CustomerRecentlyPlayedViewModel _vm;
+
+    public CustomerRecentlyPlayed(CustomerRecentlyPlayedViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext =  vm;
+		BindingContext = _vm = vm;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
 }

@@ -5,7 +5,7 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     private readonly UserService _userService;
     private readonly PlaylistService _playlistService;
     private readonly SongService _songService;
-
+    private readonly HistoryService _historyService;
     [ObservableProperty]
     private User _user = new();
 
@@ -21,11 +21,13 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     public CustomerLibraryPageViewModel(
         UserService userService,
         PlaylistService playlistService,
-        SongService songService)
+        SongService songService,
+        HistoryService historyService)
     {
         _userService = userService;
         _playlistService = playlistService;
         _songService = songService;
+        _historyService = historyService;
     }
 
 
@@ -91,10 +93,24 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         //FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
     }
 
-    [RelayCommand]
-    public async Task NavigateRecentlyPlayedCommand()
+    public async void LoadRecentlyPlayedSongs()
     {
-        await Shell.Current.GoToAsync(nameof(CustomerRecentlyPlayed));
+        var histories = await _historyService.GetActiveAsync();
+        var filteredHistories = histories.Where(h => h.UserId == User.Id).OrderBy(h => h.TimeStamp);
+        List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
+        var songs = await _songService.GetSongsBySongIds(songIds);
+        var sortedSongs = new ObservableCollection<BeatSync.Models.Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
+        RecentlyPlayedSongs = sortedSongs;
+    }
+
+    [RelayCommand]
+    async Task NavigateRecentlyPlayed()
+    {
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(RecentlyPlayedSongs), RecentlyPlayedSongs }
+        };
+        await Shell.Current.GoToAsync(nameof(CustomerRecentlyPlayed),navigationParameter);
     }
 
 }

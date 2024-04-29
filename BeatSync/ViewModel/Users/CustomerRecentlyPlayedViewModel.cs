@@ -1,5 +1,6 @@
 namespace BeatSync.ViewModel.Users;
 
+[QueryProperty(nameof(RecentlyPlayedSongs), nameof(RecentlyPlayedSongs))]
 public partial class CustomerRecentlyPlayedViewModel : ObservableObject
 {
 	private readonly UserService _userService;
@@ -7,6 +8,7 @@ public partial class CustomerRecentlyPlayedViewModel : ObservableObject
 
     [ObservableProperty]
 	private User _user = new();
+
 	[ObservableProperty]
 	private ObservableCollection<Song> _recentlyPlayedSongs = new();
 	
@@ -40,4 +42,5 @@ public partial class CustomerRecentlyPlayedViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync("..");
     }
+
 }

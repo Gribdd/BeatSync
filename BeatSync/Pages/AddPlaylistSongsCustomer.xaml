@@ -57,6 +57,7 @@
             Grid.Row="1"
             Margin="0,18,0,0"
             FontSize="25"
+            TextColor="White"
             Text="{Binding Playlist.Name}" />
         <HorizontalStackLayout
             Grid.Row="2"
@@ -73,6 +74,7 @@
             </Border>
             <Label
                 FontSize="15"
+                TextColor="White"
                 Text="{Binding User.FullName}"
                 VerticalTextAlignment="Center" />
         </HorizontalStackLayout>
@@ -87,6 +89,7 @@
                 WidthRequest="45" />
             <Label
                 FontSize="18"
+                TextColor="White"
                 Text="Add Songs"
                 VerticalTextAlignment="Center" />
             <HorizontalStackLayout.GestureRecognizers>
@@ -116,6 +119,7 @@
                             <Label
                                 Grid.Column="1"
                                 FontSize="18"
+                                TextColor="White"
                                 Text="{Binding Name}"
                                 VerticalTextAlignment="Center" />
                             <Label
@@ -127,7 +131,7 @@
                                 VerticalTextAlignment="Start" />
                         </Grid>
                         <HorizontalStackLayout Spacing="5">
-                            <ContentPresenter Content="{StaticResource HeartIconTemplateSelector}" />
+                            <ImageButton Source="heartoutline.png" WidthRequest="25" HeightRequest="25"/>
                             <ImageButton
                                 Command="{Binding BindingContext.RemoveSongFromPlaylistCommand, Source={x:Reference collectionView}}"
                                 CommandParameter="{Binding .}"

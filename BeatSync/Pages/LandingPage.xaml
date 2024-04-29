@@ -12,8 +12,7 @@
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout>
+    <Grid RowDefinitions="auto,auto,*,auto" >
             <!--  Top Elements  -->
             <HorizontalStackLayout>
                 <ImageButton
@@ -42,8 +41,8 @@
                 Margin="0,-10,0,0"
                 HeightRequest="2"
                 WidthRequest="310"
-                Color="White"/>
-                <VerticalStackLayout Margin="35,10,35,10">
+                Color="White" Grid.Row="1"/>
+            <VerticalStackLayout Margin="35,10,35,10" Grid.Row="2">
                     <CarouselView Loop="False" PeekAreaInsets="50">
                         <CarouselView.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -222,12 +221,11 @@
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                 </VerticalStackLayout>
-            <controls:MediaPlayerControl 
+            <controls:MediaPlayerControl Grid.Row="3" 
                 ArtistName="{Binding SelectedSong.ArtistName}"
                 AudioSource="{Binding MediaSource}"
 ImageSource="{Binding SelectedSong.ImageFilePath}"
 IsVisible="{Binding IsVisible}"
 SongName="{Binding SelectedSong.Name}" />
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

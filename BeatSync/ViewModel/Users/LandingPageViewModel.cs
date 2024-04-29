@@ -6,8 +6,8 @@ public partial class LandingPageViewModel : ObservableObject
 {
     private readonly UserService _userService;
     private readonly SongService _songService;
-	
-	[ObservableProperty]
+    private readonly HistoryService historyService;
+    [ObservableProperty]
 	private ObservableCollection<Song> _newSongs = new();
 
 	[ObservableProperty]
@@ -23,10 +23,13 @@ public partial class LandingPageViewModel : ObservableObject
     private bool _isVisible;
 
     public LandingPageViewModel(
-        UserService userService, SongService songService)
+        UserService userService, 
+        SongService songService,
+        HistoryService historyService)
     {
         _userService = userService;
         _songService = songService;
+        this.historyService = historyService;
     }
 
     [RelayCommand]
@@ -36,7 +39,7 @@ public partial class LandingPageViewModel : ObservableObject
     }
 
     [RelayCommand]
-    void PlaySong(Song song)
+    async Task PlaySong(Song song)
     {
         if (song.FilePath == null)
         {
@@ -49,7 +52,26 @@ public partial class LandingPageViewModel : ObservableObject
             IsVisible = true;
         }
 
+        var history = new History
+        {
+            AccountType = User.AccountType,
+            UserId = User.Id,
+            SongId = song.Id,
+            SongName = song.Name,
+            TimeStamp = DateTime.Now
+        };
+
+        var histories = await historyService.GetAllAsync();
+        foreach (var historiesItem in histories)
+        {
+            if (historiesItem.AccountType == history.AccountType && historiesItem.UserId == history.UserId && historiesItem.SongId == history.SongId)
+            {
+                await historyService.DeleteAsync(historiesItem.Id);
+            }
+        }
+        await historyService.AddAsync(history);
         MediaSource = MediaSource.FromFile(song.FilePath);
+        
     }
 
     public async Task LoadSongsAsync()
