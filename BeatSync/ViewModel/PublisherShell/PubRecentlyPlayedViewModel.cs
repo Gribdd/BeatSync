@@ -24,22 +24,6 @@ public partial class PubRecentlyPlayedViewModel : ObservableObject
 
     public async void AddRecentlyPlayedSong(Song song)
     {
-        //LoadRecentlyPlayed();
-
-        //// If the collection already contains the song, remove it first
-        //if (RecentlyPlayedSongs.Contains(song))
-        //{
-        //    RecentlyPlayedSongs.Remove(song);
-        //}
-
-        ////// Add the new song to the collection
-        //RecentlyPlayedSongs.Add(song);
-
-        ////// If the collection exceeds the maximum limit, remove the oldest song
-        //while (RecentlyPlayedSongs.Count > MAX_RECENTLY_PLAYED_SONGS)
-        //{
-        //    RecentlyPlayedSongs.RemoveAt(0);
-        //}
 
         var publisher = await _publisherService.GetCurrentUser();
 
