@@ -8,4 +8,5 @@ namespace BeatSync.Services.IService;
 
 public interface IHistoryService : IGenericService<History>
 {
+    Task<ObservableCollection<History>> GetHistoriesByUserIdAsync(int userId, int accountType);
 }

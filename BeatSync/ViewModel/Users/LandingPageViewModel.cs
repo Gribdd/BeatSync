@@ -6,12 +6,19 @@ public partial class LandingPageViewModel : ObservableObject
 {
     private readonly UserService _userService;
     private readonly SongService _songService;
-    private readonly HistoryService historyService;
-    [ObservableProperty]
-	private ObservableCollection<Song> _newSongs = new();
+    private readonly HistoryService _historyService;
 
-	[ObservableProperty]
-	private User _user = new();
+    [ObservableProperty]
+    private ObservableCollection<Song> _newSongs = new();
+
+    [ObservableProperty]
+    private ObservableCollection<Song> _recentlyPlayedSongs = new();
+
+    [ObservableProperty]
+    private ObservableCollection<Song> _suggestedSongsByGenre = new();
+
+    [ObservableProperty]
+    private User _user = new();
 
     [ObservableProperty]
     private Song _selectedSong = new();
@@ -23,19 +30,19 @@ public partial class LandingPageViewModel : ObservableObject
     private bool _isVisible;
 
     public LandingPageViewModel(
-        UserService userService, 
+        UserService userService,
         SongService songService,
         HistoryService historyService)
     {
         _userService = userService;
         _songService = songService;
-        this.historyService = historyService;
+        _historyService = historyService;
     }
 
     [RelayCommand]
-	void Logout()
-	{
-		Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
+    void Logout()
+    {
+        Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
     [RelayCommand]
@@ -61,17 +68,18 @@ public partial class LandingPageViewModel : ObservableObject
             TimeStamp = DateTime.Now
         };
 
-        var histories = await historyService.GetAllAsync();
+        var histories = await _historyService.GetAllAsync();
         foreach (var historiesItem in histories)
         {
             if (historiesItem.AccountType == history.AccountType && historiesItem.UserId == history.UserId && historiesItem.SongId == history.SongId)
             {
-                await historyService.DeleteAsync(historiesItem.Id);
+                await _historyService.DeleteAsync(historiesItem.Id);
             }
         }
-        await historyService.AddAsync(history);
+
+        await _historyService.AddAsync(history);
         MediaSource = MediaSource.FromFile(song.FilePath);
-        
+
     }
 
     public async Task LoadSongsAsync()
@@ -82,5 +90,18 @@ public partial class LandingPageViewModel : ObservableObject
     public async void LoadCurrentUser()
     {
         User = await _userService.GetCurrentUser();
+    }
+
+    public async void LoadSuggestedSongs()
+    {
+        var histories = await _historyService.GetHistoriesByUserIdAsync(User.Id, User.AccountType);
+        var songs = await _songService.GetSongsBySongIds(histories.Select(h => h.SongId).ToList());
+        var suggestedSongs = new ObservableCollection<Song>(songs
+            .GroupBy(s => s.Genre)
+            .OrderByDescending(g => g.Count())
+            .Select(g => g.First())
+            .ToList());
+
+        SuggestedSongsByGenre = suggestedSongs;
     }
 }

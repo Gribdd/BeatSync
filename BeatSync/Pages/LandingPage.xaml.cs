@@ -13,6 +13,7 @@ public partial class LandingPage : ContentPage
 	{
         base.OnAppearing();
 		await _vm.LoadSongsAsync();
-		_vm.LoadCurrentUser();
+        _vm.LoadSuggestedSongs();
+        _vm.LoadCurrentUser();
     }	
 }

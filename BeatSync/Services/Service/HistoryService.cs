@@ -12,4 +12,12 @@ public class HistoryService : GenericService<History>, IHistoryService
     {
 
     }
+
+    public async Task<ObservableCollection<History>> GetHistoriesByUserIdAsync(int userId, int accountType)
+    {
+        var histories = await GetAllAsync();
+        return new ObservableCollection<History>(histories
+            .Where(h => h.UserId == userId && h.AccountType == accountType)
+            .OrderBy(h => h.TimeStamp));
+    }
 }
