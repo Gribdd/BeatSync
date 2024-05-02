@@ -4,8 +4,11 @@ namespace BeatSync.ViewModel.Users;
 
 public partial class CustomerLandingPageViewModel : ObservableObject
 {
-    private readonly UserService userService;
+    private readonly UserService _userService;
+    private readonly PlaylistService _playlistService;
 
+    [ObservableProperty]
+    private ObservableCollection<Playlist> _playlist = new();
 
     private User _user = new();
     public User User
@@ -14,9 +17,10 @@ public partial class CustomerLandingPageViewModel : ObservableObject
         set { SetProperty(ref _user, value); }
     }
 
-    public CustomerLandingPageViewModel(UserService userService)
+    public CustomerLandingPageViewModel(UserService userService, PlaylistService playlistService)
     {
-        this.userService = userService;
+        _userService = userService;
+        _playlistService = playlistService;   
     }
 
     [RelayCommand]
@@ -32,7 +36,7 @@ public partial class CustomerLandingPageViewModel : ObservableObject
 
     public async Task GetActiveCustomer()
     {
-        User = await userService.GetCurrentUser();
+        User = await _userService.GetCurrentUser();
     }
 
     [RelayCommand]
@@ -41,6 +45,11 @@ public partial class CustomerLandingPageViewModel : ObservableObject
         await GetActiveCustomer();
         // Navigate to the ViewProfile page
         await Shell.Current.Navigation.PushAsync(new ViewProfile(this));
+    }
+
+    public async void GetPlaylists()
+    {
+        Playlist = await _playlistService.GetPlaylistsByUserAsync(User.Id);
     }
 
     [RelayCommand]
