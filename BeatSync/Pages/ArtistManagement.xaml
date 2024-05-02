@@ -18,7 +18,7 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <Grid RowDefinitions="auto,auto,auto,*">
         <HorizontalStackLayout>
             <ImageButton
@@ -30,11 +30,12 @@
                 Style="{StaticResource SubHeadline}"
                 Text="Artist Management"
                 TextColor="White" />
-            <ImageButton Margin="25,0,0,0" Source="search.png" />
             <ImageButton
-                Margin="-5,0,0,0"
-                HeightRequest="30"
-                Source="add.png" />
+                Margin="75,0,0,0"
+                BackgroundColor="Transparent"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Source="search.png" />
         </HorizontalStackLayout>
         <BoxView
             Grid.Row="1"
@@ -42,7 +43,10 @@
             HeightRequest="2"
             WidthRequest="310"
             Color="White" />
-        <HorizontalStackLayout Margin="40,10,10,10" Spacing="10" Grid.Row="2">
+        <HorizontalStackLayout
+            Grid.Row="2"
+            Margin="40,10,10,10"
+            Spacing="10">
             <Button
                 Padding="20"
                 BackgroundColor="#9747FF"
@@ -62,7 +66,7 @@
                 CornerRadius="25"
                 Text="Update" />
         </HorizontalStackLayout>
-        <CollectionView ItemsSource="{Binding Artists}" Grid.Row="3">
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Artists}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Artist">
                     <controls:CardView

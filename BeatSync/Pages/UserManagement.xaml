@@ -15,10 +15,10 @@
         <HorizontalStackLayout>
             <ImageButton
                 Margin="30"
+                BackgroundColor="Transparent"
                 Command="{Binding LogoutCommand}"
                 HeightRequest="35"
                 HorizontalOptions="Start"
-                BackgroundColor="Transparent"
                 Source="profileicon.png" />
             <Label
                 Margin="-25,35,0,0"
@@ -26,17 +26,11 @@
                 Text="User Management"
                 TextColor="White" />
             <ImageButton
-                Margin="35,0,0,0"
-                HeightRequest="35"
+                Margin="75,0,0,0"
                 BackgroundColor="Transparent"
+                HeightRequest="35"
                 HorizontalOptions="Start"
                 Source="search.png" />
-            <ImageButton
-                Margin="-5,0,0,0"
-                HeightRequest="30"
-                BackgroundColor="Transparent"
-                HorizontalOptions="Start"
-                Source="add.png" />
         </HorizontalStackLayout>
         <BoxView
             Grid.Row="1"
