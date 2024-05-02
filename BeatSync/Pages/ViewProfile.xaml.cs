@@ -2,10 +2,18 @@ namespace BeatSync.Pages
 {
     public partial class ViewProfile : ContentPage
     {
-        public ViewProfile(CustomerLandingPageViewModel viewModel)
+        CustomerLandingPageViewModel _vm;
+        public ViewProfile(CustomerLandingPageViewModel vm)
         {
+            BindingContext = _vm = vm;
             InitializeComponent();
-            BindingContext = viewModel;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _vm.GetActiveCustomer();
+            _vm.GetPlaylists();
+        }   
     }
 }
