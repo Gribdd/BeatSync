@@ -146,6 +146,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<SongManagementPub>();
             mauiAppBuilder.Services.AddTransient<AddAlbumPublisher>();
             mauiAppBuilder.Services.AddTransient<PubRecentlyPlayed>();
+            mauiAppBuilder.Services.AddTransient<PubViewProfile>();
 
             //Users
             mauiAppBuilder.Services.AddTransient<SearchPage>();

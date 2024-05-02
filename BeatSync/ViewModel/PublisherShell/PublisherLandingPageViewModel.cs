@@ -2,7 +2,8 @@
 
 public partial class PublisherLandingPageViewModel : ObservableObject
 {
-    private readonly PublisherService publisherService;
+    private readonly PublisherService _publisherService;
+    private readonly AlbumService _albumService;
 
     private Publisher _publisher = new();
     public Publisher Publisher
@@ -11,9 +12,13 @@ public partial class PublisherLandingPageViewModel : ObservableObject
         set { SetProperty(ref _publisher, value); }
     }
 
-    public PublisherLandingPageViewModel(PublisherService publisherService)
+    [ObservableProperty]
+    private ObservableCollection<Album> _albums = new();    
+
+    public PublisherLandingPageViewModel(PublisherService publisherService, AlbumService albumService)
     {
-        this.publisherService = publisherService;
+        _publisherService = publisherService;
+        _albumService = albumService;
     }
 
     [RelayCommand]
@@ -29,14 +34,19 @@ public partial class PublisherLandingPageViewModel : ObservableObject
 
     public async Task GetActivePublisher()
     {
-        Publisher = await publisherService.GetCurrentUser();
+        Publisher = await _publisherService.GetCurrentUser();
     }
 
     [RelayCommand]
     async Task ViewProfile()
     {
         await GetActivePublisher();
-        //await Shell.Current.Navigation.PushAsync(new ViewProfile(this));
+        await Shell.Current.Navigation.PushAsync(new PubViewProfile(this));
+    }
+
+    public async void GetAlbums()
+    {
+        Albums = await _albumService.GetAllAsync(); //Should only get albums by the current publisher, temp implementation
     }
 
     [RelayCommand]  

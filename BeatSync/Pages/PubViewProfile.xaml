@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.PubViewProfile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
+    Title="PubViewProfile"
+    x:DataType="viewmodel:PublisherLandingPageViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <Style TargetType="Border">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="BackgroundColor" Value="#453D62" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <HorizontalStackLayout>
+            <ImageButton
+                Margin="-190,40,30,30"
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                Source="returnbtn.png" />
+            <Label
+                Margin="-250,48,0,0"
+                Style="{StaticResource SubHeadline}"
+                Text="View Profile"
+                TextColor="White" />
+        </HorizontalStackLayout>
+
+        <Image
+            Margin="0,-10,0,30"
+            HeightRequest="187"
+            Source="{Binding Publisher.ImageFilePath}"
+            WidthRequest="200" />
+        <Label
+            Margin="5,-15,5,10"
+            Style="{StaticResource Headline}"
+            Text="{Binding Publisher.FullName}"
+            TextColor="White" />
+        <Label
+            Margin="0,-10,0,0"
+            HorizontalOptions="Center"
+            Style="{StaticResource Fields}"
+            Text="{Binding Publisher.Username}"
+            TextColor="{StaticResource Gray200}" />
+
+        <!--  temporary texxt color  -->
+        <BoxView
+            Margin="10"
+            BackgroundColor="White"
+            HeightRequest="2"
+            WidthRequest="300" />
+
+        <Label
+            Margin="45,10,0,10"
+            HorizontalOptions="Start"
+            Style="{StaticResource SubHeadline}"
+            Text="Albums Created"
+            TextColor="White" />
+
+        <CollectionView
+            x:Name="collectionView"
+            HorizontalScrollBarVisibility="Always"
+            ItemsSource="{Binding Albums}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Album">
+                    <controls:CardView
+                        CardImage="{Binding ImageFilePath}"
+                        CardSubtitleLeft="Playlist"
+                        CardSubtitleRight="{Binding Songs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
+                        CardTitle="{Binding Name}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+
+</ContentPage>

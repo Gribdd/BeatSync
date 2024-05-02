@@ -37,8 +37,7 @@
                     Text="View Profile"
                     TextColor="#a39797">
                     <Label.GestureRecognizers>
-                        <!--<TapGestureRecognizer Command="{Binding ViewProfileCommand}"  uncommment to use/>-->
-                        <!--  Change this to Command="{Binding ViewProfile}"  -->
+                        <TapGestureRecognizer Command="{Binding ViewProfileCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
             </VerticalStackLayout>
