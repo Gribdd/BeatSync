@@ -33,6 +33,7 @@
             <ImageButton
                 Margin="75,0,0,0"
                 BackgroundColor="Transparent"
+                Command="{Binding NavigateToSearchCommand}"
                 HeightRequest="35"
                 HorizontalOptions="Start"
                 Source="search.png" />

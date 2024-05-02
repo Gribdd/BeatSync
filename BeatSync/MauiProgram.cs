@@ -62,6 +62,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<AddPublisherViewModel>();
             mauiAppBuilder.Services.AddTransient<AddUserViewModel>();
             mauiAppBuilder.Services.AddTransient<UserManagementViewModel>();
+            mauiAppBuilder.Services.AddTransient<AdminSearchPageViewModel>();
 
             //Viewmodel registration and Login
             mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
@@ -119,6 +120,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<MainPage>();
             mauiAppBuilder.Services.AddTransient<AddUser>();
             mauiAppBuilder.Services.AddTransient<UserManagement>();
+            mauiAppBuilder.Services.AddTransient<AdminSearchPage>();
 
             //View Signup and Login
             mauiAppBuilder.Services.AddTransient<LoginPage>();

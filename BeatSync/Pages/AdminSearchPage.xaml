@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeatSync.Pages.AdminSearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeatSync.Controls"
+    xmlns:local="clr-namespace:BeatSync.ViewModel.Admin"
+    xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:selector="clr-namespace:BeatSync.Selector"
+    Title="AdminSearchPage"
+    x:DataType="local:AdminSearchPageViewModel"
+    BackgroundImageSource="resizedbackgroundpixel.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="artistTemplate" x:DataType="model:Artist">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Artist"
+                CardSubtitleRight="{Binding Username}"
+                CardTitle="{Binding FullName}" />
+        </DataTemplate>
+
+
+        <DataTemplate x:Key="albumTemplate" x:DataType="model:Album">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Album"
+                CardSubtitleRight="{Binding ArtistName}"
+                CardTitle="{Binding Name}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="songTemplate" x:DataType="model:Song">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Song"
+                CardSubtitleRight="{Binding ArtistName}"
+                CardTitle="{Binding Name}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="playlistTemplate" x:DataType="model:Playlist">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Song"
+                CardSubtitleRight="{Binding UserId}"
+                CardTitle="{Binding Name}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="publisherTemplate" x:DataType="model:Publisher">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Publisher"
+                CardSubtitleRight="{Binding Username}"
+                CardTitle="{Binding FullName}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="userTemplate" x:DataType="model:User">
+            <controls:CardView
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="User"
+                CardSubtitleRight="{Binding Username}"
+                CardTitle="{Binding FullName}" />
+        </DataTemplate>
+
+        <selector:SearchBarDataTemplateSelector
+            x:Key="viewSelector"
+            AlbumTemplate="{StaticResource albumTemplate}"
+            ArtistTemplate="{StaticResource artistTemplate}"
+            PlaylistTemplate="{StaticResource playlistTemplate}"
+            PublisherTemplate="{StaticResource publisherTemplate}"
+            SongTemplate="{StaticResource songTemplate}"
+            UserTemplate="{StaticResource userTemplate}" />
+
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="auto,auto,*">
+        <!--  Top Elements  -->
+        <HorizontalStackLayout>
+            <ImageButton
+                Margin="-190,30,0,30"
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png" />
+            <Label
+                Margin="-225,37,0,0"
+                Style="{StaticResource SubHeadline}"
+                Text="Search"
+                TextColor="White" />
+        </HorizontalStackLayout>
+        <SearchBar
+            Grid.Row="1"
+            BackgroundColor="White"
+            Placeholder="What do you want to look for?"
+            SearchCommand="{Binding SearchCommand}"
+            Text="{Binding SearchQuery, Mode=TwoWay}"
+            TextColor="{StaticResource Gray900}"
+            WidthRequest="310"
+            ZIndex="1" />
+
+        <!--  Display Search Results  -->
+        <Frame
+            x:Name="frmResults"
+            Grid.Row="2"
+            Margin="40,-5,40,5"
+            BackgroundColor="#17122E"
+            BorderColor="Transparent"
+            IsVisible="{Binding IsResultsVisible}">
+            <CollectionView
+                x:Name="viewResults"
+                EmptyView="No results found."
+                ItemTemplate="{StaticResource viewSelector}"
+                ItemsSource="{Binding MyList}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </Frame>
+    </Grid>
+
+</ContentPage>

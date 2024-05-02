@@ -58,6 +58,20 @@ namespace BeatSync.ViewModel.Admin
         {
             Publishers = await _publisherService.GetActiveAsync();
         }
+
+
+        [RelayCommand]
+        async Task NavigateToSearch()
+        {
+            await Shell.Current.GoToAsync(nameof(AdminSearchPage));
+        }
+
+        [RelayCommand]
+        async Task Return()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
     }
+
 }
 

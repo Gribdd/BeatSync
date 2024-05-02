@@ -136,6 +136,9 @@
 	  <MauiXaml Update="Pages\AddUser.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\AdminSearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ArtistManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

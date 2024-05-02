@@ -10,6 +10,7 @@ public partial class Admin_LandingPage : Shell
         Routing.RegisterRoute(nameof(AddArtist), typeof(AddArtist));
         Routing.RegisterRoute(nameof(AddSong), typeof(AddSong));
         Routing.RegisterRoute(nameof(AddUser), typeof(AddUser));
+        Routing.RegisterRoute(nameof(AdminSearchPage), typeof(AdminSearchPage));
 
         InitializeComponent();
 	}
