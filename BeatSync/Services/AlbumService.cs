@@ -1,4 +1,5 @@
 ﻿
+
 namespace BeatSync.Services;
 
 public class AlbumService : GenericService<Album>, IAlbumService
@@ -52,5 +53,6 @@ public class AlbumService : GenericService<Album>, IAlbumService
     {
         return _unitofWork.AlbumRepository.GetByNameAndArtistId(albumName, artistId);
     }
-    
+
+   
 }
