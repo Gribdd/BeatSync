@@ -61,4 +61,16 @@ public partial class UserManagementViewModel : ObservableObject
     {
         Users = await _userService.GetActiveAsync();
     }
+
+    [RelayCommand]
+    async Task NavigateToSearch()
+    {
+        await Shell.Current.GoToAsync(nameof(AdminSearchPage));
+    }
+
+    [RelayCommand]
+    async Task Return()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

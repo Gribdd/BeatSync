@@ -63,4 +63,16 @@ public partial class SongManagementViewModel : ObservableObject
     {
         Songs = await _songService.GetActiveAsync();
     }
+
+    [RelayCommand]
+    async Task NavigateToSearch()
+    {
+        await Shell.Current.GoToAsync(nameof(AdminSearchPage));
+    }
+
+    [RelayCommand]
+    async Task Return()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }
