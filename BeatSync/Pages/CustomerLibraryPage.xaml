@@ -69,9 +69,9 @@
             CardSubtitleLeft="Playlist"
             CardSubtitleRight="{Binding FavoriteSongs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
             CardTitle="Favorite Songs">
-            <!--<Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
-            </Frame.GestureRecognizers>-->
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BindingContext.NavigateFavoriteSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
+            </Frame.GestureRecognizers>
         </controls:CardView>
 
         <!--  Recently Played Songs  -->

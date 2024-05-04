@@ -9,7 +9,7 @@ public class LikesRepository : GenericRepository<Likes>, ILikesRepository
 
     public async Task<ObservableCollection<Likes>> GetLikesByUserId(int userId)
     {
-        _entities = await GetAll();
+        _entities = await GetActive();
         return new ObservableCollection<Likes>(_entities.Where(x => x.UserID == userId));
     }
 }

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="BeatSync.Pages.CustomerRecentlyPlayed"
+    x:Class="BeatSync.Pages.CustomerFavoriteSongs"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.Users"
-    Title="CustomerRecentlyPlayed"
-    x:DataType="viewmodel:CustomerRecentlyPlayedViewModel"
+    Title="CustomerFavoriteSongs"
+    x:DataType="viewmodel:CustomerFavoriteSongsViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
-
-    <StackLayout>
+    <StackLayout Padding="20">
+        <Label
+            HorizontalTextAlignment="Start"
+            Style="{StaticResource Headline}"
+            Text="Favorite Songs" />
         <ImageButton
             Margin="-200,30,30,30"
             Command="{Binding ReturnCommand}"
@@ -19,7 +22,7 @@
             HorizontalOptions="Start"
             Source="returnbtn.png" />
 
-        <CollectionView ItemsSource="{Binding RecentlyPlayedSongs}">
+        <CollectionView ItemsSource="{Binding FavoriteSongs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
                     <controls:CardView
@@ -31,5 +34,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </StackLayout>
-
 </ContentPage>

@@ -6,6 +6,8 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     private readonly PlaylistService _playlistService;
     private readonly SongService _songService;
     private readonly HistoryService _historyService;
+    private readonly LikesService _likesService;
+
     [ObservableProperty]
     private User _user = new();
 
@@ -18,16 +20,19 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _recentlyPlayedSongs = new();
 
+
     public CustomerLibraryPageViewModel(
         UserService userService,
         PlaylistService playlistService,
         SongService songService,
-        HistoryService historyService)
+        HistoryService historyService,
+        LikesService likesService)
     {
         _userService = userService;
         _playlistService = playlistService;
         _songService = songService;
         _historyService = historyService;
+        _likesService = likesService;
     }
 
 
@@ -78,6 +83,16 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         await Shell.Current.GoToAsync($"{nameof(AddPlaylistSongsCustomer)}", navigationParameter);
     }
 
+    [RelayCommand]
+    async Task NavigateFavoriteSongs()
+    {
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(FavoriteSongs), FavoriteSongs},
+        };
+        await Shell.Current.GoToAsync($"{nameof(CustomerFavoriteSongs)}", navigationParameter);
+    }
+
     public async Task LoadCurrentUser()
     {
         User = await _userService.GetCurrentUser();
@@ -88,11 +103,6 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         Playlists = await _playlistService.GetPlaylistsByUserAsync(User.Id);
     }
 
-    public  void LoadFavoriteSongs() //removed async for now
-    {
-        //FavoriteSongs = await _songService.GetSongsBySongIds(User.FavoriteSongsId);
-    }
-
     public async void LoadRecentlyPlayedSongs()
     {
         var histories = await _historyService.GetActiveAsync();
@@ -101,6 +111,13 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         var songs = await _songService.GetSongsBySongIds(songIds);
         var sortedSongs = new ObservableCollection<BeatSync.Models.Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
         RecentlyPlayedSongs = sortedSongs;
+    }
+
+    public async Task GetUserLikeSongs()
+    {
+        var likes = await _likesService.GetLikesByUserIdAsync(User.Id);
+        var songIds = likes.Select(l => l.SongID).ToList();
+        FavoriteSongs = await _songService.GetSongsBySongIds(songIds);
     }
 
     [RelayCommand]

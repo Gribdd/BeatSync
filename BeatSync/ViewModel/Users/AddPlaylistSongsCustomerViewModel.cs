@@ -60,16 +60,11 @@ public partial class AddPlaylistSongsCustomerViewModel : ObservableObject
             song.IsLike = !song.IsLike;
             var likes = await _likesService.GetLikesByUserIdAsync(User.Id);
             var like = likes.FirstOrDefault(like => like.SongID == song.Id && like.UserID == User.Id);
-            bool isRemove = likes.Remove(like!);
-
-            if (isRemove)
-            {
-                await _likesService.UpdateAsync(like);
-            }
+            await _likesService.DeleteAsync(like!.Id);
             return;
         }
 
-            await AddLike(song);
+        await AddLike(song);
     }
 
     private async Task AddLike(Song song)
