@@ -1,6 +1,4 @@
-﻿
-
-namespace BeatSync.Services;
+﻿namespace BeatSync.Services;
 
 public class AlbumService : GenericService<Album>, IAlbumService
 {
@@ -9,7 +7,7 @@ public class AlbumService : GenericService<Album>, IAlbumService
     {
         _unitofWork = unitofWork;
     }
-    
+
     public override async Task UpdateAsync(int id)
     {
         var albumToBeUpdated = await GetAsync(id);
@@ -54,5 +52,10 @@ public class AlbumService : GenericService<Album>, IAlbumService
         return _unitofWork.AlbumRepository.GetByNameAndArtistId(albumName, artistId);
     }
 
-   
+    public Task<ObservableCollection<Album>> GetByArtistId(int artistId)
+    {
+        return _unitofWork.AlbumRepository.GetByArtistId(artistId);
+    }
+
+
 }

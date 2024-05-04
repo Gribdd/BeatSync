@@ -63,4 +63,5 @@ public partial class Album : BaseModel
             return (false, "Please upload an image");
         return (true, string.Empty);
     }
+
 }
