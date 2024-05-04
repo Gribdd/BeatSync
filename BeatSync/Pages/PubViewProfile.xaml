@@ -64,29 +64,83 @@
             WidthRequest="300" />
 
         <Label
-            Margin="45,10,0,10"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             Style="{StaticResource SubHeadline}"
-            Text="Albums Created"
+            Text="Biography"
             TextColor="White" />
 
-        <CollectionView
-            x:Name="collectionView"
-            HorizontalScrollBarVisibility="Always"
-            ItemsSource="{Binding Albums}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Album">
-                    <controls:CardView
-                        CardImage="{Binding ImageFilePath}"
-                        CardSubtitleLeft="Playlist"
-                        CardSubtitleRight="{Binding Songs.Count, FallbackValue='0 song', StringFormat='{0} songs'}"
-                        CardTitle="{Binding Name}" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <StackLayout Margin="45,10,30,45">
+            <!--<Label MaxLines="5" Text="{Binding Publisher.FirstName, StringFormat='{0} is a publisher who is born on'}" Style="{StaticResource Fields}" TextColor="White"/>-->
+            <Label HorizontalTextAlignment="Start">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="Introducing "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.FullName}"
+                            TextColor="White" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=", also known as "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.Username}"
+                            TextColor="White" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=". Born on "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.DateOfBirth, StringFormat='{0:d}'}"
+                            TextColor="White" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=", "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.FirstName}"
+                            TextColor="{StaticResource Gray300}" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=" is a trailblazing publisher in the music industry. With a keen eye for talent and a passion for music, this publisher is dedicated to nurturing emerging artists and sharing their stories with the world. Through "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.Username}"
+                            TextColor="White" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=". "
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text="{Binding Publisher.FirstName}"
+                            TextColor="{StaticResource Gray300}" />
+                        <Span
+                            Style="{StaticResource Fields}"
+                            Text=" continues to push boundaries and inspire others in the ever-evolving world of music."
+                            TextColor="{StaticResource Gray300}"
+                            TextDecorations="None" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+
+
+
+        </StackLayout>
 
     </StackLayout>
 
