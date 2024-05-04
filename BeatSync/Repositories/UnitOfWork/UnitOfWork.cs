@@ -15,8 +15,8 @@ public class UnitOfWork : IUnitofWork
     public IAlbumRepository AlbumRepository { get; }
     public IPlaylistRepository PlaylistRepository { get; }
     public IPlaylistSongRepository PlaylistSongRepository { get; }
-
     public IHistoryRepository HistoryRepository { get; }
+    public ILikesRepository LikesRepository { get; }
     public UnitOfWork()
     {
         UserRepository = new UserRepository();
@@ -27,6 +27,7 @@ public class UnitOfWork : IUnitofWork
         PlaylistRepository = new PlaylistRepository();
         PlaylistSongRepository = new PlaylistSongRepository();
         HistoryRepository = new HistoryRepository();
+        LikesRepository = new LikesRepository();
     }
     
     //needed so that we can accessed Generic Repositories
@@ -49,6 +50,8 @@ public class UnitOfWork : IUnitofWork
             return PlaylistSongRepository as IGenericRepository<T>;
         if (typeof(T) == typeof(History))
             return HistoryRepository as IGenericRepository<T>;
+        if (typeof(T) == typeof(Likes))
+            return LikesRepository as IGenericRepository<T>;
         return null;
     }
 }

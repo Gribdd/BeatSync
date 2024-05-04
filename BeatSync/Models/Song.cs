@@ -26,6 +26,9 @@ public partial class Song : BaseModel
     [ObservableProperty]
     private string? _name;
 
+    [ObservableProperty]
+    private bool _isLike = false;
+
     public (bool, string) IsValid()
     {
         var validationMethods = new List<Func<(bool, string)>>

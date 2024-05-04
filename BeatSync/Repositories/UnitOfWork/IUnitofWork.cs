@@ -10,5 +10,6 @@ public interface IUnitofWork
     IPlaylistRepository PlaylistRepository { get; }
     IPlaylistSongRepository PlaylistSongRepository { get; }
     IHistoryRepository HistoryRepository { get; }
+    ILikesRepository LikesRepository{ get; }
     IGenericRepository<T>? GetRepository<T>() where T : class;
 }

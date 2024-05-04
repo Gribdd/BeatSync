@@ -12,14 +12,14 @@
     Shell.TabBarUnselectedColor="#7EA6D9">
 
     <TabBar>
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" />
+        </Tab>
         <Tab Title="Songs" Icon="songs.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SongManagement}" />
         </Tab>
         <Tab Title="Users" Icon="users.png">
             <ShellContent ContentTemplate="{DataTemplate pages:UserManagement}" />
-        </Tab>
-        <Tab Title="Home" Icon="home.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" />
         </Tab>
         <Tab Title="Publishers" Icon="publishers.png">
             <ShellContent ContentTemplate="{DataTemplate pages:PublisherManagement}" />

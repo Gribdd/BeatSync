@@ -9,10 +9,11 @@ public partial class AddPlaylistCustomer : ContentPage
 		BindingContext = _vm = vm;
 	}
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         _vm.LoadCurrentUser();
+        await Task.Delay(200);
     }
 }
 

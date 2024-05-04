@@ -15,5 +15,7 @@ public partial class AddPlaylistSongsCustomer : ContentPage
         base.OnAppearing();
         await _vm.GetPlaylistSongsPlaylistId();
         await _vm.GetSongsByPlaylistId();
+        await Task.Delay(200);
+        await _vm.GetUserLikeSongs();
     }
 }
