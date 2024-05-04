@@ -101,4 +101,9 @@ public class SongService : GenericService<Song>, ISongService
     {
         return await _unitofWork.SongRepository.GetSongByNameAndArtistId(name, artistId);
     }
+
+    public async Task<Song> GetSongByArtistId(int artistId)
+    {
+        return await _unitofWork.SongRepository.GetSongByArtistId(artistId);
+    }
 }

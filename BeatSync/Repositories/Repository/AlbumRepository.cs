@@ -19,4 +19,12 @@ public class AlbumRepository : GenericRepository<Album>, IAlbumRepository
         _entities = await LoadEntities();
         return _entities.FirstOrDefault(a => a.Name == albumName && a.ArtistId == artistId)!;
     }
+
+    public async Task<ObservableCollection<Album>> GetByArtistId(int artistId)
+    {
+        _entities = await LoadEntities();
+        return new ObservableCollection<Album>(_entities.Where(a => a.ArtistId == artistId));
+    }
+
+
 }
