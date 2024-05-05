@@ -1,22 +1,22 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace BeatSync.Selector
+﻿namespace BeatSync.Selector;
+public class LandingPageSelector : DataTemplateSelector
 {
-    public class LandingPageSelector : DataTemplateSelector
-    {
-        public DataTemplate? UserTemplate { get; set; }
-        public DataTemplate? PublisherTemplate { get; set; }
-        public DataTemplate? ArtistTemplate { get; set; }
+    public DataTemplate? UserTemplate { get; set; }
+    public DataTemplate? PublisherTemplate { get; set; }
+    public DataTemplate? ArtistTemplate { get; set; }
 
-        protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
+    protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
+    {
+        switch (item)
         {
-            return item switch
-            {
-                User _ => UserTemplate,
-                Publisher _ => PublisherTemplate,
-                Artist _ => ArtistTemplate,
-                _ => null, // Return null if no matching template found
-            };
+            case User _:
+                return UserTemplate;
+            case Publisher _:
+                return PublisherTemplate;
+            case Artist _:
+                return ArtistTemplate;
+            default:
+                return null;
         }
     }
 }

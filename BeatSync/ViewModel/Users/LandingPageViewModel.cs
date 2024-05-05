@@ -4,7 +4,6 @@ namespace BeatSync.ViewModel.Users;
 
 public partial class LandingPageViewModel : ObservableObject
 {
-    public DataTemplateSelector LandingPageSelector { get; set; } 
     private readonly UserService _userService;
     private readonly PublisherService _publisherService;
     private readonly ArtistService _artistService;  
@@ -20,6 +19,11 @@ public partial class LandingPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _suggestedSongsByGenre = new();
 
+    //cannot bind to object, so we need to bind to a list of objects
+    //workaround kay boang ang maui di mosugot og object
+    [ObservableProperty]
+    private ObservableCollection<object> _account = new();
+    
     [ObservableProperty]
     private User _user = new();
 
@@ -43,7 +47,6 @@ public partial class LandingPageViewModel : ObservableObject
         PublisherService publisherService,
         ArtistService artistService,
         SongService songService,
-        LandingPageSelector landingPageSelector,
         HistoryService historyService)
     {
         _userService = userService;
@@ -51,7 +54,6 @@ public partial class LandingPageViewModel : ObservableObject
         _historyService = historyService;
         _publisherService = publisherService;
         _artistService = artistService; 
-        LandingPageSelector = landingPageSelector;
     }
 
     [RelayCommand]
@@ -74,10 +76,14 @@ public partial class LandingPageViewModel : ObservableObject
             IsVisible = true;
         }
 
+        //getting accountType and userId so that it can cater multiple accounts for history
+        var accountType = Preferences.Get("currentAccountType", -1);
+        var accountId = Preferences.Get("currentUserId", -1);
+
         var history = new History
         {
-            AccountType = User.AccountType,
-            UserId = User.Id,
+            AccountType = accountType,
+            UserId = accountId,
             SongId = song.Id,
             SongName = song.Name,
             TimeStamp = DateTime.Now
@@ -104,16 +110,27 @@ public partial class LandingPageViewModel : ObservableObject
 
     public async void LoadCurrentUser()
     {
-        if (User.AccountType == 3)
+        var accountType = Preferences.Get("currentAccountType", -1);
+        //clears everytime to ensure only one account is displayed
+        Account.Clear();
+        if(accountType == -1)
         {
-            User = await _userService.GetCurrentUser();
-        }else if(Publisher.AccountType == 2)
-        {
-            Publisher = await _publisherService.GetCurrentUser();
+            await Shell.Current.DisplayAlert("Error", "Please login to continue", "Ok");
+            await Shell.Current.GoToAsync("..");
+            return;
         }
-        else if (Artist.AccountType == 1)
+
+        //adding to object collection but only one since it will render multiple accounts if not cleared
+        if (accountType == 3)
         {
-            Artist = await _artistService.GetCurrentUser();
+            Account.Add( await _userService.GetCurrentUser());
+        }else if(accountType == 2)
+        {
+            Account.Add(await _publisherService.GetCurrentUser());
+        }
+        else if (accountType == 1)
+        {
+            Account.Add(await _artistService.GetCurrentUser());
         }
     }
 

@@ -44,26 +44,31 @@ public class UserAuthService : ObservableObject
     private void NavigateBasedOnUserType(Object incomingUser)
     {
         int activeUserId = -1;
+        int activeAccountType = -1;
         switch (incomingUser)
         {
             //artist
             case Artist artist:
                 activeUserId = artist.Id;
+                activeAccountType = artist.AccountType;
                 Application.Current!.MainPage = new ArtistLandingPage(artistLandingPageViewModel);
                 break;
             //publisher
             case Publisher publisher:
                 activeUserId = publisher.Id;
+                activeAccountType = publisher.AccountType;
                 Application.Current!.MainPage = new PublisherLandingPage(publisherLandingPageViewModel);
                 break;
             case User user:
                 Application.Current!.MainPage = new CustomerLandingPage(customerLandingPageViewModel);
                 activeUserId = user.Id;
+                activeAccountType = user.AccountType;
                 break;
             default:
                 break;
         }
         Preferences.Default.Set("currentUserId", activeUserId);
+        Preferences.Default.Set("currentAccountType", activeAccountType);
     }
 
     private async Task<Object?> GetUser(string identifier, string password)

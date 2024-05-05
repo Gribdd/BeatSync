@@ -16,149 +16,146 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="userTemplate">
             <!--  LandingPage for Customers  -->
-            <ScrollView Grid.Row="2" Margin="35,10,35,10">
-                <Grid RowDefinitions="auto,auto">
-                    <Label
-                        Margin="0,10,0,0"
-                        HorizontalOptions="Start"
-                        Style="{StaticResource SubHeadline}"
-                        Text="Top Hits"
-                        TextColor="White" />
-                    <CarouselView
-                        x:Name="topHitsCarousel"
-                        Grid.Row="1"
-                        ItemsSource="{Binding NewSongs}"
-                        Loop="False"
-                        MinimumHeightRequest="200"
-                        MinimumWidthRequest="200">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Song">
-                                <VerticalStackLayout Margin="10">
-                                    <Frame
-                                        HeightRequest="120"
-                                        HorizontalOptions="Start"
-                                        WidthRequest="120">
-                                        <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
-                                    </Frame>
-                                    <Label
-                                        Margin="14,5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding Name}"
-                                        TextColor="White" />
-                                    <Label
-                                        Margin="14,-5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Reminders}"
-                                        Text="{Binding ArtistName}"
-                                        TextColor="#A39797" />
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference topHitsCarousel}}" CommandParameter="{Binding .}" />
-                                    </VerticalStackLayout.GestureRecognizers>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Grid>
-            </ScrollView>
+            <Grid RowDefinitions="auto,auto">
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SubHeadline}"
+                    Text="Top Hits"
+                    TextColor="White" />
+                <!--Since this is using users properties now it doesnt know where is the newsong since new song is in our viewmodel-->
+                <!--we just guide our itemssource to look in our viewmodel-->
+                <CarouselView
+                    x:Name="topHitsCarousel"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NewSongs}"
+                    Loop="False"
+                    MinimumHeightRequest="200"
+                    MinimumWidthRequest="200">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Song">
+                            <VerticalStackLayout Margin="10">
+                                <Frame
+                                    HeightRequest="120"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="120">
+                                    <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
+                                </Frame>
+                                <Label
+                                    Margin="14,5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Fields}"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                                <Label
+                                    Margin="14,-5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Reminders}"
+                                    Text="{Binding ArtistName}"
+                                    TextColor="#A39797" />
+                                <!--similar goes here-->
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=PlaySongCommand}" CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="publisherTemplate">
             <!--  LandingPage for Publishers  -->
-            <ScrollView Grid.Row="2" Margin="35,10,35,10">
-                <Grid RowDefinitions="auto,auto">
-                    <Label
-                        Margin="0,10,0,0"
-                        HorizontalOptions="Start"
-                        Style="{StaticResource SubHeadline}"
-                        Text="Top Hits"
-                        TextColor="White" />
-                    <CarouselView
-                        x:Name="topHitsCarousel"
-                        Grid.Row="1"
-                        ItemsSource="{Binding NewSongs}"
-                        Loop="False"
-                        MinimumHeightRequest="200"
-                        MinimumWidthRequest="200">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Song">
-                                <VerticalStackLayout Margin="10">
-                                    <Frame
-                                        HeightRequest="120"
-                                        HorizontalOptions="Start"
-                                        WidthRequest="120">
-                                        <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
-                                    </Frame>
-                                    <Label
-                                        Margin="14,5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding Name}"
-                                        TextColor="White" />
-                                    <Label
-                                        Margin="14,-5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Reminders}"
-                                        Text="{Binding ArtistName}"
-                                        TextColor="#A39797" />
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference topHitsCarousel}}" CommandParameter="{Binding .}" />
-                                    </VerticalStackLayout.GestureRecognizers>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Grid>
-            </ScrollView>
+            <Grid RowDefinitions="auto,auto">
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SubHeadline}"
+                    Text="Top Hits"
+                    TextColor="White" />
+                <CarouselView
+                    x:Name="topHitsCarousel"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NewSongs}"
+                    Loop="False"
+                    MinimumHeightRequest="200"
+                    MinimumWidthRequest="200">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Song">
+                            <VerticalStackLayout Margin="10">
+                                <Frame
+                                    HeightRequest="120"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="120">
+                                    <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
+                                </Frame>
+                                <Label
+                                    Margin="14,5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Fields}"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                                <Label
+                                    Margin="14,-5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Reminders}"
+                                    Text="{Binding ArtistName}"
+                                    TextColor="#A39797" />
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=PlaySongCommand}" CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="artistTemplate">
             <!--  LandingPage for Artists  -->
-            <ScrollView Grid.Row="2" Margin="35,10,35,10">
-                <Grid RowDefinitions="auto,auto">
-                    <Label
-                        Margin="0,10,0,0"
-                        HorizontalOptions="Start"
-                        Style="{StaticResource SubHeadline}"
-                        Text="Top Hits"
-                        TextColor="White" />
-                    <CarouselView
-                        x:Name="topHitsCarousel"
-                        Grid.Row="1"
-                        ItemsSource="{Binding NewSongs}"
-                        Loop="False"
-                        MinimumHeightRequest="200"
-                        MinimumWidthRequest="200">
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Song">
-                                <VerticalStackLayout Margin="10">
-                                    <Frame
-                                        HeightRequest="120"
-                                        HorizontalOptions="Start"
-                                        WidthRequest="120">
-                                        <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
-                                    </Frame>
-                                    <Label
-                                        Margin="14,5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Fields}"
-                                        Text="{Binding Name}"
-                                        TextColor="White" />
-                                    <Label
-                                        Margin="14,-5,5,5"
-                                        HorizontalTextAlignment="Start"
-                                        Style="{StaticResource Reminders}"
-                                        Text="{Binding ArtistName}"
-                                        TextColor="#A39797" />
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding BindingContext.PlaySongCommand, Source={x:Reference topHitsCarousel}}" CommandParameter="{Binding .}" />
-                                    </VerticalStackLayout.GestureRecognizers>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Grid>
-            </ScrollView>
+            <Grid RowDefinitions="auto,auto">
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SubHeadline}"
+                    Text="Top Hits"
+                    TextColor="White" />
+                <CarouselView
+                    x:Name="topHitsCarousel"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NewSongs}"
+                    Loop="False"
+                    MinimumHeightRequest="200"
+                    MinimumWidthRequest="200">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Song">
+                            <VerticalStackLayout Margin="10">
+                                <Frame
+                                    HeightRequest="120"
+                                    HorizontalOptions="Start"
+                                    WidthRequest="120">
+                                    <Image Aspect="AspectFill" Source="{Binding ImageFilePath}" />
+                                </Frame>
+                                <Label
+                                    Margin="14,5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Fields}"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                                <Label
+                                    Margin="14,-5,5,5"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource Reminders}"
+                                    Text="{Binding ArtistName}"
+                                    TextColor="#A39797" />
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=PlaySongCommand}" CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Grid>
         </DataTemplate>
 
         <selector:LandingPageSelector
@@ -169,7 +166,9 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="auto,auto,*,auto">
+
         <!--  Top Elements  -->
+
         <HorizontalStackLayout>
             <ImageButton
                 Margin="30"
@@ -199,10 +198,12 @@
             HeightRequest="2"
             WidthRequest="310"
             Color="White" />
-        <ScrollView
+        <Grid
             Grid.Row="2"
             Margin="35,10,35,10"
-            BindableLayout.ItemTemplateSelector="{Binding LandingPageSelector}" />
+            BindableLayout.EmptyView="empty"
+            BindableLayout.ItemTemplateSelector="{StaticResource LandingPageSelector}"
+            BindableLayout.ItemsSource="{Binding Account}" />
         <controls:MediaPlayerControl
             Grid.Row="3"
             ArtistName="{Binding SelectedSong.ArtistName}"
@@ -211,4 +212,5 @@
             IsVisible="{Binding IsVisible}"
             SongName="{Binding SelectedSong.Name}" />
     </Grid>
+
 </ContentPage>
