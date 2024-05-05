@@ -1,10 +1,13 @@
+using BeatSync.Selector;
 using BeatSync.Services.Service;
-
 namespace BeatSync.ViewModel.Users;
 
 public partial class LandingPageViewModel : ObservableObject
 {
+    public DataTemplateSelector LandingPageSelector { get; set; } 
     private readonly UserService _userService;
+    private readonly PublisherService _publisherService;
+    private readonly ArtistService _artistService;  
     private readonly SongService _songService;
     private readonly HistoryService _historyService;
 
@@ -21,6 +24,12 @@ public partial class LandingPageViewModel : ObservableObject
     private User _user = new();
 
     [ObservableProperty]
+    private Publisher _publisher = new();
+
+    [ObservableProperty]
+    private Artist _artist = new();
+
+    [ObservableProperty]
     private Song _selectedSong = new();
 
     [ObservableProperty]
@@ -31,12 +40,18 @@ public partial class LandingPageViewModel : ObservableObject
 
     public LandingPageViewModel(
         UserService userService,
+        PublisherService publisherService,
+        ArtistService artistService,
         SongService songService,
+        LandingPageSelector landingPageSelector,
         HistoryService historyService)
     {
         _userService = userService;
         _songService = songService;
         _historyService = historyService;
+        _publisherService = publisherService;
+        _artistService = artistService; 
+        LandingPageSelector = landingPageSelector;
     }
 
     [RelayCommand]
@@ -89,7 +104,17 @@ public partial class LandingPageViewModel : ObservableObject
 
     public async void LoadCurrentUser()
     {
-        User = await _userService.GetCurrentUser();
+        if (User.AccountType == 3)
+        {
+            User = await _userService.GetCurrentUser();
+        }else if(Publisher.AccountType == 2)
+        {
+            Publisher = await _publisherService.GetCurrentUser();
+        }
+        else if (Artist.AccountType == 1)
+        {
+            Artist = await _artistService.GetCurrentUser();
+        }
     }
 
     public async void LoadSuggestedSongs()

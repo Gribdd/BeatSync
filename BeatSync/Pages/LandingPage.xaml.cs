@@ -12,8 +12,9 @@ public partial class LandingPage : ContentPage
 	protected async override void OnAppearing()
 	{
         base.OnAppearing();
-		await _vm.LoadSongsAsync();
-        _vm.LoadSuggestedSongs();
         _vm.LoadCurrentUser();
+        await _vm.LoadSongsAsync();
+        _vm.LoadSuggestedSongs();
+        
     }	
 }
