@@ -5,4 +5,5 @@ public interface ISongService : IGenericService<Song>
     Task<Song> GetByNameAsync(string name);
     Task<Song> GetByNameAndArtistIdAsync(string name, int artistId);
     Task<Song> GetSongByArtistId(int artistId);
+    Task<ObservableCollection<Song>> GetSongsByGenreAsync(string genre);
 }

@@ -108,7 +108,7 @@ public partial class LandingPageViewModel : ObservableObject
         NewSongs = await _songService.GetActiveAsync(); ;
     }
 
-    public async void LoadCurrentUser()
+    public async Task LoadCurrentUser()
     {
         var accountType = Preferences.Get("currentAccountType", -1);
         //clears everytime to ensure only one account is displayed
@@ -134,16 +134,56 @@ public partial class LandingPageViewModel : ObservableObject
         }
     }
 
-    public async void LoadSuggestedSongs()
-    {
-        var histories = await _historyService.GetHistoriesByUserIdAsync(User.Id, User.AccountType);
-        var songs = await _songService.GetSongsBySongIds(histories.Select(h => h.SongId).ToList());
-        var suggestedSongs = new ObservableCollection<Song>(songs
-            .GroupBy(s => s.Genre)
-            .OrderByDescending(g => g.Count())
-            .Select(g => g.First())
-            .ToList());
 
-        SuggestedSongsByGenre = suggestedSongs;
+    public async Task LoadSuggestedSongs()
+    {
+        var accountType = Preferences.Get("currentAccountType", -1);
+        var userId = Preferences.Get("currentUserId", -1);
+
+        var histories = await _historyService.GetHistoriesByUserIdAsync(userId, accountType);
+        var songs = await _songService.GetSongsBySongIds(histories.Select(h => h.SongId).ToList());
+        var g = songs
+            .GroupBy(s => s.Genre)
+            .OrderByDescending(g => g.Count());
+
+        var suggestodSongsByGenre = new Dictionary<string, ObservableCollection<Song>>();
+
+        foreach (var grp in g)
+        {
+            //System.Diagnostics.Debug.WriteLine("{0} {1}", grp.Key, grp.Count());
+            var suggestedSongs = await _songService.GetSongsByGenreAsync(grp.Key!);
+
+            suggestodSongsByGenre[grp.Key!] = suggestedSongs;
+        }
+
+        SuggestedSongsByGenre = new ObservableCollection<Song>(suggestodSongsByGenre.SelectMany(s => s.Value));
+        //write to console suggestedsongsbygenre to see the output
+        //System.Diagnostics.Debug.WriteLine($"SuggestedSongsByGenre");
+        //foreach (var item in SuggestedSongsByGenre)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"{item.Name} : {item.Genre} : {item.ArtistName}");
+        //}
+    }
+    
+    public async Task LoadRecentlyPlayedSongs()
+    {
+        var histories = await _historyService.GetActiveAsync();
+        var filteredHistories = histories.OrderBy(h => h.TimeStamp);
+        List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
+        var songs = await _songService.GetSongsBySongIds(songIds);
+
+        //System.Diagnostics.Debug.WriteLine($"Not sorted Recently Played Songs");
+        //foreach (var song in songs)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"{song.Name} : {song.Genre} : {song.ArtistName}");
+        //}
+
+        var sortedSongs = new ObservableCollection<Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
+        //System.Diagnostics.Debug.WriteLine($"sorted Recently Played Songs");
+        //foreach (var song in sortedSongs)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"{song.Name} : {song.Genre} : {song.ArtistName}");
+        //}
+        RecentlyPlayedSongs = sortedSongs;
     }
 }

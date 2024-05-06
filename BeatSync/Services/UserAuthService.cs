@@ -69,6 +69,11 @@ public class UserAuthService : ObservableObject
         }
         Preferences.Default.Set("currentUserId", activeUserId);
         Preferences.Default.Set("currentAccountType", activeAccountType);
+
+
+        System.Diagnostics.Debug.WriteLine("Logging in....");
+        System.Diagnostics.Debug.WriteLine($"Current User Id: {activeUserId}");
+        System.Diagnostics.Debug.WriteLine($"Current Account Type: {activeAccountType}");
     }
 
     private async Task<Object?> GetUser(string identifier, string password)
