@@ -109,7 +109,7 @@ public partial class CustomerLibraryPageViewModel : ObservableObject
         var filteredHistories = histories.Where(h => h.UserId == User.Id).OrderBy(h => h.TimeStamp);
         List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
         var songs = await _songService.GetSongsBySongIds(songIds);
-        var sortedSongs = new ObservableCollection<BeatSync.Models.Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
+        var sortedSongs = new ObservableCollection<Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
         RecentlyPlayedSongs = sortedSongs;
     }
 

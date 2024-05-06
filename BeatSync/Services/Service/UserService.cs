@@ -18,10 +18,7 @@ public class UserService : GenericService<User>, IUserService
     public async Task<User> GetCurrentUser()
     {
         int userId = Preferences.Default.Get("currentUserId", -1);
-        var users = await GetActiveAsync();
-        var user = await GetAsync(userId);
-
-        return user!;
+        return await GetAsync(userId);
     }
 
     public override async Task UpdateAsync(int id)

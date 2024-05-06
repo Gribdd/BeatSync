@@ -1,3 +1,5 @@
+using Windows.Foundation;
+
 namespace BeatSync.Pages;
 
 public partial class LandingPage : ContentPage
@@ -12,8 +14,9 @@ public partial class LandingPage : ContentPage
 	protected async override void OnAppearing()
 	{
         base.OnAppearing();
-		await _vm.LoadSongsAsync();
-        _vm.LoadSuggestedSongs();
-        _vm.LoadCurrentUser();
+        await _vm.LoadSongsAsync();
+        await _vm.LoadCurrentUser();
+        await _vm.LoadSuggestedSongs();
+		await _vm.LoadRecentlyPlayedSongs();
     }	
 }

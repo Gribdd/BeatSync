@@ -41,22 +41,21 @@
 
         <DataTemplate x:Key="playlistTemplate" x:DataType="model:Playlist">
             <controls:CardView
-        CardImage="{Binding ImageFilePath}"
-        CardSubtitleLeft="Song"
-        CardSubtitleRight="{Binding UserId}"
-        CardTitle="{Binding Name}" />
+                CardImage="{Binding ImageFilePath}"
+                CardSubtitleLeft="Song"
+                CardSubtitleRight="{Binding UserId}"
+                CardTitle="{Binding Name}" />
         </DataTemplate>
 
         <selector:SearchBarDataTemplateSelector
             x:Key="viewSelector"
-            PlaylistTemplate="{StaticResource playlistTemplate}"
             AlbumTemplate="{StaticResource albumTemplate}"
             ArtistTemplate="{StaticResource artistTemplate}"
+            PlaylistTemplate="{StaticResource playlistTemplate}"
             SongTemplate="{StaticResource songTemplate}" />
 
     </ContentPage.Resources>
     <Grid RowDefinitions="auto,auto,*">
-        <!--  Top Elements  -->
         <HorizontalStackLayout>
             <ImageButton
                 Margin="30"
@@ -80,7 +79,6 @@
             WidthRequest="310"
             ZIndex="1" />
 
-        <!--  Display Search Results  -->
         <Frame
             x:Name="frmResults"
             Grid.Row="2"
@@ -96,18 +94,6 @@
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
-                <!--  Define ItemTemplate for different types of objects  -->
-                <!--<CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Margin="10">
-                            <Label Text="{Binding .}" TextColor="White" />
-                            <BoxView
-                                Margin="0,15,0,5"
-                                BackgroundColor="White"
-                                HeightRequest="1" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>-->
             </CollectionView>
         </Frame>
     </Grid>

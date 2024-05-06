@@ -26,4 +26,10 @@ public class SongRepository : GenericRepository<Song>, ISongRepository
         _entities = await LoadEntities();
         return _entities.FirstOrDefault(s => s.ArtistID == artistId)!;
     }
+
+    public async Task<ObservableCollection<Song>> GetSongsByGenre(string genre)
+    {
+        _entities = await LoadEntities();
+        return new ObservableCollection<Song>(_entities.Where(s => s.Genre == genre));
+    }
 }
