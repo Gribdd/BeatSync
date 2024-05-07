@@ -16,7 +16,7 @@ public class AlbumRepository : GenericRepository<Album>, IAlbumRepository
 
     public async Task<Album> GetByNameAndArtistId(string albumName, int artistId)
     {
-        _entities = await LoadEntities();
+        _entities = await GetActive();
         return _entities.FirstOrDefault(a => a.Name == albumName && a.ArtistId == artistId)!;
     }
 

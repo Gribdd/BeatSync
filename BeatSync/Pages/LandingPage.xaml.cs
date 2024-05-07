@@ -1,4 +1,3 @@
-using Windows.Foundation;
 
 namespace BeatSync.Pages;
 
