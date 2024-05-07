@@ -10,7 +10,7 @@ public class AlbumRepository : GenericRepository<Album>, IAlbumRepository
 
     public async Task<Album> GetByName(string albumName)
     {
-        _entities = await LoadEntities();
+        _entities = await GetActive();
         return _entities.FirstOrDefault(a => a.Name == albumName)!;
     }
 

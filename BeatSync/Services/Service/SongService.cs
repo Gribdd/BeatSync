@@ -49,8 +49,7 @@ public class SongService : GenericService<Song>, ISongService
     //method overloading for updating album id of song 
     public override async Task UpdateAsync(Song song)
     {
-        var songToBeUpdated = await GetAsync(song.Id);
-        await base.UpdateAsync(songToBeUpdated);
+        await base.UpdateAsync(song);
     }
 
     public async Task<ObservableCollection<Song>> GetSongsBySearchQuery(string? query)
