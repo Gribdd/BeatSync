@@ -83,23 +83,23 @@
             <!--  LandingPage for Artists  -->
             <HorizontalStackLayout>
                 <ImageButton
-                    Margin="30"
+                    Margin="5,30,20,30"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=LogoutCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
                 <Label
-                    Margin="-25,35,0,0"
+                    Margin="-10,35,0,0"
                     Style="{StaticResource SubHeadline}"
                     Text="{Binding FullName, StringFormat='Hi {0)!'}"
                     TextColor="White" />
                 <ImageButton
-                    Margin="55,0,0,0"
+                    Margin="5,0,0,0"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
                 <ImageButton
-                    Margin="-5,0,0,0"
+                    Margin="-15,0,0,0"
                     HeightRequest="30"
                     HorizontalOptions="Start"
                     Source="add.png" />
@@ -235,6 +235,7 @@
             </Grid>
         </ScrollView>
         <controls:MediaPlayerControl
+            Grid.Row="6"
             ZIndex="1"
             ArtistName="{Binding SelectedSong.ArtistName}"
             AudioSource="{Binding MediaSource}"

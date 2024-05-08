@@ -19,13 +19,15 @@ public partial class CustomerLandingPage : Shell
         Routing.RegisterRoute($"library/{nameof(AddPlaylistSongsCustomer)}/{nameof(AddPlaylistSongsSearch)}", typeof(AddPlaylistSongsSearch));
         Routing.RegisterRoute(nameof(ViewProfile), typeof(ViewProfile));
         Routing.RegisterRoute(nameof(CustomerRecentlyPlayed), typeof(CustomerRecentlyPlayed));
-        Routing.RegisterRoute(nameof(CustomerFavoriteSongs), typeof(CustomerFavoriteSongs));
+        //Routing.RegisterRoute(nameof(CustomerFavoriteSongs), typeof(CustomerFavoriteSongs));
+        Routing.RegisterRoute($"library/{nameof(CustomerFavoriteSongs)}", typeof(CustomerFavoriteSongs));
     }
 
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.GetActiveCustomer();
+        //await _vm.GetActiveCustomer();
+        var result = Task.Run(async () => await _vm.GetActiveCustomer());
     }
 }
 

@@ -19,7 +19,7 @@ public partial class PublisherLandingPage : Shell
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.GetActivePublisher();
+        var result = Task.Run(async () => await _vm.GetActivePublisher());
     }
 
 }
