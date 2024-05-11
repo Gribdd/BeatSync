@@ -22,7 +22,7 @@ public class AlbumRepository : GenericRepository<Album>, IAlbumRepository
 
     public async Task<ObservableCollection<Album>> GetByArtistId(int artistId)
     {
-        _entities = await LoadEntities();
+        _entities = await GetActive();
         return new ObservableCollection<Album>(_entities.Where(a => a.ArtistId == artistId));
     }
 

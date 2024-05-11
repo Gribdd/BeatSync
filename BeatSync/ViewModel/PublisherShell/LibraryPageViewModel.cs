@@ -4,6 +4,13 @@ public partial class LibraryPageViewModel : ObservableObject
 {
     private readonly AlbumService _albumService;
     private readonly PublisherService _publisherService;
+    private readonly ArtistService _artistService;
+    private readonly UserService _userService;
+
+    //cannot bind to object, so we need to bind to a list of objects
+    //workaround kay boang ang maui di mosugot og object
+    [ObservableProperty]
+    private ObservableCollection<object> _account = new();
 
     [ObservableProperty]
     private ObservableCollection<Album> _albums = new();
@@ -19,10 +26,16 @@ public partial class LibraryPageViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Song> _recentlyPlayedSongs = new();
 
-    public LibraryPageViewModel(AlbumService albumService, PublisherService publisherService)
+    public LibraryPageViewModel(
+        AlbumService albumService,
+        PublisherService publisherService,
+        ArtistService artistService,
+        UserService userService)
     {
         _albumService = albumService;
         _publisherService = publisherService;
+        _artistService = artistService;
+        _userService = userService;
     }
 
 
@@ -73,21 +86,52 @@ public partial class LibraryPageViewModel : ObservableObject
         Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
     }
 
-    public async void GetAlbums()
+    public async Task GetAlbums()
     {
-        Albums = await _albumService.GetActiveAsync();
+        var accountType = Preferences.Get("currentAccountType", -1);
+        if (accountType == 2)
+        {
+            Albums = await _albumService.GetActiveAsync();
+        }
+        else
+        {
+            var artistId = Preferences.Get("currentUserId", -1);
+            Albums = await _albumService.GetByArtistId(artistId);
+        }
     }
 
-    public async void GetActivePublisher()
+    public async Task LoadCurrentUser()
     {
-        Publisher = await _publisherService.GetCurrentUser();
+        var accountType = Preferences.Get("currentAccountType", -1);
+        //clears everytime to ensure only one account is displayed
+        Account.Clear();
+        if (accountType == -1)
+        {
+            await Shell.Current.DisplayAlert("Error", "Please login to continue", "Ok");
+            await Shell.Current.GoToAsync("..");
+            return;
+        }
+
+        //adding to object collection but only one since it will render multiple accounts if not cleared
+        if (accountType == 3)
+        {
+            Account.Add(await _userService.GetCurrentUser());
+        }
+        else if (accountType == 2)
+        {
+            Account.Add(await _publisherService.GetCurrentUser());
+        }
+        else if (accountType == 1)
+        {
+            Account.Add(await _artistService.GetCurrentUser());
+        }
     }
 
     [RelayCommand]
     public async Task NavigateRecentlyPlayedCommand()
     {
         await Shell.Current.GoToAsync(nameof(PubRecentlyPlayed));
-    }   
+    }
 
     public async void LoadFavoriteSongs()
     {
