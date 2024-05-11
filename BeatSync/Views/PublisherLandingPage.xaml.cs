@@ -16,10 +16,15 @@ public partial class PublisherLandingPage : Shell
         InitializeComponent();
     }
 
-    protected async override void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        var result = Task.Run(async () => await _vm.GetActivePublisher());
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Task.Run(async () => await _vm.GetActivePublisher());
+
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        System.Diagnostics.Debug.WriteLine($"PublisherLandingPage.OnAppearing took {elapsedMs}ms");
     }
 
 }

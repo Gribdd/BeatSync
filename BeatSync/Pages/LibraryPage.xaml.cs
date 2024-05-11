@@ -9,10 +9,14 @@ public partial class LibraryPage : ContentPage
 		InitializeComponent();
 	}
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
-		_vm.GetAlbums();
-		_vm.GetActivePublisher();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        await _vm.GetAlbums();
+		await _vm.LoadCurrentUser();
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        System.Diagnostics.Debug.WriteLine($"LibraryPage.OnAppearing took {elapsedMs}ms");
     }
 }
