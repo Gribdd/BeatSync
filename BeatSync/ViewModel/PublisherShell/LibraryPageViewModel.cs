@@ -98,6 +98,11 @@ public partial class LibraryPageViewModel : ObservableObject
             var artistId = Preferences.Get("currentUserId", -1);
             Albums = await _albumService.GetByArtistId(artistId);
         }
+        System.Diagnostics.Debug.WriteLine($"Albums count: {Albums.Count}");
+        foreach (var album in Albums)
+        {
+            System.Diagnostics.Debug.WriteLine($"album: {album.Name} artist: {album.ArtistName}");
+        }
     }
 
     public async Task LoadCurrentUser()

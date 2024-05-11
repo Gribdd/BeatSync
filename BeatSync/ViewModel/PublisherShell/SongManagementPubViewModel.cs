@@ -4,9 +4,16 @@ namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class SongManagementPubViewModel : ObservableObject
 {
-    private SongService _songService;
-    private PublisherService _publisherService;
+    private readonly SongService _songService;
+    private readonly PublisherService _publisherService;
+    private readonly ArtistService _artistService;
     private readonly PubRecentlyPlayedViewModel _pubRecentlyPlayedViewModel;
+    private readonly UserService _userService;
+
+    //cannot bind to object, so we need to bind to a list of objects
+    //workaround kay boang ang maui di mosugot og object
+    [ObservableProperty]
+    private ObservableCollection<object> _account = new();
 
     [ObservableProperty]
     private MediaSource? _mediaSource;
@@ -22,16 +29,23 @@ public partial class SongManagementPubViewModel : ObservableObject
     
     [ObservableProperty]
     private bool _isVisible;
-
-    [ObservableProperty]
-    private Publisher _publisher = new();
+    
 
 
-    public SongManagementPubViewModel(SongService songService, PublisherService publisherService, PubRecentlyPlayedViewModel pubRecentlyPlayedViewModel)
+
+    public SongManagementPubViewModel(
+        SongService songService, 
+        PublisherService publisherService, 
+        ArtistService artistService,
+        PubRecentlyPlayedViewModel pubRecentlyPlayedViewModel,
+        UserService userService
+        )
     {
         _songService = songService;
         _publisherService = publisherService;
+        _artistService = artistService;
         _pubRecentlyPlayedViewModel = pubRecentlyPlayedViewModel;
+        _userService = userService;
     }
 
 
@@ -88,11 +102,48 @@ public partial class SongManagementPubViewModel : ObservableObject
 
     public async void GetSongsAsync()
     {
-        Songs = await _songService.GetActiveAsync();
+        var accountType = Preferences.Get("currentAccountType", -1);
+        if (accountType == 2)
+        {
+            Songs = await _songService.GetActiveAsync();
+        }
+        else
+        {
+            var artistId = Preferences.Get("currentUserId", -1);
+            Songs = await _songService.GetSongsByArtistIdAsync(artistId);
+        }
+        System.Diagnostics.Debug.WriteLine($"Albums count: {Songs.Count}");
+        foreach (var song in Songs)
+        {
+            System.Diagnostics.Debug.WriteLine($"album: {song.Name} artist: {song.ArtistName}");
+        }
     }
 
-    public async void GetActivePublisher()
+    public async Task LoadCurrentUser()
     {
-        Publisher = await _publisherService.GetCurrentUser();
+        var accountType = Preferences.Get("currentAccountType", -1);
+        //clears everytime to ensure only one account is displayed
+        Account.Clear();
+        if (accountType == -1)
+        {
+            await Shell.Current.DisplayAlert("Error", "Please login to continue", "Ok");
+            await Shell.Current.GoToAsync("..");
+            return;
+        }
+
+        //adding to object collection but only one since it will render multiple accounts if not cleared
+        if (accountType == 3)
+        {
+            Account.Add(await _userService.GetCurrentUser());
+        }
+        else if (accountType == 2)
+        {
+            Account.Add(await _publisherService.GetCurrentUser());
+        }
+        else if (accountType == 1)
+        {
+            Account.Add(await _artistService.GetCurrentUser());
+        }
     }
+
 }

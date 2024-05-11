@@ -81,14 +81,12 @@
             BindableLayout.EmptyView="empty"
             BindableLayout.ItemTemplateSelector="{StaticResource LandingPageSelector}"
             BindableLayout.ItemsSource="{Binding Account}" />
-
         <BoxView
             Grid.Row="1"
             Margin="0,-10,0,10"
             HeightRequest="2"
             WidthRequest="310"
             Color="White" />
-
         <HorizontalStackLayout
             Grid.Row="2"
             Margin="40,10,10,10"
@@ -106,7 +104,6 @@
                 CornerRadius="25"
                 Text="Delete" />
         </HorizontalStackLayout>
-
         <!--  Favorite Songs  -->
         <controls:CardView
             Grid.Row="3"
@@ -119,7 +116,6 @@
         <TapGestureRecognizer Command="{Binding BindingContext.NavigateAddPlaylistSongsCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
     </Frame.GestureRecognizers>-->
         </controls:CardView>
-
         <!--  Recently Played Songs  -->
         <controls:CardView
             Grid.Row="4"
@@ -132,7 +128,6 @@
                 <TapGestureRecognizer Command="{Binding NavigateRecentlyPlayedCommandCommand}" />
             </Frame.GestureRecognizers>
         </controls:CardView>
-
         <CollectionView
             x:Name="collectionView"
             Grid.Row="5"
