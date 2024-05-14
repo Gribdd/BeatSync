@@ -14,6 +14,4 @@ public partial class SongManagement : ContentPage
         base.OnAppearing();
 		_vm.GetSongs();
     }
-
-	
 }

@@ -9,11 +9,11 @@ public partial class SongManagementPub : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
         _vm.GetSongsAsync();
-        _vm.GetActivePublisher();
+        await _vm.LoadCurrentUser();
     }
 
 }

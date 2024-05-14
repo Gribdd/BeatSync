@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:BeatSync.Controls"
     xmlns:model="clr-namespace:BeatSync.Models"
+    xmlns:selector="clr-namespace:BeatSync.Selector"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeatSync.ViewModel.PublisherShell"
     Title="Songs"
@@ -12,31 +13,72 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <DataTemplate x:Key="artistTemplate" x:DataType="model:Artist">
+            <!--  LandingPage for Artists  -->
+            <HorizontalStackLayout>
+                <ImageButton
+                    Margin="5,30,20,30"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=LogoutCommand}"
+                    HeightRequest="35"
+                    HorizontalOptions="Start"
+                    Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
+                <Label
+                    Margin="-10,35,0,0"
+                    Style="{StaticResource SubHeadline}"
+                    Text="{Binding FullName, StringFormat='Hi {0)!'}"
+                    TextColor="White" />
+                <ImageButton
+                    Margin="5,0,0,0"
+                    HeightRequest="35"
+                    HorizontalOptions="Start"
+                    Source="search.png" />
+                <ImageButton
+                    Margin="-15,0,0,0"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="add.png" />
+            </HorizontalStackLayout>
+
+        </DataTemplate>
+        <DataTemplate x:Key="publisherTemplate" x:DataType="model:Publisher">
+            <!--  LandingPage for Publishers  -->
+            <HorizontalStackLayout>
+                <ImageButton
+                    Margin="30"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=LogoutCommand}"
+                    HeightRequest="35"
+                    HorizontalOptions="Start"
+                    Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
+                <Label
+                    Margin="-25,35,0,0"
+                    Style="{StaticResource SubHeadline}"
+                    Text="{Binding FullName, StringFormat='Hi {0)!'}"
+                    TextColor="White" />
+                <ImageButton
+                    Margin="55,0,0,0"
+                    HeightRequest="35"
+                    HorizontalOptions="Start"
+                    Source="search.png" />
+                <ImageButton
+                    Margin="-5,0,0,0"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="add.png" />
+            </HorizontalStackLayout>
+        </DataTemplate>
+        <selector:LandingPageSelector
+            x:Key="LandingPageSelector"
+            ArtistTemplate="{StaticResource artistTemplate}"
+            PublisherTemplate="{StaticResource publisherTemplate}" />
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="auto,auto,auto,*,auto">
-        <HorizontalStackLayout>
-            <ImageButton
-                Margin="30"
-                Command="{Binding LogoutCommand}"
-                HeightRequest="35"
-                HorizontalOptions="Start"
-                Source="{Binding Publisher.ImageFilePath}" />
-            <Label
-                Margin="-25,35,0,0"
-                Style="{StaticResource SubHeadline}"
-                Text="Songs"
-                TextColor="White" />
-            <ImageButton
-                Margin="145,0,0,0"
-                HeightRequest="35"
-                HorizontalOptions="Start"
-                Source="search.png" />
-            <ImageButton
-                Margin="-5,0,0,0"
-                Command="{Binding AddSongCommand}"
-                HeightRequest="30"
-                HorizontalOptions="Start"
-                Source="add.png" />
-        </HorizontalStackLayout>
+        <HorizontalStackLayout
+            Margin="35,10,35,10"
+            BindableLayout.EmptyView="empty"
+            BindableLayout.ItemTemplateSelector="{StaticResource LandingPageSelector}"
+            BindableLayout.ItemsSource="{Binding Account}" />
         <BoxView
             Grid.Row="1"
             Margin="0,-10,0,0"
@@ -76,7 +118,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
         <controls:MediaPlayerControl
             Grid.Row="4"
             ArtistName="{Binding SelectedSong.ArtistName}"
