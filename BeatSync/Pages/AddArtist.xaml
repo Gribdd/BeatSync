@@ -23,38 +23,47 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="30">
 
-        <ImageButton
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="-200,30,30,30"
-            Command="{Binding ReturnCommand}"
-            HeightRequest="30"
-            HorizontalOptions="Start"
-            Source="returnbtn.png" />
-        <VerticalStackLayout>
+        <Grid>
+            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="20">
+                <ImageButton
+                    Command="{Binding ReturnCommand}"
+                    HeightRequest="30"
+                    HorizontalOptions="Start"
+                    Source="returnbtn.png"
+                    WidthRequest="30" />
+                <Label
+                    Grid.Column="1"
+                    Margin="0,5,0,0"
+                    Style="{StaticResource SubHeadline}"
+                    Text="Add Artist"
+                    TextColor="white"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </Grid>
+        <VerticalStackLayout Margin="0,15,0,0">
             <Border>
                 <Entry
                     Margin="5"
-                    PlaceholderColor="{StaticResource Gray100}"
                     ClearButtonVisibility="WhileEditing"
                     Keyboard="Email"
                     Placeholder="Enter Email"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.Email}" />
             </Border>
             <Border>
                 <Entry
-                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Username"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.Username}" />
             </Border>
             <Border>
                 <Entry
-                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Password"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.Password}" />
             </Border>
@@ -70,8 +79,8 @@
             </Border>
             <Border>
                 <Entry
-                    PlaceholderColor="{StaticResource Gray100}"
                     Placeholder="Enter Last Name"
+                    PlaceholderColor="{StaticResource Gray100}"
                     Style="{StaticResource Fields}"
                     Text="{Binding Artist.LastName}" />
             </Border>
@@ -89,7 +98,7 @@
                 </Picker>
             </Border>
             <Button
-                Margin="0,10,0,0"
+                Margin="0,15,0,0"
                 BackgroundColor="#9747FF"
                 Command="{Binding UploadImageCommand}"
                 CornerRadius="25"
@@ -97,7 +106,7 @@
                 Text="Upload Image"
                 WidthRequest="300" />
             <Button
-                Margin="30"
+                Margin="30,10,30,30"
                 BackgroundColor="#9747FF"
                 Command="{Binding AddArtistCommand}"
                 CornerRadius="25"
