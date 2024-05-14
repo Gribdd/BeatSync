@@ -11,15 +11,23 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
 
-    <StackLayout>
-        <ImageButton
-            Margin="-200,30,30,30"
-            Command="{Binding ReturnCommand}"
-            HeightRequest="30"
-            HorizontalOptions="Start"
-            Source="returnbtn.png" />
+    <Grid Margin="20" RowDefinitions="auto,auto">
+        <HorizontalStackLayout Spacing="20">
+            <ImageButton
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png"
+                WidthRequest="30" />
+            <Label
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource Headline}"
+                Text="Recently Played Songs"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
 
-        <CollectionView ItemsSource="{Binding RecentlyPlayedSongs}">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding RecentlyPlayedSongs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
                     <controls:CardView
@@ -29,7 +37,10 @@
                         CardTitle="{Binding Name}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 
 </ContentPage>

@@ -7,7 +7,6 @@ public partial class SongManagementPubViewModel : ObservableObject
     private readonly SongService _songService;
     private readonly PublisherService _publisherService;
     private readonly ArtistService _artistService;
-    private readonly PubRecentlyPlayedViewModel _pubRecentlyPlayedViewModel;
     private readonly UserService _userService;
 
     //cannot bind to object, so we need to bind to a list of objects
@@ -29,22 +28,18 @@ public partial class SongManagementPubViewModel : ObservableObject
     
     [ObservableProperty]
     private bool _isVisible;
-    
-
 
 
     public SongManagementPubViewModel(
         SongService songService, 
         PublisherService publisherService, 
         ArtistService artistService,
-        PubRecentlyPlayedViewModel pubRecentlyPlayedViewModel,
         UserService userService
         )
     {
         _songService = songService;
         _publisherService = publisherService;
         _artistService = artistService;
-        _pubRecentlyPlayedViewModel = pubRecentlyPlayedViewModel;
         _userService = userService;
     }
 
@@ -79,7 +74,6 @@ public partial class SongManagementPubViewModel : ObservableObject
         await SaveUserHistoryAsync(song);
 
         MediaSource = MediaSource.FromFile(song.FilePath);
-        _pubRecentlyPlayedViewModel.AddRecentlyPlayedSong(song);
     }
 
     [RelayCommand]
@@ -100,6 +94,9 @@ public partial class SongManagementPubViewModel : ObservableObject
         });
     }
 
+    /// <summary>
+    /// handles both publisher and artist
+    /// </summary>
     public async void GetSongsAsync()
     {
         var accountType = Preferences.Get("currentAccountType", -1);

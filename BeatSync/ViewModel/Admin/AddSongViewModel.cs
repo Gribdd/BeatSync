@@ -13,7 +13,7 @@ public partial class AddSongViewModel : ObservableObject
     private FileResult? fileResultSong;
 
     [ObservableProperty]
-    private bool _isVisible = false;
+    private bool _isVisible = true;
 
     [ObservableProperty]
     private Song _song = new();
@@ -43,6 +43,8 @@ public partial class AddSongViewModel : ObservableObject
         Song.ArtistName = $"{SelectedArtist.FirstName} {SelectedArtist.LastName}";
 
         var (isValid, message) = Song.IsValid();
+        var userId = Preferences.Get("currentUserId", -1);
+        
         if (!isValid)
         {
             await Shell.Current.DisplayAlert("Error!", message, "Ok");
@@ -101,4 +103,17 @@ public partial class AddSongViewModel : ObservableObject
     {
         Artists = await _artistService.GetAllAsync();
     }
+
+    //create a method name whether the current user is artist, publisher or admin
+
+    public async Task LoadCurrentUser()
+    {
+        var accountType = Preferences.Get("currentAccountType", -1);
+        if (accountType == 1)
+        {
+            SelectedArtist = await _artistService.GetCurrentUser();
+            IsVisible = false;
+        }
+    }
+
 }

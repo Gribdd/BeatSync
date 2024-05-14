@@ -1,6 +1,4 @@
-﻿using BeatSync.Services.Service;
-
-namespace BeatSync.ViewModel.PublisherShell;
+﻿namespace BeatSync.ViewModel.PublisherShell;
 
 public partial class AddAlbumPublisherViewModel : ObservableObject
 {
@@ -19,6 +17,9 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
 
     [ObservableProperty]
     private Artist _selectedArtist = new();
+
+    [ObservableProperty]
+    private bool _isVisible = true;
 
     public AddAlbumPublisherViewModel(
         AlbumService albumService, 
@@ -68,7 +69,16 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
     }
     public async void GetArtists()
     {
-        Artists = await _artistService.GetActiveAsync();
+        var accountType = Preferences.Get("currentAccountType", -1);
+        if (accountType == 1)
+        {
+            SelectedArtist = await _artistService.GetCurrentUser();
+            IsVisible = false;
+        }
+        else
+        {
+            Artists = await _artistService.GetActiveAsync();
+        }
     }
 
     //validation to check if the album name is unique
@@ -78,6 +88,5 @@ public partial class AddAlbumPublisherViewModel : ObservableObject
         var album = await _albumService.GetByNameAndArtistIdAsync(albumName, artistId);
         //name can be duplicate if the artist is different
         return album != null && album.ArtistId == artistId;
-
     }
 }

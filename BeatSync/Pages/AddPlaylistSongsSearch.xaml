@@ -10,10 +10,25 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
     <Grid
-        Padding="34,98,34,0"
-        RowDefinitions="auto,*"
+        RowDefinitions="auto,auto,*"
         RowSpacing="20">
+        <HorizontalStackLayout
+            Margin="40,10,0,20"
+            Padding="10"
+            Spacing="20">
+            <ImageButton
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                Source="returnbtn.png"
+                WidthRequest="30" />
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Search Albums"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
         <SearchBar
+            Grid.Row="1"
             BackgroundColor="White"
             Placeholder="Search"
             SearchCommand="{Binding SearchSongCommand}"
@@ -22,7 +37,8 @@
             ZIndex="1" />
         <CollectionView
             x:Name="collectionView"
-            Grid.Row="1"
+            Grid.Row="2"
+            Margin="50,0,0,0"
             HorizontalOptions="Center"
             ItemsSource="{Binding Songs}">
             <CollectionView.EmptyView>
@@ -43,6 +59,7 @@
                             Grid.Column="1"
                             FontSize="18"
                             Text="{Binding Name}"
+                            TextColor="White"
                             VerticalTextAlignment="Center" />
                         <Label
                             Grid.Row="1"

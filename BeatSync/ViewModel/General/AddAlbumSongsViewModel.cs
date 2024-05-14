@@ -6,6 +6,7 @@ namespace BeatSync.ViewModel.General;
 //first parameter receives the data
 //second parameter is the parameter id specied in the shell route
 [QueryProperty(nameof(Album), nameof(Album))]
+[QueryProperty(nameof(Account), nameof(Account))]
 public partial class AddAlbumSongsViewModel : ObservableObject
 {
     private AlbumService albumService;
@@ -13,6 +14,9 @@ public partial class AddAlbumSongsViewModel : ObservableObject
 
     [ObservableProperty]
     private Album _album = new();
+
+    [ObservableProperty]
+    private ObservableCollection<object> _account = new();
 
     [ObservableProperty]
     private ObservableCollection<Song> _songs = new();

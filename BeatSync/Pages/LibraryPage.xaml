@@ -30,11 +30,13 @@
                     TextColor="White" />
                 <ImageButton
                     Margin="5,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=GoToAlbumSearchPageCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
                 <ImageButton
                     Margin="-15,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=AddAlbumCommand}"
                     HeightRequest="30"
                     HorizontalOptions="Start"
                     Source="add.png" />
@@ -57,11 +59,13 @@
                     TextColor="White" />
                 <ImageButton
                     Margin="55,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=GoToAlbumSearchPageCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
                 <ImageButton
                     Margin="-5,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LibraryPageViewModel}}, Path=AddAlbumCommand}"
                     HeightRequest="30"
                     HorizontalOptions="Start"
                     Source="add.png" />
