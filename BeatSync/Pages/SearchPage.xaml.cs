@@ -23,7 +23,6 @@ public partial class SearchPage : ContentPage
             _vm.SearchQuery = string.Empty;
             _vm.MyList.Clear();
             ((SearchPageViewModel)BindingContext).IsResultsVisible = false;
-
         }
     }
 }

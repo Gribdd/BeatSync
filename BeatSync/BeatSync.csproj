@@ -139,6 +139,9 @@
 	  <MauiXaml Update="Pages\AdminSearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\AlbumSearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ArtistManagement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -41,7 +41,7 @@
                 Text="{Binding Album.Name}"
                 TextColor="White" />
         </Border>
-        <Border>
+        <Border IsVisible="{Binding IsVisible}">
             <Picker
                 Title="--SELECT ARTIST--"
                 ItemDisplayBinding="{Binding Username}"

@@ -22,16 +22,22 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <VerticalStackLayout>
-        <ImageButton
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="-60,30,30,30"
-            Command="{Binding ReturnCommand}"
-            HeightRequest="30"
-            HorizontalOptions="Start"
-            Source="returnbtn.png" />
-        <VerticalStackLayout>
+    <Grid Margin="20" RowDefinitions="auto,auto">
+        <Grid ColumnDefinitions="auto,auto" ColumnSpacing="20">
+            <ImageButton
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png"
+                WidthRequest="30" />
+            <Label
+                Grid.Column="1"
+                Style="{StaticResource Headline}"
+                Text="Add Song"
+                TextColor="white"
+                VerticalTextAlignment="Center" />
+        </Grid>
+        <VerticalStackLayout Margin="20,0,0,0" Grid.Row="1">
             <Border>
                 <Entry
                     Margin="5"
@@ -41,7 +47,7 @@
                     Style="{StaticResource Fields}"
                     Text="{Binding Song.Name}" />
             </Border>
-            <Border Padding="5">
+            <Border Padding="5" IsVisible="{Binding IsVisible}">
                 <Picker
                     Title="Select artist"
                     ItemDisplayBinding="{Binding Username}"
@@ -54,7 +60,7 @@
                     ItemsSource="{Binding Genres}"
                     SelectedItem="{Binding Song.Genre}" />
             </Border>
-            <!--#9F9BAE-->
+            <!--  #9F9BAE  -->
             <Button
                 Margin="0,10,0,0"
                 BackgroundColor="#9747FF"
@@ -72,7 +78,7 @@
                 Text="Upload Song"
                 WidthRequest="300" />
             <Button
-                Margin="30"
+                Margin="0,10,0,0"
                 BackgroundColor="#9747FF"
                 Command="{Binding AddSongCommand}"
                 CornerRadius="25"
@@ -80,5 +86,5 @@
                 Text="Submit Details"
                 WidthRequest="300" />
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

@@ -42,7 +42,17 @@ public partial class LibraryPageViewModel : ObservableObject
     [RelayCommand]
     async Task AddAlbum()
     {
-        await Shell.Current.GoToAsync($"{nameof(AddAlbumPublisher)}");
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(Account), Account }
+        };
+        await Shell.Current.GoToAsync($"{nameof(AddAlbumPublisher)}", navigationParameter);
+    }
+
+    [RelayCommand]
+    async Task GoToAlbumSearchPage()
+    {
+        await Shell.Current.GoToAsync($"{nameof(AlbumSearchPage)}");
     }
 
     [RelayCommand]
@@ -75,7 +85,8 @@ public partial class LibraryPageViewModel : ObservableObject
     {
         var navigationParameter = new Dictionary<string, object>
         {
-            {nameof(Album), album }
+            {nameof(Album), album },
+            {nameof(Account), Account }
         };
         await Shell.Current.GoToAsync($"{nameof(AddAlbumSongs)}", navigationParameter);
     }

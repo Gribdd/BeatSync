@@ -43,7 +43,6 @@
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>
-
     <Shell.FlyoutFooter>
         <Button
             Margin="20"
@@ -55,16 +54,15 @@
     </Shell.FlyoutFooter>
 
     <TabBar>
-        <Tab Title="Library" Icon="library.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
         </Tab>
         <Tab Title="Songs" Icon="songs.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SongManagementPub}" Route="songs" />
         </Tab>
-        <Tab Title="Home" Icon="home.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
+        <Tab Title="Library" Icon="library.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LibraryPage}" Route="library" />
         </Tab>
-
     </TabBar>
 </Shell>
 

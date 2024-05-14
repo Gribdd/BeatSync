@@ -56,16 +56,15 @@
     </Shell.FlyoutFooter>
 
     <TabBar>
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
+        </Tab>
         <Tab Title="Search" Icon="search.png">
             <ShellContent ContentTemplate="{DataTemplate pages:SearchPage}" Route="search" />
         </Tab>
         <Tab Title="Library" Icon="library.png">
             <ShellContent ContentTemplate="{DataTemplate pages:CustomerLibraryPage}" Route="library" />
         </Tab>
-        <Tab Title="Home" Icon="home.png">
-            <ShellContent ContentTemplate="{DataTemplate pages:LandingPage}" Route="home" />
-        </Tab>
-
     </TabBar>
 </Shell>
 

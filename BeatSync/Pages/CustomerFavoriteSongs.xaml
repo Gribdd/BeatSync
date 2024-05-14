@@ -10,19 +10,24 @@
     x:DataType="viewmodel:CustomerFavoriteSongsViewModel"
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
-    <StackLayout Padding="20">
-        <Label
-            HorizontalTextAlignment="Start"
-            Style="{StaticResource Headline}"
-            Text="Favorite Songs" />
-        <ImageButton
-            Margin="-200,30,30,30"
-            Command="{Binding ReturnCommand}"
-            HeightRequest="30"
-            HorizontalOptions="Start"
-            Source="returnbtn.png" />
 
-        <CollectionView ItemsSource="{Binding FavoriteSongs}">
+    <Grid Margin="20" RowDefinitions="auto,auto">
+        <HorizontalStackLayout Spacing="20">
+            <ImageButton
+                Command="{Binding ReturnCommand}"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="returnbtn.png"
+                WidthRequest="30" />
+            <Label
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource Headline}"
+                Text="REcen"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding FavoriteSongs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
                     <controls:CardView
@@ -32,6 +37,9 @@
                         CardTitle="{Binding Name}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 </ContentPage>

@@ -1,9 +1,9 @@
 namespace BeatSync.Pages;
 
-public partial class AddSong : ContentPage
+public partial class AlbumSearchPage : ContentPage
 {
-	AddSongViewModel _vm;
-    public AddSong(AddSongViewModel vm)
+    AlbumSearchPageViewModel _vm;
+    public AlbumSearchPage(AlbumSearchPageViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = _vm = vm;
@@ -12,7 +12,6 @@ public partial class AddSong : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.PopulateArtist();
-        await _vm.LoadCurrentUser();
+        await _vm.GetAlbums();
     }
 }

@@ -43,14 +43,9 @@
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
-                <ImageButton
-                    Margin="-5,0,0,0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="add.png" />
+
             </HorizontalStackLayout>
         </DataTemplate>
-
         <DataTemplate x:Key="publisherTemplate" x:DataType="model:Publisher">
             <!--  LandingPage for Publishers  -->
 
@@ -71,14 +66,8 @@
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
-                <ImageButton
-                    Margin="-5,0,0,0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="add.png" />
             </HorizontalStackLayout>
         </DataTemplate>
-
         <DataTemplate x:Key="artistTemplate" x:DataType="model:Artist">
             <!--  LandingPage for Artists  -->
             <HorizontalStackLayout>
@@ -98,15 +87,9 @@
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
-                <ImageButton
-                    Margin="-15,0,0,0"
-                    HeightRequest="30"
-                    HorizontalOptions="Start"
-                    Source="add.png" />
             </HorizontalStackLayout>
 
         </DataTemplate>
-
         <selector:LandingPageSelector
             x:Key="LandingPageSelector"
             ArtistTemplate="{StaticResource artistTemplate}"
@@ -234,14 +217,12 @@
                 </CarouselView>
             </Grid>
         </ScrollView>
-        <controls:MediaPlayerControl
-            Grid.Row="6"
-            ZIndex="1"
+        <!--<controls:MediaPlayerControl
             ArtistName="{Binding SelectedSong.ArtistName}"
             AudioSource="{Binding MediaSource}"
             ImageSource="{Binding SelectedSong.ImageFilePath}"
             IsVisible="{Binding IsVisible}"
-            SongName="{Binding SelectedSong.Name}" />
+            SongName="{Binding SelectedSong.Name}" />-->
     </Grid>
 
 </ContentPage>
