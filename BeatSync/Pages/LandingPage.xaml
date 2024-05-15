@@ -26,20 +26,23 @@
 
         <DataTemplate x:Key="userTemplate" x:DataType="model:User">
             <!--  LandingPage for Customers  -->
-            <HorizontalStackLayout>
+            <HorizontalStackLayout WidthRequest="350">
                 <ImageButton
-                    Margin="30"
+                    Margin="0,30,0,10"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=LogoutCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
                 <Label
-                    Margin="-25,35,0,0"
+                    Margin="0,35,0,0"
+                    LineBreakMode="TailTruncation"
+                    MaximumWidthRequest="100"
                     Style="{StaticResource SubHeadline}"
                     Text="{Binding FullName, StringFormat='Hi {0)!'}"
                     TextColor="White" />
                 <ImageButton
-                    Margin="55,0,0,0"
+                    Margin="120,25,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
@@ -49,20 +52,22 @@
         <DataTemplate x:Key="publisherTemplate" x:DataType="model:Publisher">
             <!--  LandingPage for Publishers  -->
 
-            <HorizontalStackLayout>
+            <HorizontalStackLayout WidthRequest="350">
                 <ImageButton
-                    Margin="30"
+                    Margin="0,30,0,10"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=LogoutCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
                 <Label
-                    Margin="-25,35,0,0"
+                    Margin="0,35,0,0"
+                    LineBreakMode="TailTruncation"
+                    MaximumWidthRequest="100"
                     Style="{StaticResource SubHeadline}"
-                    Text="{Binding FullName, StringFormat='Hi {0)!'}"
+                    Text="{Binding FullName, StringFormat='Hi, {0}!'}"
                     TextColor="White" />
                 <ImageButton
-                    Margin="55,0,0,0"
+                    Margin="120,25,0,0"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
@@ -73,18 +78,20 @@
             <!--  LandingPage for Artists  -->
             <HorizontalStackLayout>
                 <ImageButton
-                    Margin="5,30,20,30"
+                    Margin="0,30,0,10"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=LogoutCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="{Binding ImageFilePath, FallbackValue='logo.png'}" />
                 <Label
-                    Margin="-10,35,0,0"
+                    Margin="0,35,0,0"
+                    LineBreakMode="TailTruncation"
+                    MaximumWidthRequest="100"
                     Style="{StaticResource SubHeadline}"
                     Text="{Binding FullName, StringFormat='Hi, {0}!'}"
                     TextColor="White" />
                 <ImageButton
-                    Margin="5,0,0,0"
+                    Margin="120,25,0,0"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
@@ -219,12 +226,15 @@
                 </CarouselView>
             </Grid>
         </ScrollView>
-        <!--<controls:MediaPlayerControl
+
+        <controls:MediaPlayerControl
+            Grid.Row="3"
+            Margin="0,5,0,0"
             ArtistName="{Binding SelectedSong.ArtistName}"
             AudioSource="{Binding MediaSource}"
             ImageSource="{Binding SelectedSong.ImageFilePath}"
             IsVisible="{Binding IsVisible}"
-            SongName="{Binding SelectedSong.Name}" />-->
+            SongName="{Binding SelectedSong.Name}" />
     </Grid>
 
 </ContentPage>

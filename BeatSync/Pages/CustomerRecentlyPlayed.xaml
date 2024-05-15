@@ -11,8 +11,8 @@
     BackgroundImageSource="resizedbackgroundpixel.png"
     Shell.NavBarIsVisible="False">
 
-    <Grid Margin="20" RowDefinitions="auto,auto">
-        <HorizontalStackLayout Spacing="20">
+    <Grid Margin="30" RowDefinitions="auto,auto">
+        <HorizontalStackLayout Spacing="20" Margin="0,0,0,20">
             <ImageButton
                 Command="{Binding ReturnCommand}"
                 HeightRequest="30"
@@ -21,7 +21,7 @@
                 WidthRequest="30" />
             <Label
                 HorizontalTextAlignment="Start"
-                Style="{StaticResource Headline}"
+                Style="{StaticResource SubHeadline}"
                 Text="Recently Played Songs"
                 TextColor="White"
                 VerticalTextAlignment="Center" />

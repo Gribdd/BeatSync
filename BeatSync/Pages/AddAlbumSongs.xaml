@@ -57,10 +57,10 @@
                             CardSubtitleLeft="{Binding ArtistName}"
                             CardSubtitleRight="{Binding Genre}"
                             CardTitle="{Binding Name}"
-                            HorizontalOptions="Center" />
+                            HorizontalOptions="Center"
+                            WidthRequest="250" />
                         <Button
-                            Command="{Binding BindingContext.RemoveSongFromAlbumCommand, 
-                                        Source={x:Reference collectionView}}"
+                            Command="{Binding BindingContext.RemoveSongFromAlbumCommand, Source={x:Reference collectionView}}"
                             CommandParameter="{Binding .}"
                             Text="Delete" />
                     </HorizontalStackLayout>

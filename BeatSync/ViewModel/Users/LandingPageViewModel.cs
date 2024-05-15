@@ -160,8 +160,10 @@ public partial class LandingPageViewModel : ObservableObject
     
     public async Task LoadRecentlyPlayedSongs()
     {
+        var accountType = Preferences.Get("currentAccountType", -1);
+        var userId = Preferences.Get("currentUserId", -1); 
         var histories = await _historyService.GetActiveAsync();
-        var filteredHistories = histories.OrderBy(h => h.TimeStamp);
+        var filteredHistories = histories.Where(h => h.AccountType == accountType && h.UserId == userId).OrderBy(h => h.TimeStamp);
         List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
         var songs = await _songService.GetSongsBySongIds(songIds);
         var sortedSongs = new ObservableCollection<Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());

@@ -72,7 +72,7 @@
         <SearchBar
             Grid.Row="1"
             BackgroundColor="White"
-            Placeholder="What do you want to listen to?"
+            Placeholder="What do you want to look for?"
             SearchCommand="{Binding SearchCommand}"
             Text="{Binding SearchQuery, Mode=TwoWay}"
             TextColor="{StaticResource Gray900}"

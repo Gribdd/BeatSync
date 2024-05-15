@@ -34,14 +34,15 @@
             <Label
                 Margin="0,5,0,0"
                 FontSize="20"
-                TextColor="White"
                 Text="Give your playlist a name"
+                TextColor="White"
                 VerticalTextAlignment="Center" />
         </HorizontalStackLayout>
         <Border>
             <Entry
                 HeightRequest="50"
                 Placeholder="Enter playlist name"
+                PlaceholderColor="{StaticResource Gray200}"
                 Style="{StaticResource Fields}"
                 Text="{Binding Playlist.Name}" />
         </Border>
