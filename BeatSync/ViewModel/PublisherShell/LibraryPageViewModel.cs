@@ -3,6 +3,7 @@
 public partial class LibraryPageViewModel : ObservableObject
 {
     private readonly AlbumService _albumService;
+    private readonly SongService _songService;
     private readonly PublisherService _publisherService;
     private readonly ArtistService _artistService;
     private readonly UserService _userService;
@@ -28,11 +29,13 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public LibraryPageViewModel(
         AlbumService albumService,
+        SongService songService,
         PublisherService publisherService,
         ArtistService artistService,
         UserService userService)
     {
         _albumService = albumService;
+        _songService = songService;
         _publisherService = publisherService;
         _artistService = artistService;
         _userService = userService;
@@ -64,7 +67,7 @@ public partial class LibraryPageViewModel : ObservableObject
             var album = await _albumService.GetByNameAsync(albumName);
             await _albumService.UpdateAsync(album.Id);
         }
-        Albums = await _albumService.GetActiveAsync();
+        await GetAlbums();
     }
 
     [RelayCommand]
@@ -74,9 +77,15 @@ public partial class LibraryPageViewModel : ObservableObject
         if (!string.IsNullOrEmpty(albumName))
         {
             var album = await _albumService.GetByNameAsync(albumName);
+            var songs = album.Songs;
+            foreach (var song in songs!)
+            {
+                song.AlbumId = null;
+                await _songService.UpdateAsync(song);
+            }
             await _albumService.DeleteAsync(album.Id);
         }
-        Albums = await _albumService.GetActiveAsync();
+        await GetAlbums();
     }
 
 
