@@ -20,6 +20,7 @@ public partial class CustomerLandingPage : Shell
         Routing.RegisterRoute(nameof(ViewProfile), typeof(ViewProfile));
         Routing.RegisterRoute(nameof(CustomerRecentlyPlayed), typeof(CustomerRecentlyPlayed));
         //Routing.RegisterRoute(nameof(CustomerFavoriteSongs), typeof(CustomerFavoriteSongs));
+        Routing.RegisterRoute(nameof(LandingPageSearch), typeof(LandingPageSearch));
         Routing.RegisterRoute($"library/{nameof(CustomerFavoriteSongs)}", typeof(CustomerFavoriteSongs));
     }
 
