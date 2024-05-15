@@ -63,6 +63,7 @@
                     TextColor="White" />
                 <ImageButton
                     Margin="55,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
@@ -80,10 +81,11 @@
                 <Label
                     Margin="-10,35,0,0"
                     Style="{StaticResource SubHeadline}"
-                    Text="{Binding FullName, StringFormat='Hi {0)!'}"
+                    Text="{Binding FullName, StringFormat='Hi, {0}!'}"
                     TextColor="White" />
                 <ImageButton
                     Margin="5,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LandingPageViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />

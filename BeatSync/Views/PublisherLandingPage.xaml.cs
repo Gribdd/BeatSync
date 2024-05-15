@@ -11,6 +11,9 @@ public partial class PublisherLandingPage : Shell
         Routing.RegisterRoute($"library/{nameof(AlbumSearchPage)}", typeof(AlbumSearchPage));
         Routing.RegisterRoute(nameof(ViewProfile), typeof(ViewProfile));
         Routing.RegisterRoute(nameof(PubRecentlyPlayed), typeof(PubRecentlyPlayed));
+        Routing.RegisterRoute($"songs/{nameof(SongSearchPage)}", typeof(SongSearchPage));
+        Routing.RegisterRoute(nameof(LandingPageSearch), typeof(LandingPageSearch));
+        //Routing.RegisterRoute($"landingpage/{nameof(LandingPageSearch)}", typeof(LandingPageSearch));
 
 
         BindingContext = _vm = vm;

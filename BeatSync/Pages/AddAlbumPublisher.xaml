@@ -38,6 +38,7 @@
                 ClearButtonVisibility="WhileEditing"
                 FontFamily="JuaRegular"
                 Placeholder="Enter album name"
+                PlaceholderColor="{StaticResource Gray200}"
                 Text="{Binding Album.Name}"
                 TextColor="White" />
         </Border>

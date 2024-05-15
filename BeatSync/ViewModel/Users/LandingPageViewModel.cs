@@ -150,19 +150,12 @@ public partial class LandingPageViewModel : ObservableObject
 
         foreach (var grp in g)
         {
-            //System.Diagnostics.Debug.WriteLine("{0} {1}", grp.Key, grp.Count());
             var suggestedSongs = await _songService.GetSongsByGenreAsync(grp.Key!);
 
             suggestodSongsByGenre[grp.Key!] = suggestedSongs;
         }
 
         SuggestedSongsByGenre = new ObservableCollection<Song>(suggestodSongsByGenre.SelectMany(s => s.Value));
-        //write to console suggestedsongsbygenre to see the output
-        //System.Diagnostics.Debug.WriteLine($"SuggestedSongsByGenre");
-        //foreach (var item in SuggestedSongsByGenre)
-        //{
-        //    System.Diagnostics.Debug.WriteLine($"{item.Name} : {item.Genre} : {item.ArtistName}");
-        //}
     }
     
     public async Task LoadRecentlyPlayedSongs()
@@ -171,19 +164,15 @@ public partial class LandingPageViewModel : ObservableObject
         var filteredHistories = histories.OrderBy(h => h.TimeStamp);
         List<int> songIds = filteredHistories.Select(h => h.SongId).Distinct().ToList();
         var songs = await _songService.GetSongsBySongIds(songIds);
-
-        //System.Diagnostics.Debug.WriteLine($"Not sorted Recently Played Songs");
-        //foreach (var song in songs)
-        //{
-        //    System.Diagnostics.Debug.WriteLine($"{song.Name} : {song.Genre} : {song.ArtistName}");
-        //}
-
         var sortedSongs = new ObservableCollection<Song>(songs.Where(s => songIds.Contains(s.Id)).OrderBy(s => filteredHistories.First(h => h.SongId == s.Id).TimeStamp).Reverse());
-        //System.Diagnostics.Debug.WriteLine($"sorted Recently Played Songs");
-        //foreach (var song in sortedSongs)
-        //{
-        //    System.Diagnostics.Debug.WriteLine($"{song.Name} : {song.Genre} : {song.ArtistName}");
-        //}
         RecentlyPlayedSongs = sortedSongs;
     }
+
+    [RelayCommand]
+    async Task NavigateToSearch()
+    {
+        await Shell.Current.GoToAsync(nameof(LandingPageSearch));
+    }
+
+    
 }
