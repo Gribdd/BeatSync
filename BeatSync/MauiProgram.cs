@@ -91,6 +91,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<PubUserHistoryViewModel>();
             mauiAppBuilder.Services.AddTransient<PublisherLandingPageViewModel>();
             mauiAppBuilder.Services.AddTransient<PubRecentlyPlayedViewModel>();
+            mauiAppBuilder.Services.AddTransient<SongSearchPageViewModel>();
 
             //Users
             mauiAppBuilder.Services.AddTransient<SearchPageViewModel>();
@@ -143,6 +144,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<AddSong>();
             mauiAppBuilder.Services.AddTransient<ViewProfile>();
             mauiAppBuilder.Services.AddTransient<AlbumSearchPage>();
+            mauiAppBuilder.Services.AddTransient<LandingPageSearch>();
 
 
             //Publisher
@@ -151,6 +153,7 @@ namespace BeatSync
             mauiAppBuilder.Services.AddTransient<AddAlbumPublisher>();
             mauiAppBuilder.Services.AddTransient<PubRecentlyPlayed>();
             mauiAppBuilder.Services.AddTransient<PubViewProfile>();
+            mauiAppBuilder.Services.AddTransient<SongSearchPage>();
 
             //Users
             mauiAppBuilder.Services.AddTransient<SearchPage>();

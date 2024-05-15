@@ -8,9 +8,7 @@ public partial class SongManagementPubViewModel : ObservableObject
     private readonly PublisherService _publisherService;
     private readonly ArtistService _artistService;
     private readonly UserService _userService;
-
-    //cannot bind to object, so we need to bind to a list of objects
-    //workaround kay boang ang maui di mosugot og object
+    
     [ObservableProperty]
     private ObservableCollection<object> _account = new();
 
@@ -43,6 +41,11 @@ public partial class SongManagementPubViewModel : ObservableObject
         _userService = userService;
     }
 
+    [RelayCommand]
+    async Task NavigateToSearch()
+    {
+        await Shell.Current.GoToAsync(nameof(SongSearchPage));
+    }
 
     [RelayCommand]
     void Logout()

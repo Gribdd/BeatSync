@@ -83,4 +83,10 @@ public partial class SearchPageViewModel : ObservableObject
     {
         User = await _userService.GetCurrentUser();
     }
+
+    [RelayCommand]
+    async Task Return()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

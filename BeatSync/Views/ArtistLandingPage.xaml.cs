@@ -8,12 +8,16 @@ public partial class ArtistLandingPage : Shell
     public ArtistLandingPage(ArtistLandingPageViewModel vm)
     {
         Routing.RegisterRoute($"songs/{nameof(AddSong)}", typeof(AddSong));
-        Routing.RegisterRoute($"library/{nameof(AddAlbumPublisher)}", typeof(AddAlbumPublisher)); //add/revise for artist side
+        Routing.RegisterRoute($"library/{nameof(AddAlbumPublisher)}", typeof(AddAlbumPublisher)); 
         Routing.RegisterRoute($"library/{nameof(AddAlbumSongs)}", typeof(AddAlbumSongs));
-        Routing.RegisterRoute($"library/{nameof(PubRecentlyPlayed)}",typeof(PubRecentlyPlayed)); //add/revise for artist side
-        Routing.RegisterRoute($"library/{nameof(CustomerFavoriteSongs)}", typeof(CustomerFavoriteSongs)); //add/revise for artist side
-        Routing.RegisterRoute($"library/{nameof(AlbumSearchPage)}", typeof(AlbumSearchPage)); //add/revise for artist side
+        Routing.RegisterRoute($"library/{nameof(PubRecentlyPlayed)}",typeof(PubRecentlyPlayed)); 
+        Routing.RegisterRoute($"library/{nameof(CustomerFavoriteSongs)}", typeof(CustomerFavoriteSongs)); 
+        Routing.RegisterRoute($"library/{nameof(AlbumSearchPage)}", typeof(AlbumSearchPage)); 
         Routing.RegisterRoute(nameof(ArtistViewProfile), typeof(ArtistViewProfile));
+        Routing.RegisterRoute($"songs/{nameof(SongSearchPage)}", typeof(SongSearchPage));
+        Routing.RegisterRoute(nameof(LandingPageSearch), typeof(LandingPageSearch));
+        //Routing.RegisterRoute($"landingpage/{nameof(LandingPageSearch)}", typeof(LandingPageSearch));
+
 
         BindingContext = _vm = vm;
         InitializeComponent();

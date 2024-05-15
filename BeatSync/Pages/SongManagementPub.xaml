@@ -30,6 +30,7 @@
                     TextColor="White" />
                 <ImageButton
                     Margin="5,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SongManagementPubViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
@@ -58,6 +59,7 @@
                     TextColor="White" />
                 <ImageButton
                     Margin="55,0,0,0"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SongManagementPubViewModel}}, Path=NavigateToSearchCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Start"
                     Source="search.png" />
@@ -122,6 +124,7 @@
         </CollectionView>
         <controls:MediaPlayerControl
             Grid.Row="4"
+            Margin="0,3,0,0"
             ArtistName="{Binding SelectedSong.ArtistName}"
             AudioSource="{Binding MediaSource}"
             ImageSource="{Binding SelectedSong.ImageFilePath}"
