@@ -49,7 +49,7 @@ You will need to download **Git** and the **.NET SDK with MAUI workloads** to ru
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/sophia/beatsync.git
+   git clone https://github.com/sophiamgdn/beatsync.git
    cd beatsync
    ```
 
