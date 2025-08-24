@@ -4,6 +4,10 @@ BeatSync is a mobile music streaming app built with **.NET MAUI**. It features a
 
 ---
 
+## Demo
+
+![Portfolio Demo](https://i.postimg.cc/g2d99BTX/Software-Development-2.png)
+
 ## 🚀 Features  
 
 - 🎶 Stream music seamlessly  
